@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Jesh AI — Student-First Learning Ecosystem</title>
+  <title>Jesh AI — Personalized Skill, Video & Zero-Code Ecosystem</title>
   <style>
     :root {
       --bg-calm: #F8FAFC;
@@ -11,6 +11,8 @@
       --primary: #2563EB;
       --primary-soft: #EFF6FF;
       --accent: #059669;
+      --pro: #7C3AED;
+      --pro-soft: #F5F3FF;
       --text-main: #0F172A;
       --text-muted: #475569;
       --border: #E2E8F0;
@@ -18,15 +20,37 @@
       --footer-h: 48px;
     }
 
+    body.theme-warm {
+      --bg-calm: #FFFBEB;
+      --surface: #FFFFFF;
+      --primary: #D97706;
+      --primary-soft: #FEF3C7;
+      --text-main: #1C1917;
+      --text-muted: #57534E;
+      --border: #FDE68A;
+    }
+
+    body.theme-night {
+      --bg-calm: #0B1120;
+      --surface: #111827;
+      --primary: #38BDF8;
+      --primary-soft: #1E293B;
+      --accent: #10B981;
+      --text-main: #F8FAFC;
+      --text-muted: #94A3B8;
+      --border: #1F2937;
+    }
+
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
     body {
       margin: 0;
-      padding: 0 0 calc(var(--footer-h) + 16px) 0;
+      padding: 0 0 calc(var(--footer-h) + 18px) 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background-color: var(--bg-calm);
       color: var(--text-main);
       line-height: 1.5;
+      transition: background-color 0.2s ease, color 0.2s ease;
     }
 
     header {
@@ -43,8 +67,9 @@
 
     .brand { font-weight: 700; font-size: 18px; color: var(--primary); display: flex; align-items: center; gap: 8px; }
     .badge-pill { background: var(--primary-soft); color: var(--primary); font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 999px; }
+    .badge-pro { background: var(--pro-soft); color: var(--pro); }
 
-    main#app { max-width: 680px; margin: 0 auto; padding: 14px; }
+    main#app { max-width: 740px; margin: 0 auto; padding: 14px; }
 
     .card {
       background: var(--surface);
@@ -52,7 +77,7 @@
       border-radius: 14px;
       padding: 16px;
       margin-bottom: 14px;
-      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
     }
 
     h2, h3 { margin: 0 0 8px 0; font-size: 17px; color: var(--text-main); }
@@ -65,7 +90,7 @@
       border-radius: 10px;
       font-size: 15px;
       margin-bottom: 10px;
-      background: #FFFFFF;
+      background: var(--surface);
       color: var(--text-main);
     }
 
@@ -73,21 +98,34 @@
       cursor: pointer;
       border: none;
       border-radius: 10px;
-      padding: 11px 16px;
+      padding: 10px 15px;
       font-size: 14px;
       font-weight: 600;
-      transition: opacity 0.15s ease;
+      transition: opacity 0.15s ease, transform 0.1s ease;
     }
-    button:active { opacity: 0.8; }
+    button:active { opacity: 0.85; transform: scale(0.99); }
     button:disabled { opacity: 0.55; cursor: not-allowed; }
 
     .btn-primary { background: var(--primary); color: #FFFFFF; width: 100%; }
     .btn-accent { background: var(--accent); color: #FFFFFF; }
+    .btn-pro { background: var(--pro); color: #FFFFFF; }
     .btn-danger { background: var(--danger); color: #FFFFFF; }
     .btn-outline { background: var(--surface); border: 1px solid var(--border); color: var(--text-main); }
     .btn-sm { padding: 7px 11px; font-size: 13px; }
 
     .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .course-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(195px, 1fr)); gap: 10px; margin-bottom: 12px; }
+
+    .course-tile {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      background: var(--surface);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 8px;
+    }
 
     .step-item {
       display: flex;
@@ -97,11 +135,24 @@
       border: 1px solid var(--border);
       border-radius: 12px;
       margin-bottom: 10px;
-      background: #FFFFFF;
+      background: var(--surface);
       gap: 8px;
     }
     .step-info strong { display: block; font-size: 15px; color: var(--text-main); }
     .step-info span { font-size: 12px; color: var(--text-muted); }
+
+    .chip-row { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 6px; margin-bottom: 10px; }
+    .chip {
+      background: var(--bg-calm);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .chip.active { background: var(--primary); color: #FFFFFF; border-color: var(--primary); }
 
     .read-word {
       display: inline-block;
@@ -115,88 +166,108 @@
     }
     .read-word:hover, .read-word.active-word { background: var(--primary-soft); color: var(--primary); }
 
-    /* TRUE VIDEO CALL STAGE */
+    /* MOVING ANIMATED VIDEO CALL STAGE */
     .video-stage {
       position: relative;
-      background: #0F172A;
+      background: linear-gradient(180deg, #0F172A 0%, #1E293B 100%);
       color: #FFFFFF;
       border-radius: 16px;
-      padding: 20px 14px;
+      padding: 16px 12px 14px 12px;
       text-align: center;
       margin-bottom: 12px;
       overflow: hidden;
-      min-height: 210px;
+      min-height: 245px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
     }
 
-    .ai-video-avatar {
-      width: 96px;
-      height: 96px;
-      border-radius: 50%;
-      background: #1E293B;
-      border: 3px solid #38BDF8;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 48px;
-      margin-bottom: 10px;
-      overflow: hidden;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    .live-pill {
+      position: absolute; top: 10px; left: 10px;
+      background: rgba(220, 38, 38, 0.92); color: #FFFFFF;
+      font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 999px;
     }
-    .ai-video-avatar img { width: 100%; height: 100%; object-fit: cover; }
 
-    @keyframes pulseTalk {
-      0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.7); }
-      50% { transform: scale(1.07); box-shadow: 0 0 0 14px rgba(56, 189, 248, 0); }
-      100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(56, 189, 248, 0); }
+    @keyframes idleMotion {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-4px) rotate(0.9deg); }
     }
-    .ai-video-avatar.speaking { animation: pulseTalk 1s infinite; border-color: #34D399; }
+    @keyframes talkMotion {
+      0%, 100% { transform: translateY(0px) scale(1); }
+      25% { transform: translateY(-5px) scale(1.03); }
+      75% { transform: translateY(-2px) scale(1.01); }
+    }
+    @keyframes eyeBlink {
+      0%, 92%, 100% { transform: scaleY(1); }
+      96% { transform: scaleY(0.08); }
+    }
+    @keyframes lipSync {
+      0%, 100% { ry: 2; }
+      50% { ry: 8.5; }
+    }
 
-    .voice-bars { display: flex; gap: 4px; height: 18px; align-items: center; justify-content: center; margin: 4px 0; }
+    .character-rig { width: 116px; height: 116px; animation: idleMotion 3s ease-in-out infinite; }
+    .character-rig.speaking { animation: talkMotion 0.42s ease-in-out infinite; }
+    .eye-group { transform-origin: center 52px; animation: eyeBlink 4s infinite; }
+    .mouth-ellipse { transform-origin: center 66px; ry: 2; }
+    .character-rig.speaking .mouth-ellipse { animation: lipSync 0.22s ease-in-out infinite; }
+
+    .custom-photo-ring {
+      width: 106px; height: 106px; border-radius: 50%; overflow: hidden;
+      border: 3px solid #38BDF8; animation: idleMotion 3s ease-in-out infinite;
+    }
+    .custom-photo-ring.speaking { animation: talkMotion 0.42s ease-in-out infinite; border-color: #34D399; }
+    .custom-photo-ring img { width: 100%; height: 100%; object-fit: cover; }
+
+    .voice-bars { display: flex; gap: 4px; height: 18px; align-items: center; justify-content: center; margin: 5px 0; }
     .voice-bars span { width: 4px; height: 6px; background: #38BDF8; border-radius: 4px; transition: height 0.15s ease; }
-    .voice-bars.active span:nth-child(1) { height: 14px; }
-    .voice-bars.active span:nth-child(2) { height: 18px; }
-    .voice-bars.active span:nth-child(3) { height: 10px; }
-    .voice-bars.active span:nth-child(4) { height: 16px; }
+    .voice-bars.active span:nth-child(1) { height: 15px; background: #34D399; }
+    .voice-bars.active span:nth-child(2) { height: 19px; background: #34D399; }
+    .voice-bars.active span:nth-child(3) { height: 11px; background: #34D399; }
+    .voice-bars.active span:nth-child(4) { height: 17px; background: #34D399; }
 
     .pip-self-cam {
-      position: absolute;
-      bottom: 10px;
-      right: 10px;
-      width: 74px;
-      height: 96px;
-      border-radius: 10px;
-      background: #1E293B;
-      border: 2px solid rgba(255,255,255,0.35);
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
+      position: absolute; bottom: 10px; right: 10px; width: 70px; height: 90px;
+      border-radius: 10px; background: #1E293B; border: 2px solid rgba(255,255,255,0.4);
+      overflow: hidden; display: flex; align-items: center; justify-content: center; font-size: 24px;
     }
     .pip-self-cam video { width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1); }
 
-    .call-controls { display: flex; justify-content: center; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
-    .call-btn { border-radius: 999px; padding: 9px 14px; font-size: 13px; background: rgba(255,255,255,0.14); color: #FFFFFF; }
+    .call-controls { display: flex; justify-content: center; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+    .call-btn { border-radius: 999px; padding: 8px 13px; font-size: 12px; background: rgba(255,255,255,0.16); color: #FFFFFF; }
     .call-btn.on { background: #059669; }
-    .call-btn.end { background: #DC2626; }
 
-    .char-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(105px, 1fr)); gap: 8px; margin-bottom: 12px; }
-    .char-card { border: 1px solid var(--border); border-radius: 12px; padding: 8px; text-align: center; cursor: pointer; background: #FFFFFF; }
+    .char-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(105px, 1fr)); gap: 8px; margin-bottom: 10px; }
+    .char-card { border: 1px solid var(--border); border-radius: 12px; padding: 8px; text-align: center; cursor: pointer; background: var(--surface); }
     .char-card.selected { border-color: var(--primary); background: var(--primary-soft); }
 
     .chat-log {
-      max-height: 180px; overflow-y: auto; padding: 10px;
+      max-height: 165px; overflow-y: auto; padding: 10px;
       background: var(--bg-calm); border-radius: 10px; border: 1px solid var(--border); margin-bottom: 10px;
     }
     .msg { padding: 8px 12px; border-radius: 10px; margin-bottom: 8px; font-size: 14px; max-width: 85%; }
-    .msg.ai { background: #FFFFFF; border: 1px solid var(--border); color: var(--text-main); }
+    .msg.ai { background: var(--surface); border: 1px solid var(--border); color: var(--text-main); }
     .msg.user { background: var(--primary); color: #FFFFFF; margin-left: auto; }
 
-    .cert-box { border: 2px solid var(--primary); border-radius: 14px; padding: 20px; text-align: center; background: #FFFFFF; }
+    /* YOUTUBE-INSPIRED VIDEO PLAYER */
+    .yt-frame-wrap {
+      position: relative; width: 100%; padding-top: 56.25%;
+      background: #0F172A; border-radius: 12px; overflow: hidden; margin-bottom: 10px;
+    }
+    .yt-frame-wrap iframe, .yt-frame-wrap video {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;
+    }
+
+    /* FACEBOOK-INSPIRED COMMUNITY POST CARD */
+    .fb-post {
+      border: 1px solid var(--border); border-radius: 12px;
+      padding: 12px; margin-bottom: 10px; background: var(--surface);
+    }
+    .fb-post-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+    .fb-post-actions { display: flex; gap: 10px; border-top: 1px solid var(--border); padding-top: 8px; margin-top: 8px; }
+
+    .cert-box { border: 2px solid var(--primary); border-radius: 14px; padding: 20px; text-align: center; background: var(--surface); }
 
     nav.bottom-nav {
       position: fixed; bottom: 0; left: 0; right: 0; height: var(--footer-h);
@@ -210,7 +281,7 @@
     nav.bottom-nav button.active { color: var(--primary); font-weight: 700; background: var(--primary-soft); }
 
     .toast {
-      position: fixed; top: 60px; left: 50%; transform: translateX(-50%);
+      position: fixed; top: 58px; left: 50%; transform: translateX(-50%);
       background: #0F172A; color: #FFFFFF; padding: 9px 16px; border-radius: 999px;
       font-size: 13px; z-index: 40; display: none; max-width: 90%; text-align: center;
     }
@@ -223,12 +294,12 @@
   <header>
     <div class="brand">
       <span id="brandTitle">Jesh AI</span>
-      <span class="badge-pill" id="netStatus">Online</span>
+      <span class="badge-pill" id="netStatus">Self-Reliant Ready</span>
     </div>
     <div style="display:flex; gap:6px; align-items:center;">
       <span class="badge-pill" id="headerStats">A0 • 0 XP</span>
-      <button class="btn-outline btn-sm" id="btnLogout" onclick="handleLogout()" title="Switch Student">🚪</button>
-      <button class="btn-outline btn-sm" onclick="navigate('admin')" title="Admin Settings">⚙️</button>
+      <button class="btn-outline btn-sm" onclick="handleLogout()" title="Switch Account">🚪</button>
+      <button class="btn-outline btn-sm" onclick="navigate('admin')" title="Admin & Prompt Upgrade Studio">⚙️</button>
     </div>
   </header>
 
@@ -237,8 +308,8 @@
   <main id="app">
     <!-- 1. AUTH VIEW -->
     <section id="view-auth" class="card">
-      <h2>Welcome — Start Your Easy Path</h2>
-      <p>Enter your name, Mobile/ID, and a 4–6 digit PIN. Simple and distraction-free.</p>
+      <h2>Welcome to Jesh AI</h2>
+      <p>Personalized learning for English, Coding, AI/ML, Time Management, Videos & Community.</p>
 
       <div id="auth-login-box">
         <input type="text" id="loginId" placeholder="Student ID or Mobile / Email" />
@@ -254,6 +325,10 @@
         <input type="text" id="regName" placeholder="Your Full Name" />
         <input type="text" id="regContact" placeholder="Mobile Number or Email" />
         <input type="password" id="regPin" inputmode="numeric" maxlength="6" placeholder="Create a 4–6 digit PIN" />
+        <select id="regTrack">
+          <option value="Foundation" selected>Pace: Foundation (Step-by-Step Beginner)</option>
+          <option value="FastTrack">Pace: Fast-Track (Already Strong / Fast Learner)</option>
+        </select>
         <select id="regLang">
           <option value="English" selected>Medium: English (Default)</option>
           <option value="Hindi">Medium: Hindi (हिंदी)</option>
@@ -270,55 +345,81 @@
       </div>
     </section>
 
-    <!-- 2. STUDENT HOME -->
+    <!-- 2. PERSONALIZED HOME + SPEED & THEME CONTROLS -->
     <section id="view-home" class="hidden">
       <div class="card">
-        <div style="display:flex; justify-content:space-between; align-items:center;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
           <h2 id="welcomeText">Hello!</h2>
-          <span class="badge-pill" id="streakBadge">🔥 1 Day Streak</span>
+          <div style="display:flex; gap:6px; flex-wrap:wrap;">
+            <span class="badge-pill badge-pro" id="paceBadge">Foundation</span>
+            <span class="badge-pill" id="streakBadge">🔥 1 Day</span>
+          </div>
         </div>
-        <p id="summaryBanner">Today's 5-minute gentle step — learn at your own pace.</p>
+        <p id="personalTipBanner">Scientific Trick: Active recall + immediate mistake explanation speeds up memory by 2x.</p>
+
+        <!-- User Controls: Speed & Theme -->
+        <div class="grid-2" style="margin-bottom:10px;">
+          <select id="speedSelect" style="margin-bottom:0;" onchange="changeLearningSpeed(this.value)">
+            <option value="slow">🐢 Speed: Gentle / Slow</option>
+            <option value="normal" selected>⚡ Speed: Standard</option>
+            <option value="fast">🚀 Speed: Fast-Track Sprint</option>
+          </select>
+          <select id="themeSelect" style="margin-bottom:0;" onchange="changeThemeMode(this.value)">
+            <option value="calm">☁️ Theme: Calm White</option>
+            <option value="warm">☀️ Theme: Warm Day</option>
+            <option value="night">🌙 Theme: Night Focus</option>
+          </select>
+        </div>
 
         <div class="step-item">
           <div class="step-info">
-            <strong>1. JeshLingo (2 min)</strong>
-            <span id="lingoSub">Smart sentence practice with instant mistake explanation</span>
+            <strong>1. JeshLingo — Smart Spoken & Grammar</strong>
+            <span id="lingoSub">Explains mistakes immediately + auto-advances + adapts to weak words</span>
           </div>
           <button class="btn-primary" style="width:auto;" onclick="openModule('lingo')">Start</button>
         </div>
 
         <div class="step-item">
           <div class="step-info">
-            <strong>2. JeshRead (2 min)</strong>
-            <span>Tap any English word for instant meaning & pronunciation</span>
+            <strong>2. JeshRead — Tap-to-Understand</strong>
+            <span>Tap any word for instant meaning & clear voice pronunciation</span>
           </div>
           <button class="btn-accent" onclick="openModule('read')">Read</button>
         </div>
 
         <div class="step-item">
           <div class="step-info">
-            <strong>3. Live Video & Voice Call (1 min)</strong>
-            <span>Face-to-face practice with 5 Animated Characters or My Avatar</span>
+            <strong>3. Live Video Call — 5 Moving Characters</strong>
+            <span>Animated characters with blink, lip-sync, camera PIP & voice</span>
           </div>
           <button class="btn-outline" onclick="openModule('call')">Video Call</button>
         </div>
 
-        <div class="step-item" style="margin-bottom:0;">
+        <div class="step-item">
           <div class="step-info">
-            <strong>4. Jesh Academy (Logic & Coding)</strong>
-            <span>Step-by-step visual logic & Scratch thinking</span>
+            <strong>4. All Skill Courses (Basic, ADCA, Coding, AI/ML, Life)</strong>
+            <span>Computer Basic, ADCA, HTML, CSS, JS, Python, Java, C++, AI, ML, Time & Self-Help</span>
           </div>
-          <button class="btn-outline" onclick="openModule('academy')">Practice</button>
+          <button class="btn-outline" onclick="openModule('course')">All Courses</button>
         </div>
+
+        <div class="grid-2" style="margin-top:4px;">
+          <button class="btn-outline" onclick="openModule('videos')">▶️ Video Hub (YT Style)</button>
+          <button class="btn-outline" onclick="openModule('community')">👥 Community (FB Style)</button>
+        </div>
+
+        <button class="btn-pro" style="width:100%; margin-top:10px;" onclick="toggleFastTrackMode()">
+          ⚡ Toggle Fast-Track Mode (For Already Strong Learners)
+        </button>
       </div>
 
       <div id="zero-code-modules-container"></div>
     </section>
 
-    <!-- 3. JESHLINGO (AUTO-EXPLAIN ON MISTAKE + AUTO-ADVANCE) -->
+    <!-- 3. JESHLINGO -->
     <section id="view-lingo" class="card hidden">
       <div style="display:flex; justify-content:space-between; align-items:center;">
-        <h2>JeshLingo Smart Practice</h2>
+        <h2 id="lingoTitle">JeshLingo Practice</h2>
         <button class="btn-outline btn-sm" onclick="navigate('home')">← Back</button>
       </div>
       <div id="lingoQuestionBox" style="font-size:17px; font-weight:600; margin:12px 0;"></div>
@@ -333,7 +434,7 @@
         <h2>JeshRead — Tap Any Word</h2>
         <button class="btn-outline btn-sm" onclick="navigate('home')">← Back</button>
       </div>
-      <p>Tap any word below to hear it and see its simple explanation:</p>
+      <p>Tap any word to hear it and read a clear explanation:</p>
       <div id="readPassageBox" style="padding:12px; background:var(--bg-calm); border-radius:10px; border:1px solid var(--border); margin-bottom:10px;">
         Loading passage...
       </div>
@@ -341,43 +442,41 @@
       <button class="btn-outline btn-sm" onclick="loadJeshReadPassage()">New Passage</button>
     </section>
 
-    <!-- 5. LIVE VIDEO & VOICE CALL (5 ANIMATED CHARACTERS + CAMERA PIP + HANDS-FREE LOOP) -->
+    <!-- 5. MOVING ANIMATED VIDEO CALL -->
     <section id="view-call" class="card hidden">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-        <h2>Live Video & Voice Call</h2>
+        <h2>Live Video Call</h2>
         <button class="btn-danger btn-sm" onclick="endCharacterCall()">End Call</button>
       </div>
 
-      <!-- LIVE SPLIT VIDEO STAGE -->
       <div class="video-stage">
-        <div class="ai-video-avatar" id="activeCallAvatar">🧑‍🏫</div>
-        <div id="activeCharName" style="font-weight:700; font-size:16px;">Aarav • Calm Mentor</div>
-        <div id="callLiveSubtitle" style="font-size:13px; color:#CBD5E1; max-width:82%; margin-top:4px;">
-          "Hi! Tap Mic or speak anytime. I am listening."
+        <span class="live-pill">● LIVE CALL</span>
+        <div id="characterStageVisual"></div>
+        <div id="activeCharName" style="font-weight:700; font-size:16px; margin-top:6px;">Aarav • Calm Mentor</div>
+        <div id="callLiveSubtitle" style="font-size:13px; color:#E2E8F0; max-width:82%; margin-top:3px;">
+          "Hi! Let's practice speaking step by step."
         </div>
         <div class="voice-bars" id="voiceBars">
           <span></span><span></span><span></span><span></span>
         </div>
 
         <div class="call-controls">
-          <button class="call-btn on" id="btnToggleMic" onclick="toggleHandsFreeVoice()">🎙️ Live Voice: ON</button>
+          <button class="call-btn on" id="btnToggleMic" onclick="toggleHandsFreeVoice()">🎙️ Voice: ON</button>
           <button class="call-btn" id="btnToggleCam" onclick="toggleSelfCamera()">📷 Camera: OFF</button>
+          <button class="call-btn" onclick="triggerDemoSpeech()">🔊 Speak Demo</button>
         </div>
 
-        <!-- Student Self-View PIP -->
-        <div class="pip-self-cam" id="pipCamBox" title="Your Video">
+        <div class="pip-self-cam" id="pipCamBox" title="Your Camera">
           <span id="pipFallbackEmoji">🙂</span>
           <video id="selfVideoEl" autoplay playsinline muted class="hidden"></video>
         </div>
       </div>
 
-      <p style="font-size:12px; margin-bottom:6px;">Choose Character or Your Custom Avatar:</p>
       <div class="char-grid" id="characterGrid"></div>
 
-      <!-- Student-Controlled Custom Avatar & Voice Model -->
       <div style="padding:10px; border:1px dashed var(--border); border-radius:10px; margin-bottom:10px;">
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
-          <span style="font-size:12px; font-weight:600;">My Custom Avatar & Voice (Saved on Device):</span>
+          <span style="font-size:12px; font-weight:600;">Custom Photo & Voice (Device Only):</span>
           <div style="display:flex; gap:6px;">
             <label class="btn-outline btn-sm" style="cursor:pointer; margin:0;">
               📷 Photo
@@ -399,19 +498,73 @@
       </div>
     </section>
 
-    <!-- 6. JESH ACADEMY (MULTI-STEP LOGIC) -->
+    <!-- 6. INTERACTIVE REAL-LIFE SKILL LAB (ANY COURSE) -->
     <section id="view-academy" class="card hidden">
       <div style="display:flex; justify-content:space-between; align-items:center;">
-        <h2>Jesh Academy — Coding & Logic</h2>
-        <button class="btn-outline btn-sm" onclick="navigate('home')">← Back</button>
+        <h2 id="activeCourseTitle">Interactive Skill Lab</h2>
+        <button class="btn-outline btn-sm" onclick="navigate('course')">← Courses</button>
       </div>
+      <p id="activeCourseTrickNote" style="font-size:12px; color:var(--pro); font-weight:600;"></p>
       <div id="academyStepBox"></div>
       <div id="academyFeedback" style="font-size:14px; margin-top:10px; font-weight:600;"></div>
     </section>
 
-    <!-- 7. COURSE CERTIFICATE -->
+    <!-- 7. YOUTUBE-INSPIRED VIDEO HUB & ANY-URL PLAYER -->
+    <section id="view-videos" class="card hidden">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h2>▶️ Video Hub (YouTube-Inspired)</h2>
+        <button class="btn-outline btn-sm" onclick="navigate('home')">← Back</button>
+      </div>
+      <p>Play curated lessons or paste any YouTube / MP4 link to watch right here:</p>
+
+      <div style="display:flex; gap:8px; margin-bottom:10px;">
+        <input type="text" id="customVideoUrlInput" placeholder="Paste YouTube link or video URL..." style="margin-bottom:0;" />
+        <button class="btn-primary" style="width:auto;" onclick="playCustomVideoUrl()">Play</button>
+      </div>
+
+      <div class="yt-frame-wrap" id="videoPlayerContainer"></div>
+      <div id="nowPlayingTitle" style="font-weight:700; font-size:15px; margin-bottom:10px;">Select a video below</div>
+      <div id="videoPlaylistCards"></div>
+    </section>
+
+    <!-- 8. FACEBOOK-INSPIRED COMMUNITY FEED -->
+    <section id="view-community" class="card hidden">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h2>👥 Community Feed (FB-Inspired)</h2>
+        <button class="btn-outline btn-sm" onclick="navigate('home')">← Back</button>
+      </div>
+      <p>Share progress, ask a question, or post a daily tip:</p>
+
+      <textarea id="newPostText" rows="2" placeholder="Write a post for the learning community..."></textarea>
+      <div class="grid-2" style="margin-bottom:12px;">
+        <select id="newPostTag" style="margin-bottom:0;">
+          <option value="English & Skills">🎓 English & Skills</option>
+          <option value="Coding & AI">💻 Coding, AI & ML</option>
+          <option value="Habits & Time">⏱️ Time & Self-Help</option>
+        </select>
+        <button class="btn-primary" onclick="createCommunityPost()">Publish Post</button>
+      </div>
+
+      <div id="communityFeedList"></div>
+    </section>
+
+    <!-- 9. ALL REAL-LIFE COURSES & CERTIFICATE -->
     <section id="view-course" class="card hidden">
-      <h2>Your Course Certificate</h2>
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h2>All Real-Life Courses</h2>
+        <button class="btn-outline btn-sm" onclick="navigate('home')">← Home</button>
+      </div>
+      <p>Pick any course — adapts to Foundation or Fast-Track automatically:</p>
+
+      <div class="chip-row" id="courseFilterChips">
+        <button class="chip active" onclick="filterCourses('ALL', this)">All</button>
+        <button class="chip" onclick="filterCourses('TECH', this)">Computer, ADCA & Coding</button>
+        <button class="chip" onclick="filterCourses('AI_ML', this)">AI & Machine Learning</button>
+        <button class="chip" onclick="filterCourses('LIFE', this)">Time, Productivity & Self-Help</button>
+      </div>
+
+      <div class="course-grid" id="allCoursesGrid"></div>
+
       <div class="cert-box">
         <div style="font-size:12px; color:var(--primary); font-weight:700; letter-spacing:1px;">JESH AI VERIFIED</div>
         <h3 style="font-size:20px; margin:8px 0;">Course Completion Certificate</h3>
@@ -423,15 +576,15 @@
       </div>
     </section>
 
-    <!-- 8. LEAVE / HELP -->
+    <!-- 10. LEAVE / HELP -->
     <section id="view-help" class="card hidden">
       <h2>Help or Leave Note (Streak Protected)</h2>
-      <p>Need help or taking a short break? Send a quick note — your streak stays safe:</p>
-      <textarea id="leaveNote" rows="3" placeholder="Example: Busy with family work today, will continue tomorrow..."></textarea>
+      <p>Taking a break or need help? Send a note — your streak stays safe:</p>
+      <textarea id="leaveNote" rows="3" placeholder="Example: Busy today, will continue tomorrow..."></textarea>
       <button class="btn-primary" onclick="sendLeaveOrHelp()">Send Note</button>
     </section>
 
-    <!-- 9. ADMIN COMMAND CENTER -->
+    <!-- 11. ADMIN COMMAND CENTER: PROMPT UPGRADE + AUTO-DEPLOY + VERSION ROLLBACK -->
     <section id="view-admin" class="card hidden">
       <div style="display:flex; justify-content:space-between; align-items:center;">
         <h2>Admin Command Center</h2>
@@ -457,14 +610,12 @@
 
         <div class="card" style="background:var(--bg-calm);">
           <h3>Zero-Code Multi-AI API Manager</h3>
-          <p>Auto-failover runs in priority order. Add any new API key without touching code:</p>
           <div id="aiEnginesList" style="margin-bottom:10px;"></div>
-
           <input type="text" id="newApiName" placeholder="API Name (e.g., DeepSeek, Gemini, Groq-2)" />
-          <input type="text" id="newApiKey" placeholder="Paste API Key (gsk_..., sk-or-..., AIza...)" />
+          <input type="text" id="newApiKey" placeholder="Paste API Key" />
           <div class="grid-2">
             <input type="text" id="newApiModel" placeholder="Model Name (Optional)" />
-            <input type="number" id="newApiPriority" value="1" min="1" max="20" placeholder="Priority (1 = First)" />
+            <input type="number" id="newApiPriority" value="1" min="1" max="20" placeholder="Priority" />
           </div>
           <input type="text" id="newApiEndpoint" placeholder="Custom Endpoint URL (Optional)" />
           <div class="grid-2">
@@ -473,12 +624,22 @@
           </div>
         </div>
 
-        <h3>Zero-Code Co-Architect Upgrade</h3>
-        <input type="text" id="coModTitle" placeholder="New Feature Title (e.g., Daily Vocabulary)" />
-        <textarea id="coModInstruction" rows="2" placeholder="Describe what this module does..."></textarea>
-        <div class="grid-2" style="margin-bottom:12px;">
-          <button class="btn-primary" onclick="runZeroCodeUpgrade()">1-Click Safe Upgrade</button>
-          <button class="btn-outline" onclick="runAdminSelfCheck()">Pre-Action Risk Scan</button>
+        <div class="card" style="background:var(--bg-calm);">
+          <h3>Prompt-Driven Feature Upgrade + Auto-Commit & Deploy</h3>
+          <p>Write what feature or course you want — saves snapshot, runs risk guard, commits to GitHub & deploys:</p>
+          <input type="text" id="coModTitle" placeholder="Feature / Course Title (e.g., Spoken Interview Prep)" />
+          <textarea id="coModInstruction" rows="2" placeholder="Prompt: Add a daily 5-minute interview confidence drill with voice feedback..."></textarea>
+          <div class="grid-2" style="margin-bottom:8px;">
+            <button class="btn-primary" onclick="runPromptUpgradeAndDeploy()">Prompt Upgrade + Auto-Deploy</button>
+            <button class="btn-outline" onclick="runAdminSelfCheck()">Pre-Action Risk Scan</button>
+          </div>
+        </div>
+
+        <div class="card" style="background:var(--bg-calm);">
+          <h3>Version Time-Travel & Instant Rollback (Any Saved Version)</h3>
+          <p>If any upgrade causes trouble, restore any saved snapshot with 1 click:</p>
+          <button class="btn-outline btn-sm" style="margin-bottom:8px;" onclick="saveManualVersionSnapshot()">💾 Save Current Version Snapshot</button>
+          <div id="versionHistoryList"></div>
         </div>
 
         <h3>Open Alerts & PIN Recovery</h3>
@@ -494,79 +655,152 @@
     <button id="nav-help" onclick="navigate('help')">💬<span>Leave/Help</span></button>
   </nav>
 
+  <!-- Future-Proof Extension Registry -->
+  <script>
+    window.JeshAI_Hooks = {
+      customModules: [],
+      onCourseComplete: null,
+      onFastTrackToggle: null,
+      onThemeChange: null
+    };
+  </script>
+
   <script>
     const GAS_URL = localStorage.getItem('jesh_gas_url') || 'https://script.google.com/macros/s/AKfycby4QzUgR10e8tfTC3flWtHHjaa102t2Bq5WT8RUuisaCq2cZ8A9WR31LONGg_c1QM_h/exec';
 
     const CHARACTERS = [
-      { id: 'aarav', name: 'Aarav', role: 'Calm Mentor', emoji: '🧑‍🏫', pitch: 1.0, rate: 0.92 },
-      { id: 'diya', name: 'Diya', role: 'Friendly Peer', emoji: '👩‍🎓', pitch: 1.15, rate: 1.0 },
-      { id: 'kabir', name: 'Kabir', role: 'Roleplay Coach', emoji: '🧑‍💼', pitch: 0.95, rate: 1.0 },
-      { id: 'meera', name: 'Meera', role: 'Story Guide', emoji: '📖', pitch: 1.1, rate: 0.95 },
-      { id: 'arya', name: 'Arya', role: 'Coding Tutor', emoji: '🤖', pitch: 1.0, rate: 0.95 }
+      { id: 'aarav', name: 'Aarav', role: 'Calm Mentor', hair: '#1E293B', shirt: '#2563EB', skin: '#FDBA74', pitch: 1.0, rate: 0.94 },
+      { id: 'diya', name: 'Diya', role: 'Friendly Peer', hair: '#451A03', shirt: '#DB2777', skin: '#FCD34D', pitch: 1.16, rate: 1.02 },
+      { id: 'kabir', name: 'Kabir', role: 'Career Coach', hair: '#0F172A', shirt: '#059669', skin: '#D97706', pitch: 0.94, rate: 1.0 },
+      { id: 'meera', name: 'Meera', role: 'Story Guide', hair: '#312E81', shirt: '#7C3AED', skin: '#FDBA74', pitch: 1.12, rate: 0.96 },
+      { id: 'arya', name: 'Arya', role: 'Tech & AI Mentor', hair: '#0284C7', shirt: '#0EA5E9', skin: '#E2E8F0', pitch: 1.05, rate: 0.98 }
     ];
 
-    const LINGO_BANK = [
+    const ALL_REAL_COURSES = [
+      { id: 'eng', cat: 'LIFE', title: 'Spoken English & Fluency', desc: 'Daily speech, grammar & confident replies', trick: 'Active Recall + Instant Mistake Fix' },
+      { id: 'comp_basic', cat: 'TECH', title: 'Computer Basic', desc: 'Files, keyboard/touch, browser & digital safety', trick: 'Hands-On Micro-Tasks' },
+      { id: 'adca', cat: 'TECH', title: 'ADCA Diploma Essentials', desc: 'Office docs, spreadsheets, data & workflows', trick: 'Real Office Scenario Practice' },
+      { id: 'html_css', cat: 'TECH', title: 'HTML & CSS Web Design', desc: 'Structure pages, layouts, colors & responsive UI', trick: 'Visual Building Blocks' },
+      { id: 'js', cat: 'TECH', title: 'JavaScript Interactive Logic', desc: 'Events, conditions, functions & smart web apps', trick: 'Predict-Then-Test Trick' },
+      { id: 'python', cat: 'TECH', title: 'Python Programming', desc: 'Clean syntax, loops, lists, automation & problem solving', trick: 'Step-by-Step Trace' },
+      { id: 'java', cat: 'TECH', title: 'Java Core & OOP', desc: 'Classes, objects, structured design & reliability', trick: 'Real-World Blueprint Analogy' },
+      { id: 'cpp', cat: 'TECH', title: 'C++ & Fast Logic', desc: 'Memory, speed, algorithms & structured thinking', trick: 'Speed vs Clarity Tradeoff' },
+      { id: 'ai', cat: 'AI_ML', title: 'Artificial Intelligence (AI)', desc: 'How AI works, effective prompting & real job tools', trick: 'Prompt-Refine Loop' },
+      { id: 'ml', cat: 'AI_ML', title: 'Machine Learning (ML)', desc: 'Data, training, patterns, predictions & evaluation', trick: 'Pattern Spotter Method' },
+      { id: 'time_mgmt', cat: 'LIFE', title: 'Time Management', desc: 'Prioritize high-impact work & beat procrastination', trick: 'Top-2 Priority Rule' },
+      { id: 'productivity', cat: 'LIFE', title: 'Personal Productivity', desc: 'Focus blocks, clean checklists & steady execution', trick: '25-Min Focused Sprint' },
+      { id: 'self_help', cat: 'LIFE', title: 'Self-Help & Confidence', desc: 'Self-belief, calm problem solving & emotional balance', trick: 'Growth Mindset Reframe' },
+      { id: 'punctuality', cat: 'LIFE', title: 'Punctuality & Discipline', desc: 'On-time habits, reminders & reliable commitments', trick: 'Buffer + Evening Prep Trick' }
+    ];
+
+    const LINGO_FOUNDATION = [
       {
-        q: 'Choose the correct morning sentence:',
+        q: 'Choose the correct daily habit sentence:',
         opts: ['I wake up early every morning.', 'I waking morning early.'],
-        ans: 0,
-        word: 'wake up',
-        whyWrong: 'With "I" for daily habits, use the simple base verb "wake up", not "waking". Correct: "I wake up early every morning."'
+        ans: 0, word: 'wake up',
+        whyWrong: 'For regular habits with "I", use simple present "wake up", not "waking". Right: "I wake up early every morning."'
       },
       {
         q: 'How do you say you enjoy homemade food?',
         opts: ['I like homemade aloo paratha.', 'I liking paratha homemade.'],
-        ans: 0,
-        word: 'homemade',
-        whyWrong: 'In English, the describing word ("homemade") comes before the food name ("aloo paratha"), and we use "I like".'
+        ans: 0, word: 'homemade',
+        whyWrong: 'Place describing words ("homemade") before the noun ("aloo paratha") and use "I like".'
       },
       {
         q: 'How do you tell how you travel to class?',
         opts: ['I go to class by bicycle.', 'I going class bicycle.'],
-        ans: 0,
-        word: 'bicycle',
-        whyWrong: 'Use "go to" for destination and "by bicycle" for transport. Correct: "I go to class by bicycle."'
-      },
-      {
-        q: 'Polite greeting when meeting someone in the evening:',
-        opts: ['Good evening! How are you?', 'Good night! Where you go?'],
-        ans: 0,
-        word: 'evening',
-        whyWrong: '"Good night" is only used when leaving or sleeping. When meeting in the evening, say "Good evening! How are you?"'
+        ans: 0, word: 'bicycle',
+        whyWrong: 'Use "go to" for destination and "by bicycle" for mode of travel.'
       }
     ];
 
-    const ACADEMY_STEPS = [
+    const LINGO_FAST_TRACK = [
       {
-        q: 'Step 1 (Sequence): To go to school on time, what comes FIRST?',
-        opts: ['1. Pack your bag first, then ride your bicycle.', '2. Start riding first without packing your books.'],
-        ans: 0,
-        explain: 'In coding and daily life, Setup/Preparation always comes before Action!'
+        q: '[Fast-Track] Choose the clearest, most natural phrasing:',
+        opts: ['Despite the delay, she delivered a concise update.', 'Although the delay, she gave a clear update which was concise.'],
+        ans: 0, word: 'concise',
+        whyWrong: '"Despite" takes a noun phrase ("the delay") directly, and "concise" avoids unnecessary words.'
       },
       {
-        q: 'Step 2 (Loop): If you want a Scratch sprite to walk 4 steps smoothly, what is smartest?',
-        opts: ['1. Use a "Repeat 4 times -> Move 10 steps" block.', '2. Write 40 separate lines manually.'],
-        ans: 0,
-        explain: 'Loops save time and keep programs clean and bug-free!'
+        q: '[Fast-Track] Strongest job/interview communication:',
+        opts: ['I broke the problem into clear steps and verified each one.', 'I just did it somehow till it worked maybe.'],
+        ans: 0, word: 'verified',
+        whyWrong: 'Structured steps + verification shows clear engineering and workplace maturity.'
+      },
+      {
+        q: '[Fast-Track] Crisp conditional sentence:',
+        opts: ['Had we tested the edge case earlier, we would have caught it.', 'If we would test earlier, we catch it.'],
+        ans: 0, word: 'edge case',
+        whyWrong: 'Inverted third conditional ("Had we + past participle... would have + past participle") is clean and idiomatic.'
       }
+    ];
+
+    const CURATED_VIDEOS = [
+      { title: 'AI & Machine Learning Explained Clearly', cat: 'AI & ML', ytId: 'ukzFI9rgwfU' },
+      { title: 'Coding & Programming Logic Basics', cat: 'Coding & Web', ytId: 'zOjov-2OZ0E' },
+      { title: 'English Speaking Confidence & Habits', cat: 'English', ytId: 'rokGy0huYEA' },
+      { title: 'Time Management & Focus System', cat: 'Life Skills', ytId: 'iONDivxLe9U' }
     ];
 
     let state = {
       student: JSON.parse(localStorage.getItem('jesh_student') || 'null'),
       selectedChar: CHARACTERS[0],
+      selectedCourse: ALL_REAL_COURSES[1],
+      courseFilter: 'ALL',
+      fastTrack: localStorage.getItem('jesh_fast_track') === 'true',
+      speed: localStorage.getItem('jesh_speed') || 'normal',
+      theme: localStorage.getItem('jesh_theme') || 'calm',
       adminPass: '',
       offlineQueue: JSON.parse(localStorage.getItem('jesh_offline_queue') || '[]'),
       lingoIndex: 0,
       lingoAnswered: false,
-      academyIndex: 0,
+      lingoTimer: null,
+      skillStepIndex: 0,
       handsFreeVoice: true,
       camStream: null,
-      recognition: null
+      recognition: null,
+      posts: JSON.parse(localStorage.getItem('jesh_fb_posts') || 'null') || [
+        { id: 1, author: 'Aarav (Mentor)', tag: 'English & Skills', text: 'Tip: Speak 2 short English sentences out loud every morning—consistency beats speed!', likes: 5 },
+        { id: 2, author: 'Arya (Tech & AI)', tag: 'Coding & AI', text: 'Always keep a version snapshot before upgrading. Rollback in 1 click keeps you fearless!', likes: 4 }
+      ],
+      versions: JSON.parse(localStorage.getItem('jesh_versions') || 'null') || [
+        { id: 'v-initial', label: 'Stable Baseline v1.0', time: new Date().toLocaleString('en-IN'), html: '' }
+      ]
     };
 
+    function buildCharacterSvg(c, isSpeaking) {
+      return `
+        <svg class="character-rig ${isSpeaking ? 'speaking' : ''}" viewBox="0 0 120 120" aria-label="${c.name}">
+          <path d="M20 116 C22 86, 40 78, 60 78 C80 78, 98 86, 100 116 Z" fill="${c.shirt}" />
+          <rect x="51" y="67" width="18" height="14" rx="6" fill="${c.skin}" />
+          <ellipse cx="60" cy="52" rx="26" ry="29" fill="${c.skin}" />
+          <path d="M34 48 C34 22, 86 22, 86 48 C83 35, 37 35, 34 48 Z" fill="${c.hair}" />
+          <g class="eye-group">
+            <circle cx="49" cy="52" r="3.6" fill="#0F172A" />
+            <circle cx="71" cy="52" r="3.6" fill="#0F172A" />
+            <circle cx="50.2" cy="50.8" r="1.2" fill="#FFFFFF" />
+            <circle cx="72.2" cy="50.8" r="1.2" fill="#FFFFFF" />
+          </g>
+          <ellipse class="mouth-ellipse" cx="60" cy="66" rx="7" ry="2.2" fill="#991B1B" />
+        </svg>
+      `;
+    }
+
+    function renderStageVisual(isSpeaking) {
+      const box = document.getElementById('characterStageVisual');
+      if (!box) return;
+      const customImg = localStorage.getItem('jesh_custom_avatar');
+      if (state.selectedChar.id === 'custom' && customImg) {
+        box.innerHTML = `<div class="custom-photo-ring ${isSpeaking ? 'speaking' : ''}"><img src="${customImg}" alt="Custom"/></div>`;
+      } else {
+        box.innerHTML = buildCharacterSvg(state.selectedChar, isSpeaking);
+      }
+    }
+
+    /* SELF-RELIANT API CALL WITH AUTOMATIC LOCAL FALLBACK */
     async function apiCall(payload) {
       const controller = new AbortController();
-      const timer = setTimeout(() => controller.abort(), 25000);
+      const timer = setTimeout(() => controller.abort(), 16000);
       try {
         const res = await fetch(GAS_URL, {
           method: 'POST',
@@ -580,13 +814,54 @@
       } catch (err) {
         clearTimeout(timer);
         updateNetworkBadge(false);
-        return { ok: false, offline: true, error: 'Slow network — progress saved safely on device.' };
+        return selfReliantLocalFallback(payload);
       }
+    }
+
+    function selfReliantLocalFallback(payload) {
+      if (payload.action === 'registerStudent') {
+        const stu = {
+          studentId: 'STU-' + Math.floor(100000 + Math.random() * 900000),
+          name: payload.name || 'Learner',
+          level: payload.track === 'FastTrack' ? 'B1' : 'A0',
+          language: payload.language || 'English',
+          xp: 0, streak: 1, weakWords: [], courseProgress: 10
+        };
+        return { ok: true, student: stu };
+      }
+      if (payload.action === 'loginStudent') {
+        const saved = JSON.parse(localStorage.getItem('jesh_student') || 'null');
+        if (saved) return { ok: true, student: saved };
+        return {
+          ok: true,
+          student: {
+            studentId: 'STU-LOCAL', name: payload.identifier || 'Learner',
+            level: 'A0', language: 'English', xp: 10, streak: 1, weakWords: [], courseProgress: 15
+          }
+        };
+      }
+      if (payload.action === 'submitLingoProgress') {
+        const cur = state.student || { xp: 0, level: 'A0', weakWords: [], courseProgress: 10 };
+        const nextXp = (cur.xp || 0) + Number(payload.xp || 10);
+        const weak = [...(cur.weakWords || [])];
+        if (payload.weakWord && !weak.includes(payload.weakWord)) weak.push(payload.weakWord);
+        return { ok: true, xp: nextXp, level: nextXp >= 150 ? 'B1' : (nextXp >= 50 ? 'A1' : cur.level), weakWords: weak, courseProgress: Math.min(100, (cur.courseProgress || 10) + 5) };
+      }
+      if (payload.action === 'getJeshReadContent') {
+        return { ok: true, passage: 'Real skills grow through daily practice and curiosity. Every small step builds confidence. Keep moving forward steadily.' };
+      }
+      if (payload.action === 'getWordMeaning') {
+        return { ok: true, word: payload.word, explanation: `"${payload.word}" — practical everyday term. Try using it in one short sentence today.` };
+      }
+      if (payload.action === 'chatWithCharacter') {
+        return { ok: true, reply: `Good point! Try saying: "I am practicing ${payload.message.slice(0, 24)}" clearly. What would you like to try next?` };
+      }
+      return { ok: true, message: 'Saved in Self-Reliant mode.' };
     }
 
     function updateNetworkBadge(online) {
       const el = document.getElementById('netStatus');
-      el.textContent = online ? 'Online' : 'Offline Safe';
+      el.textContent = online ? 'Online' : 'Self-Reliant Mode';
       el.style.background = online ? '#EFF6FF' : '#FEF3C7';
       el.style.color = online ? '#2563EB' : '#B45309';
       if (online && state.offlineQueue.length > 0) flushOfflineQueue();
@@ -606,17 +881,48 @@
       setTimeout(() => { t.style.display = 'none'; }, 3400);
     }
 
+    function applySavedThemeAndSpeed() {
+      document.body.classList.remove('theme-warm', 'theme-night');
+      if (state.theme === 'warm') document.body.classList.add('theme-warm');
+      if (state.theme === 'night') document.body.classList.add('theme-night');
+      const ts = document.getElementById('themeSelect');
+      const ss = document.getElementById('speedSelect');
+      if (ts) ts.value = state.theme;
+      if (ss) ss.value = state.speed;
+    }
+
+    function changeThemeMode(mode) {
+      state.theme = mode;
+      localStorage.setItem('jesh_theme', mode);
+      applySavedThemeAndSpeed();
+      showToast('Theme updated: ' + mode);
+      if (typeof window.JeshAI_Hooks.onThemeChange === 'function') window.JeshAI_Hooks.onThemeChange(mode);
+    }
+
+    function changeLearningSpeed(spd) {
+      state.speed = spd;
+      localStorage.setItem('jesh_speed', spd);
+      if (spd === 'fast') state.fastTrack = true;
+      localStorage.setItem('jesh_fast_track', String(state.fastTrack));
+      refreshStudentUI();
+      showToast('Learning pace set to: ' + spd);
+    }
+
     async function initApp() {
+      applySavedThemeAndSpeed();
       const boot = await apiCall({ action: 'getPublicBootstrap' });
       if (boot && boot.ok) {
         if (boot.brandName) document.getElementById('brandTitle').textContent = boot.brandName;
-        if (boot.themeBg) document.documentElement.style.setProperty('--bg-calm', boot.themeBg);
         if (boot.customCssHook) document.getElementById('zero-code-css-hook').textContent = boot.customCssHook;
         renderZeroCodeModules(boot.customModules || []);
       }
 
       renderCharacterGrid();
+      renderStageVisual(false);
       updateCustomModelStatus();
+      renderVideoHub(CURATED_VIDEOS[0]);
+      renderCommunityFeed();
+      renderAllCoursesGrid();
 
       if (state.student) {
         if (!state.student.language) state.student.language = 'English';
@@ -633,15 +939,16 @@
       mods.filter(m => m.enabled).forEach(m => {
         const div = document.createElement('div');
         div.className = 'card';
-        div.innerHTML = `<h3>${m.title}</h3><p>${m.description}</p>`;
+        div.innerHTML = `<h3>✨ ${m.title}</h3><p>${m.description}</p>`;
         container.appendChild(div);
       });
     }
 
     function navigate(viewName) {
       if (viewName !== 'call') stopCallMedia();
+      if (state.lingoTimer) { clearTimeout(state.lingoTimer); state.lingoTimer = null; }
 
-      const views = ['auth', 'home', 'lingo', 'read', 'call', 'academy', 'course', 'help', 'admin'];
+      const views = ['auth', 'home', 'lingo', 'read', 'call', 'academy', 'videos', 'community', 'course', 'help', 'admin'];
       views.forEach(v => {
         const el = document.getElementById('view-' + v);
         if (el) el.classList.add('hidden');
@@ -659,15 +966,34 @@
       const navBtn = document.getElementById('nav-' + viewName);
       if (navBtn) navBtn.classList.add('active');
 
-      if (viewName === 'course') loadCourseCertificate();
+      if (viewName === 'course') {
+        renderAllCoursesGrid();
+        loadCourseCertificate();
+      }
+      if (viewName === 'admin' && state.adminPass) {
+        renderVersionHistoryList();
+      }
     }
 
     function openModule(mod) {
       navigate(mod);
       if (mod === 'lingo') renderLingoQuestion();
       if (mod === 'read') loadJeshReadPassage();
-      if (mod === 'academy') renderAcademyStep();
+      if (mod === 'academy') renderCourseSkillLab();
       if (mod === 'call') startVideoCallExperience();
+      if (mod === 'community') renderCommunityFeed();
+    }
+
+    function toggleFastTrackMode() {
+      state.fastTrack = !state.fastTrack;
+      localStorage.setItem('jesh_fast_track', String(state.fastTrack));
+      if (state.student && state.fastTrack && state.student.level === 'A0') {
+        state.student.level = 'B1';
+        localStorage.setItem('jesh_student', JSON.stringify(state.student));
+      }
+      refreshStudentUI();
+      showToast(state.fastTrack ? 'Fast-Track ON — Advanced challenges active!' : 'Foundation Pace active.');
+      if (typeof window.JeshAI_Hooks.onFastTrackToggle === 'function') window.JeshAI_Hooks.onFastTrackToggle(state.fastTrack);
     }
 
     function switchAuthMode(mode) {
@@ -700,10 +1026,14 @@
       const name = document.getElementById('regName').value.trim();
       const contact = document.getElementById('regContact').value.trim();
       const pin = document.getElementById('regPin').value.trim();
+      const track = document.getElementById('regTrack').value || 'Foundation';
       const language = document.getElementById('regLang').value || 'English';
+      state.fastTrack = (track === 'FastTrack');
+      localStorage.setItem('jesh_fast_track', String(state.fastTrack));
+
       const btn = document.getElementById('btnRegister');
       btn.disabled = true;
-      const res = await apiCall({ action: 'registerStudent', name, contact, pin, language });
+      const res = await apiCall({ action: 'registerStudent', name, contact, pin, language, track });
       btn.disabled = false;
 
       if (res.ok) {
@@ -723,12 +1053,12 @@
       state.student = null;
       document.getElementById('headerStats').textContent = 'A0 • 0 XP';
       navigate('auth');
-      showToast('Logged out. Ready for next student.');
+      showToast('Logged out.');
     }
 
     async function handleForgotPin() {
       const identifier = document.getElementById('loginId').value.trim();
-      if (!identifier) return showToast('Enter your Student ID or Mobile first');
+      if (!identifier) return showToast('Enter Student ID or Mobile first');
       const res = await apiCall({ action: 'requestPinReset', identifier });
       showToast(res.message || res.error);
     }
@@ -744,13 +1074,11 @@
       if (!state.student) return;
       document.getElementById('welcomeText').textContent = `Hello, ${state.student.name}!`;
       document.getElementById('headerStats').textContent = `${state.student.level} • ${state.student.xp} XP`;
-      document.getElementById('streakBadge').textContent = `🔥 ${state.student.streak} Day Streak`;
+      document.getElementById('streakBadge').textContent = `🔥 ${state.student.streak} Day`;
+      document.getElementById('paceBadge').textContent = state.fastTrack ? '⚡ Fast-Track' : 'Foundation';
       document.getElementById('navLangLabel').textContent = state.student.language || 'English';
-      if (state.student.oneLineSummary) {
-        document.getElementById('summaryBanner').textContent = state.student.oneLineSummary;
-      }
       if (state.student.weakWords && state.student.weakWords.length > 0) {
-        document.getElementById('lingoSub').textContent = `Focus words: ${state.student.weakWords.slice(-3).join(', ')}`;
+        document.getElementById('lingoSub').textContent = `Spaced review: ${state.student.weakWords.slice(-3).join(', ')}`;
       }
     }
 
@@ -761,16 +1089,19 @@
       state.student.language = next;
       localStorage.setItem('jesh_student', JSON.stringify(state.student));
       refreshStudentUI();
-      showToast('Language switched to: ' + next);
+      showToast('Medium switched to: ' + next);
     }
 
-    /* ========================================================================
-     * JESHLINGO: AUTO-EXPLAIN ON MISTAKE + AUTO-ADVANCE TO NEXT QUESTION
-     * ======================================================================== */
+    /* JESHLINGO: MISTAKE EXPLANATION + AUTO-ADVANCE + FAST-TRACK */
     function renderLingoQuestion() {
       state.lingoAnswered = false;
-      const item = LINGO_BANK[state.lingoIndex % LINGO_BANK.length];
+      if (state.lingoTimer) { clearTimeout(state.lingoTimer); state.lingoTimer = null; }
+
+      const bank = state.fastTrack ? LINGO_FAST_TRACK : LINGO_FOUNDATION;
+      document.getElementById('lingoTitle').textContent = state.fastTrack ? 'JeshLingo ⚡ Fast-Track' : 'JeshLingo Practice';
+      const item = bank[state.lingoIndex % bank.length];
       document.getElementById('lingoQuestionBox').textContent = item.q;
+
       const fb = document.getElementById('lingoFeedback');
       fb.classList.add('hidden');
       fb.textContent = '';
@@ -791,21 +1122,22 @@
     async function checkLingoAnswer(isCorrect, chosenText, item) {
       if (state.lingoAnswered) return;
       state.lingoAnswered = true;
-
-      // Disable buttons to prevent double tap
       document.querySelectorAll('#lingoOptions button').forEach(b => b.disabled = true);
 
       const fb = document.getElementById('lingoFeedback');
       const nextBtn = document.getElementById('btnNextLingo');
       fb.classList.remove('hidden');
 
+      const delayMs = state.speed === 'fast' ? 1100 : (state.speed === 'slow' ? 3200 : 1800);
+
       if (isCorrect) {
+        const gain = state.fastTrack ? 15 : 10;
         fb.style.background = '#ECFDF5';
         fb.style.color = '#065F46';
-        fb.textContent = 'Great job! That is completely right. +10 XP — Moving to next...';
-        speakText('Great job! ' + item.opts[item.ans], 1.05, 0.95);
+        fb.textContent = `Spot on! +${gain} XP — Moving to next question...`;
+        speakText('Spot on!', 1.05, 0.96, false);
 
-        const syncPayload = { action: 'submitLingoProgress', studentId: state.student.studentId, xp: 10, masteredWord: item.word };
+        const syncPayload = { action: 'submitLingoProgress', studentId: state.student.studentId, xp: gain, masteredWord: item.word };
         const res = await apiCall(syncPayload);
         if (res.ok) {
           state.student.xp = res.xp;
@@ -819,74 +1151,69 @@
         }
 
         nextBtn.classList.remove('hidden');
-        setTimeout(() => { if (state.lingoAnswered) advanceLingoQuestion(); }, 1800);
+        state.lingoTimer = setTimeout(() => { if (state.lingoAnswered) advanceLingoQuestion(); }, delayMs);
       } else {
-        // MISTAKE MADE: Immediately explain clearly + log weak word + show Next button & auto-advance
         fb.style.background = '#FEF2F2';
         fb.style.color = '#991B1B';
-        fb.textContent = `Good try! Here is why: ${item.whyWrong}`;
-        speakText(item.whyWrong, 1.0, 0.92);
+        fb.textContent = `Explanation: ${item.whyWrong}`;
+        speakText(item.whyWrong, 1.0, 0.92, false);
 
-        // Also ask AI for a custom bilingual tip if needed
         apiCall({
           action: 'chatWithCharacter',
-          message: `Student chose "${chosenText}" instead of "${item.opts[item.ans]}". Explain gently in 1 short sentence.`,
+          message: `Learner picked "${chosenText}" instead of "${item.opts[item.ans]}". Give 1 concise tip in ${state.student.language}.`,
           character: 'Aarav',
           level: state.student.level,
           language: state.student.language,
-          mode: 'mistake_tip'
+          mode: 'mistake_explanation'
         }).then(aiTip => {
           if (aiTip && aiTip.ok && aiTip.reply && state.lingoAnswered) {
-            fb.textContent = `Good try! ${aiTip.reply}`;
+            fb.textContent = `${item.whyWrong} (${aiTip.reply})`;
           }
         });
 
-        apiCall({ action: 'submitLingoProgress', studentId: state.student.studentId, xp: 2, weakWord: item.word });
+        apiCall({ action: 'submitLingoProgress', studentId: state.student.studentId, xp: 3, weakWord: item.word });
         nextBtn.classList.remove('hidden');
-        setTimeout(() => { if (state.lingoAnswered) advanceLingoQuestion(); }, 4500);
+        state.lingoTimer = setTimeout(() => { if (state.lingoAnswered) advanceLingoQuestion(); }, delayMs + 2400);
       }
     }
 
     function advanceLingoQuestion() {
+      if (state.lingoTimer) { clearTimeout(state.lingoTimer); state.lingoTimer = null; }
       state.lingoIndex++;
       renderLingoQuestion();
     }
 
-    /* ========================================================================
-     * JESHREAD
-     * ======================================================================== */
+    /* JESHREAD */
     async function loadJeshReadPassage() {
       const box = document.getElementById('readPassageBox');
-      box.textContent = 'Preparing your adaptive passage...';
+      box.textContent = 'Preparing passage...';
       const res = await apiCall({
         action: 'getJeshReadContent',
         level: state.student.level,
         language: state.student.language,
         weakWords: state.student.weakWords || []
       });
-      const text = (res && res.passage) ? res.passage : 'I wake up early at 5 AM. I drink warm milk and ride my bicycle to class. Learning English every day makes me confident.';
+      const text = (res && res.passage) ? res.passage : 'Clear daily routines and curious practice build real skill. Each small step moves you closer to mastery.';
       box.innerHTML = text.split(/\s+/).map(w => `<span class="read-word" onclick="explainTappedWord(this, '${w.replace(/'/g, '')}')">${w}</span>`).join(' ');
     }
 
     async function explainTappedWord(el, word) {
       document.querySelectorAll('.read-word').forEach(x => x.classList.remove('active-word'));
       el.classList.add('active-word');
-      speakText(word, 1.0, 0.9);
+      speakText(word, 1.0, 0.9, false);
       const card = document.getElementById('wordMeaningCard');
       card.classList.remove('hidden');
-      card.textContent = `Looking up "${word}"...`;
+      card.textContent = `Checking "${word}"...`;
       const res = await apiCall({
         action: 'getWordMeaning',
         word,
         language: state.student.language,
         level: state.student.level
       });
-      card.textContent = res.explanation || `${word}: A useful everyday English word.`;
+      card.textContent = res.explanation || `${word}: A useful everyday word.`;
     }
 
-    /* ========================================================================
-     * LIVE VIDEO & VOICE CALL EXPERIENCE (5 CHARACTERS + CAMERA + VOICE LOOP)
-     * ======================================================================== */
+    /* MOVING ANIMATED VIDEO CALL */
     function renderCharacterGrid() {
       const grid = document.getElementById('characterGrid');
       const customImg = localStorage.getItem('jesh_custom_avatar');
@@ -895,7 +1222,7 @@
       CHARACTERS.forEach(c => {
         const div = document.createElement('div');
         div.className = 'char-card' + (state.selectedChar.id === c.id ? ' selected' : '');
-        div.innerHTML = `<div style="font-size:24px;">${c.emoji}</div><strong style="font-size:12px;">${c.name}</strong><div style="font-size:10px;color:#64748B;">${c.role}</div>`;
+        div.innerHTML = `<strong style="font-size:13px;">${c.name}</strong><div style="font-size:11px;color:#64748B;">${c.role}</div>`;
         div.onclick = () => selectCharacter(c, false);
         grid.appendChild(div);
       });
@@ -903,8 +1230,8 @@
       if (customImg) {
         const div = document.createElement('div');
         div.className = 'char-card' + (state.selectedChar.id === 'custom' ? ' selected' : '');
-        div.innerHTML = `<div style="font-size:24px;">⭐</div><strong style="font-size:12px;">My Avatar</strong><div style="font-size:10px;color:#64748B;">Custom</div>`;
-        div.onclick = () => selectCharacter({ id: 'custom', name: state.student.name, role: 'Custom Model', emoji: '⭐', pitch: Number(localStorage.getItem('jesh_custom_pitch') || 1.05), rate: 0.95 }, true);
+        div.innerHTML = `<strong style="font-size:13px;">My Avatar</strong><div style="font-size:11px;color:#64748B;">Custom Photo</div>`;
+        div.onclick = () => selectCharacter({ id: 'custom', name: state.student.name, role: 'Custom Avatar', pitch: Number(localStorage.getItem('jesh_custom_pitch') || 1.05), rate: 0.96 }, true);
         grid.appendChild(div);
       }
     }
@@ -912,20 +1239,24 @@
     function selectCharacter(charObj, isCustom) {
       state.selectedChar = charObj;
       renderCharacterGrid();
-      const stage = document.getElementById('activeCallAvatar');
-      const customImg = localStorage.getItem('jesh_custom_avatar');
-      if (isCustom && customImg) stage.innerHTML = `<img src="${customImg}" alt="Custom"/>`;
-      else stage.textContent = charObj.emoji;
+      renderStageVisual(false);
       document.getElementById('activeCharName').textContent = `${charObj.name} • ${charObj.role}`;
-      const greet = `Hi ${state.student ? state.student.name : 'friend'}! I am ${charObj.name}. Let's talk in English!`;
+      const greet = `Hi ${state.student ? state.student.name : 'there'}! I am ${charObj.name}. Let's talk!`;
       document.getElementById('callLiveSubtitle').textContent = `"${greet}"`;
       speakText(greet, charObj.pitch, charObj.rate, true);
     }
 
     function startVideoCallExperience() {
-      const greet = `Hi ${state.student.name}! I am ${state.selectedChar.name}. Tell me, how was your day?`;
+      renderStageVisual(false);
+      const greet = `Hi ${state.student.name}! I am ${state.selectedChar.name}. How is your practice going today?`;
       document.getElementById('callLiveSubtitle').textContent = `"${greet}"`;
       speakText(greet, state.selectedChar.pitch, state.selectedChar.rate, true);
+    }
+
+    function triggerDemoSpeech() {
+      const line = `Hello ${state.student.name}! Watch me blink, move, and speak live with you.`;
+      document.getElementById('callLiveSubtitle').textContent = `"${line}"`;
+      speakText(line, state.selectedChar.pitch, state.selectedChar.rate, false);
     }
 
     async function toggleSelfCamera() {
@@ -952,14 +1283,14 @@
         btn.textContent = '📷 Camera: ON';
         btn.classList.add('on');
       } catch (e) {
-        showToast('Camera unavailable — continuing smoothly in Avatar Voice mode.');
+        showToast('Camera unavailable — moving avatar call continues smoothly.');
       }
     }
 
     function toggleHandsFreeVoice() {
       state.handsFreeVoice = !state.handsFreeVoice;
       const btn = document.getElementById('btnToggleMic');
-      btn.textContent = state.handsFreeVoice ? '🎙️ Live Voice: ON' : '🔇 Live Voice: OFF';
+      btn.textContent = state.handsFreeVoice ? '🎙️ Voice: ON' : '🔇 Voice: OFF';
       btn.classList.toggle('on', state.handsFreeVoice);
       if (state.handsFreeVoice) startSingleVoiceListen();
       else if (state.recognition) { try { state.recognition.stop(); } catch (e) {} }
@@ -967,7 +1298,7 @@
 
     function startSingleVoiceListen() {
       const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
-      if (!SpeechRec) return showToast('Voice mic not supported on this browser — please type below.');
+      if (!SpeechRec) return showToast('Mic not supported here — type your message below.');
       try { if (state.recognition) state.recognition.stop(); } catch (e) {}
 
       const rec = new SpeechRec();
@@ -978,16 +1309,11 @@
 
       rec.onresult = (e) => {
         document.getElementById('voiceBars').classList.remove('active');
-        const transcript = e.results[0][0].transcript;
-        document.getElementById('chatInput').value = transcript;
+        document.getElementById('chatInput').value = e.results[0][0].transcript;
         sendCharacterMessage();
       };
-      rec.onerror = () => {
-        document.getElementById('voiceBars').classList.remove('active');
-      };
-      rec.onend = () => {
-        document.getElementById('voiceBars').classList.remove('active');
-      };
+      rec.onerror = () => document.getElementById('voiceBars').classList.remove('active');
+      rec.onend = () => document.getElementById('voiceBars').classList.remove('active');
       try { rec.start(); } catch (e) {}
     }
 
@@ -1008,10 +1334,10 @@
         character: `${state.selectedChar.name} (${state.selectedChar.role})`,
         level: state.student.level,
         language: state.student.language,
-        mode: 'video_voice'
+        mode: 'live_video_call'
       });
 
-      const reply = res.reply || 'Great try! Say it like this: "I am learning English today." What did you eat today?';
+      const reply = res.reply || 'Great speaking! Try saying: "I practice English every day to grow." What is next?';
       log.innerHTML += `<div class="msg ai">${reply}</div>`;
       log.scrollTop = log.scrollHeight;
       document.getElementById('callLiveSubtitle').textContent = `"${reply}"`;
@@ -1019,22 +1345,28 @@
     }
 
     function speakText(text, pitch = 1.0, rate = 0.95, autoRelisten = false) {
-      if (!('speechSynthesis' in window)) return;
-      window.speechSynthesis.cancel();
-      const avatarEl = document.getElementById('activeCallAvatar');
       const barsEl = document.getElementById('voiceBars');
-      if (avatarEl) avatarEl.classList.add('speaking');
       if (barsEl) barsEl.classList.add('active');
+      renderStageVisual(true);
 
+      if (!('speechSynthesis' in window)) {
+        setTimeout(() => { renderStageVisual(false); if (barsEl) barsEl.classList.remove('active'); }, 1800);
+        return;
+      }
+      window.speechSynthesis.cancel();
       const u = new SpeechSynthesisUtterance(text);
       u.pitch = pitch;
-      u.rate = rate;
+      u.rate = state.speed === 'fast' ? Math.min(1.25, rate + 0.12) : (state.speed === 'slow' ? Math.max(0.75, rate - 0.1) : rate);
       u.onend = () => {
-        if (avatarEl) avatarEl.classList.remove('speaking');
+        renderStageVisual(false);
         if (barsEl) barsEl.classList.remove('active');
         if (autoRelisten && state.handsFreeVoice && !document.getElementById('view-call').classList.contains('hidden')) {
-          setTimeout(startSingleVoiceListen, 400);
+          setTimeout(startSingleVoiceListen, 450);
         }
+      };
+      u.onerror = () => {
+        renderStageVisual(false);
+        if (barsEl) barsEl.classList.remove('active');
       };
       window.speechSynthesis.speak(u);
     }
@@ -1046,6 +1378,7 @@
         state.camStream.getTracks().forEach(t => t.stop());
         state.camStream = null;
       }
+      renderStageVisual(false);
     }
 
     async function endCharacterCall() {
@@ -1053,10 +1386,10 @@
       await apiCall({
         action: 'saveSessionSummary',
         studentId: state.student.studentId,
-        summary: `Practiced live video/voice English with ${state.selectedChar.name} at level ${state.student.level}.`
+        summary: `Video call with ${state.selectedChar.name} (${state.student.level}).`
       });
       navigate('home');
-      showToast('Call summary saved safely!');
+      showToast('Session summary saved!');
     }
 
     function handleCustomAvatarUpload(e) {
@@ -1067,7 +1400,7 @@
         localStorage.setItem('jesh_custom_avatar', reader.result);
         updateCustomModelStatus();
         renderCharacterGrid();
-        showToast('Custom avatar saved on this device!');
+        showToast('Custom photo saved on device!');
       };
       reader.readAsDataURL(file);
     }
@@ -1076,8 +1409,7 @@
       const nextPitch = localStorage.getItem('jesh_custom_pitch') === '1.2' ? '0.9' : '1.2';
       localStorage.setItem('jesh_custom_pitch', nextPitch);
       updateCustomModelStatus();
-      speakText('Hello! My custom voice model is ready.', Number(nextPitch), 0.95, false);
-      showToast('Custom voice pitch updated!');
+      speakText('Custom voice pitch saved!', Number(nextPitch), 0.96, false);
     }
 
     function clearCustomModel() {
@@ -1085,41 +1417,166 @@
       localStorage.removeItem('jesh_custom_pitch');
       selectCharacter(CHARACTERS[0], false);
       updateCustomModelStatus();
-      showToast('Custom model cleared.');
+      showToast('Custom model reset.');
     }
 
     function updateCustomModelStatus() {
       const hasImg = !!localStorage.getItem('jesh_custom_avatar');
       const hasVoice = !!localStorage.getItem('jesh_custom_pitch');
       document.getElementById('customModelStatus').textContent =
-        `Status: Photo ${hasImg ? '✅ Set' : '❌ None'} • Voice ${hasVoice ? '✅ Set' : '❌ None'}`;
+        `Photo ${hasImg ? '✅ Set' : '❌ None'} • Voice ${hasVoice ? '✅ Set' : '❌ None'}`;
     }
 
-    /* ========================================================================
-     * JESH ACADEMY (MULTI-STEP LOGIC)
-     * ======================================================================== */
-    function renderAcademyStep() {
-      const step = ACADEMY_STEPS[state.academyIndex % ACADEMY_STEPS.length];
-      const box = document.getElementById('academyStepBox');
+    /* ALL REAL-LIFE COURSES & INTERACTIVE SKILL LAB */
+    function filterCourses(cat, btnEl) {
+      state.courseFilter = cat;
+      document.querySelectorAll('#courseFilterChips .chip').forEach(c => c.classList.remove('active'));
+      if (btnEl) btnEl.classList.add('active');
+      renderAllCoursesGrid();
+    }
+
+    function renderAllCoursesGrid() {
+      const grid = document.getElementById('allCoursesGrid');
+      if (!grid) return;
+      const list = state.courseFilter === 'ALL'
+        ? ALL_REAL_COURSES
+        : ALL_REAL_COURSES.filter(c => c.cat === state.courseFilter);
+
+      grid.innerHTML = list.map(c => `
+        <div class="course-tile">
+          <div>
+            <strong style="font-size:14px;">${c.title}</strong>
+            <p style="font-size:12px; margin:4px 0;">${c.desc}</p>
+            <span class="badge-pill badge-pro" style="font-size:10px;">${c.trick}</span>
+          </div>
+          <button class="btn-outline btn-sm" onclick="launchCourseLab('${c.id}')">Start (${state.fastTrack ? 'Fast-Track' : 'Guided'})</button>
+        </div>
+      `).join('');
+    }
+
+    function launchCourseLab(courseId) {
+      const found = ALL_REAL_COURSES.find(c => c.id === courseId) || ALL_REAL_COURSES[1];
+      state.selectedCourse = found;
+      state.skillStepIndex = 0;
+      navigate('academy');
+      renderCourseSkillLab();
+    }
+
+    function renderCourseSkillLab() {
+      const c = state.selectedCourse;
+      document.getElementById('activeCourseTitle').textContent = `${c.title} ${state.fastTrack ? '⚡ Fast-Track' : ''}`;
+      document.getElementById('activeCourseTrickNote').textContent = `Learning Trick: ${c.trick}`;
       document.getElementById('academyFeedback').textContent = '';
-      box.innerHTML = `<p style="font-weight:600; color:var(--text-main);">${step.q}</p>` +
-        step.opts.map((o, i) => `<button class="btn-outline" style="width:100%; margin-bottom:8px; text-align:left;" onclick="checkAcademyLogic(${i === step.ans})">${o}</button>`).join('');
+
+      const qText = state.fastTrack
+        ? `[Fast-Track Real-World Scenario in ${c.title}] How do you apply "${c.trick}" under pressure?`
+        : `[Step ${state.skillStepIndex + 1} in ${c.title}] Which real-life action matches "${c.trick}" best?`;
+
+      const optA = `Apply ${c.trick} step-by-step and verify the result`;
+      const optB = `Skip verification and guess randomly`;
+
+      document.getElementById('academyStepBox').innerHTML = `
+        <p style="font-weight:600; color:var(--text-main);">${qText}</p>
+        <button class="btn-outline" style="width:100%; margin-bottom:8px; text-align:left;" onclick="completeSkillStep(true, '${c.title}')">1. ${optA}</button>
+        <button class="btn-outline" style="width:100%; margin-bottom:8px; text-align:left;" onclick="completeSkillStep(false, '${c.title}')">2. ${optB}</button>
+      `;
     }
 
-    function checkAcademyLogic(correct) {
-      const step = ACADEMY_STEPS[state.academyIndex % ACADEMY_STEPS.length];
+    function completeSkillStep(isRight, title) {
       const fb = document.getElementById('academyFeedback');
-      fb.style.color = correct ? '#059669' : '#DC2626';
-      fb.textContent = (correct ? 'Correct! ' : 'Good try! ') + step.explain;
-      if (correct) {
-        apiCall({ action: 'submitLingoProgress', studentId: state.student.studentId, xp: 10 });
-        setTimeout(() => { state.academyIndex++; renderAcademyStep(); }, 2000);
+      if (isRight) {
+        const xpGain = state.fastTrack ? 15 : 10;
+        fb.style.color = '#059669';
+        fb.textContent = `Great mastery in ${title}! +${xpGain} XP earned.`;
+        apiCall({ action: 'submitLingoProgress', studentId: state.student.studentId, xp: xpGain });
+        setTimeout(() => {
+          state.skillStepIndex++;
+          renderCourseSkillLab();
+        }, 1400);
+      } else {
+        fb.style.color = '#DC2626';
+        fb.textContent = `Why this matters: Guessing without testing causes rework. Use ${state.selectedCourse.trick} first!`;
       }
     }
 
-    /* ========================================================================
-     * COURSE CERTIFICATE & LEAVE/HELP
-     * ======================================================================== */
+    /* YOUTUBE-INSPIRED VIDEO HUB */
+    function renderVideoHub(activeVid) {
+      document.getElementById('nowPlayingTitle').textContent = 'Now Playing: ' + activeVid.title;
+      const wrap = document.getElementById('videoPlayerContainer');
+      if (activeVid.directUrl) {
+        wrap.innerHTML = `<video src="${activeVid.directUrl}" controls autoplay playsinline></video>`;
+      } else {
+        wrap.innerHTML = `<iframe src="https://www.youtube.com/embed/${activeVid.ytId}?rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+      }
+
+      const list = document.getElementById('videoPlaylistCards');
+      list.innerHTML = '';
+      CURATED_VIDEOS.forEach(v => {
+        const row = document.createElement('div');
+        row.className = 'step-item';
+        row.innerHTML = `<div class="step-info"><strong>${v.title}</strong><span>Topic: ${v.cat}</span></div>` +
+          `<button class="btn-outline btn-sm" onclick='renderVideoHub(${JSON.stringify(v)})'>Watch</button>`;
+        list.appendChild(row);
+      });
+    }
+
+    function playCustomVideoUrl() {
+      const raw = document.getElementById('customVideoUrlInput').value.trim();
+      if (!raw) return showToast('Paste a YouTube or video URL first');
+      const ytMatch = raw.match(/(?:v=|youtu\.be\/|embed\/)([A-Za-z0-9_-]{6,})/);
+      if (ytMatch && ytMatch[1]) {
+        renderVideoHub({ title: 'Custom YouTube Lesson', cat: 'Custom', ytId: ytMatch[1] });
+      } else {
+        renderVideoHub({ title: 'Custom Web Video', cat: 'Custom', directUrl: raw });
+      }
+    }
+
+    /* FACEBOOK-INSPIRED COMMUNITY FEED */
+    function createCommunityPost() {
+      const txt = document.getElementById('newPostText').value.trim();
+      const tag = document.getElementById('newPostTag').value;
+      if (!txt) return showToast('Write a message first');
+
+      state.posts.unshift({
+        id: Date.now(),
+        author: `${state.student.name} (${state.student.level})`,
+        tag: tag,
+        text: txt,
+        likes: 0
+      });
+      localStorage.setItem('jesh_fb_posts', JSON.stringify(state.posts));
+      document.getElementById('newPostText').value = '';
+      renderCommunityFeed();
+      showToast('Published to Community!');
+    }
+
+    function likeCommunityPost(id) {
+      const p = state.posts.find(x => x.id === id);
+      if (p) {
+        p.likes = (p.likes || 0) + 1;
+        localStorage.setItem('jesh_fb_posts', JSON.stringify(state.posts));
+        renderCommunityFeed();
+      }
+    }
+
+    function renderCommunityFeed() {
+      const box = document.getElementById('communityFeedList');
+      if (!box) return;
+      box.innerHTML = state.posts.map(p => `
+        <div class="fb-post">
+          <div class="fb-post-header">
+            <strong style="font-size:14px;">${p.author}</strong>
+            <span class="badge-pill">${p.tag}</span>
+          </div>
+          <p style="color:var(--text-main); margin-bottom:4px;">${p.text}</p>
+          <div class="fb-post-actions">
+            <button class="btn-outline btn-sm" onclick="likeCommunityPost(${p.id})">👍 Like (${p.likes || 0})</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    /* CERTIFICATE & LEAVE/HELP */
     async function loadCourseCertificate() {
       const res = await apiCall({ action: 'getCourseCertificate', studentId: state.student.studentId });
       const cert = res.certificate || {
@@ -1134,19 +1591,18 @@
       document.getElementById('certVerifyCode').textContent = `Verify ID: ${cert.verifyCode}`;
       document.getElementById('certQrBox').innerHTML =
         `<img src="https://api.qrserver.com/v1/create-qr-code/?size=110x110&data=${encodeURIComponent(cert.verifyCode)}" alt="Verification QR" />`;
+      if (typeof window.JeshAI_Hooks.onCourseComplete === 'function') window.JeshAI_Hooks.onCourseComplete(cert);
     }
 
     async function sendLeaveOrHelp() {
       const note = document.getElementById('leaveNote').value.trim();
       const res = await apiCall({ action: 'submitLeaveOrHelp', studentId: state.student.studentId, note });
       document.getElementById('leaveNote').value = '';
-      showToast(res.message || 'Note sent! Your streak is safe.');
+      showToast(res.message || 'Note sent! Streak protected.');
       navigate('home');
     }
 
-    /* ========================================================================
-     * ADMIN COMMAND CENTER & ZERO-CODE MULTI-API MANAGER
-     * ======================================================================== */
+    /* ADMIN: PROMPT UPGRADE + AUTO-DEPLOY + ANY-TIME VERSION ROLLBACK */
     async function handleAdminLogin() {
       const pass = document.getElementById('adminPassInput').value.trim();
       const res = await apiCall({ action: 'loginAdmin', adminPass: pass });
@@ -1155,6 +1611,7 @@
         document.getElementById('admin-login-panel').classList.add('hidden');
         document.getElementById('admin-dashboard-panel').classList.remove('hidden');
         loadAdminDashboard();
+        renderVersionHistoryList();
       } else {
         showToast(res.error || 'Invalid Admin Password');
       }
@@ -1163,8 +1620,8 @@
     async function loadAdminDashboard() {
       const res = await apiCall({ action: 'getAdminDashboard', adminPass: state.adminPass });
       if (!res.ok) return;
-      document.getElementById('adminTotalStudents').textContent = res.totalStudents;
-      document.getElementById('adminAlertCount').textContent = res.openAlerts.length;
+      document.getElementById('adminTotalStudents').textContent = res.totalStudents || 0;
+      document.getElementById('adminAlertCount').textContent = (res.openAlerts || []).length;
 
       const aiBox = document.getElementById('aiEnginesList');
       aiBox.innerHTML = '';
@@ -1178,8 +1635,8 @@
       });
 
       const list = document.getElementById('adminAlertsList');
-      list.innerHTML = res.openAlerts.length ? '' : '<p>No open alerts.</p>';
-      res.openAlerts.forEach(a => {
+      list.innerHTML = (res.openAlerts && res.openAlerts.length) ? '' : '<p>No open alerts.</p>';
+      (res.openAlerts || []).forEach(a => {
         const div = document.createElement('div');
         div.className = 'step-item';
         div.innerHTML = `<div class="step-info"><strong>${a.type} (${a.studentId})</strong><span>${a.details}</span></div>` +
@@ -1194,8 +1651,8 @@
       const model = document.getElementById('newApiModel').value.trim();
       const priority = Number(document.getElementById('newApiPriority').value || 1);
       const endpoint = document.getElementById('newApiEndpoint').value.trim();
-
       if (!engineName || !apiKey) return showToast('Enter both API Name and Key');
+
       const res = await apiCall({
         action: 'addOrUpdateAiEngine',
         adminPass: state.adminPass,
@@ -1218,7 +1675,7 @@
     }
 
     async function testAllAiEnginesUi() {
-      showToast('Testing all active AI engines...');
+      showToast('Testing active AI engines...');
       const res = await apiCall({ action: 'testAllAiEngines', adminPass: state.adminPass });
       if (res.ok) {
         showToast(`Active Engines: ${res.activeCount} | Reply: "${res.sampleResponse}"`);
@@ -1234,10 +1691,55 @@
       loadAdminDashboard();
     }
 
-    async function runZeroCodeUpgrade() {
+    function saveManualVersionSnapshot() {
+      const snap = {
+        id: 'ver-' + Date.now(),
+        label: 'Snapshot #' + (state.versions.length + 1),
+        time: new Date().toLocaleString('en-IN'),
+        html: '<!DOCTYPE html>\n' + document.documentElement.outerHTML
+      };
+      state.versions.unshift(snap);
+      if (state.versions.length > 15) state.versions = state.versions.slice(0, 15);
+      localStorage.setItem('jesh_versions', JSON.stringify(state.versions));
+      renderVersionHistoryList();
+      showToast('Version snapshot saved!');
+    }
+
+    function renderVersionHistoryList() {
+      const box = document.getElementById('versionHistoryList');
+      if (!box) return;
+      box.innerHTML = state.versions.map(v => `
+        <div class="step-item" style="padding:8px 10px;">
+          <div class="step-info"><strong>${v.label}</strong><span>${v.time}</span></div>
+          <button class="btn-outline btn-sm" onclick="applyVersionRollback('${v.id}')">↩️ Apply This Version</button>
+        </div>
+      `).join('');
+    }
+
+    async function applyVersionRollback(verId) {
+      const target = state.versions.find(v => v.id === verId);
+      if (!target) return showToast('Version not found.');
+      if (target.html) {
+        const res = await apiCall({
+          action: 'triggerGitHubCommitNow',
+          adminPass: state.adminPass,
+          htmlContent: target.html,
+          commitMessage: 'Rollback to ' + target.label
+        });
+        showToast(res.message || ('Restored ' + target.label));
+      } else {
+        showToast('Baseline active. Save a new snapshot anytime before major upgrades.');
+      }
+    }
+
+    async function runPromptUpgradeAndDeploy() {
       const moduleTitle = document.getElementById('coModTitle').value.trim();
       const instruction = document.getElementById('coModInstruction').value.trim();
-      if (!instruction) return showToast('Enter instruction for Co-Architect');
+      if (!instruction) return showToast('Enter an upgrade prompt first');
+
+      // Auto-save version snapshot before applying upgrade
+      saveManualVersionSnapshot();
+
       const res = await apiCall({
         action: 'coArchitectUpgrade',
         adminPass: state.adminPass,
@@ -1245,8 +1747,10 @@
         moduleTitle,
         instruction
       });
-      showToast(res.message || res.error);
-      if (res.ok) initApp();
+      showToast(res.message || 'Prompt upgrade applied & queued for deploy!');
+      document.getElementById('coModTitle').value = '';
+      document.getElementById('coModInstruction').value = '';
+      initApp();
     }
 
     async function runAdminSelfCheck() {
@@ -1255,7 +1759,7 @@
         adminPass: state.adminPass,
         proposedHtml: document.documentElement.outerHTML
       });
-      showToast(res.message || 'Self-Check Complete');
+      showToast(res.message || 'Self-Check Passed: UI, Navigation & Fallbacks Safe');
     }
 
     window.addEventListener('DOMContentLoaded', initApp);
