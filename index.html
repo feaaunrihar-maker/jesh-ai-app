@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Jesh AI — Warm Live Video Call, Learning & Skill Ecosystem</title>
+  <title>Jesh AI — Self-Reliant Learning, Video Call, Courses & AI Chat</title>
   <style>
     :root {
       --bg-calm: #F8FAFC;
@@ -145,7 +145,6 @@
     .step-info strong { display: block; font-size: 15px; color: var(--text-main); }
     .step-info span { font-size: 12px; color: var(--text-muted); }
 
-    /* COLORFUL DUOLINGO-INSPIRED JESHLINGO */
     .lingo-header-bar { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
     .progress-track { flex: 1; height: 12px; background: var(--border); border-radius: 999px; overflow: hidden; }
     .progress-fill {
@@ -175,7 +174,6 @@
       font-weight: 700; font-size: 13px; flex-shrink: 0;
     }
 
-    /* PURE AI CHAT */
     .ai-chat-stream {
       max-height: 340px; overflow-y: auto; padding: 12px;
       background: var(--bg-calm); border: 1.5px solid var(--border);
@@ -190,7 +188,6 @@
     .ai-bubble.me { background: var(--primary); color: #FFFFFF; margin-left: auto; }
     .ai-bubble-tools { display: flex; gap: 10px; margin-top: 6px; font-size: 11px; color: var(--text-muted); }
 
-    /* GOOGLE READ-ALONG INSPIRED JESHREAD */
     .read-along-banner {
       display: flex; align-items: center; gap: 12px;
       background: linear-gradient(135deg, #EFF6FF 0%, #ECFDF5 100%);
@@ -227,7 +224,6 @@
     }
     .chip.active { background: var(--primary); color: #FFFFFF; border-color: var(--primary); }
 
-    /* MOVING ANIMATED VIDEO CALL STAGE */
     .video-stage {
       position: relative;
       background: linear-gradient(180deg, #0F172A 0%, #1E293B 100%);
@@ -366,7 +362,7 @@
   <main id="app">
     <!-- 1. AUTH VIEW -->
     <section id="view-auth" class="card">
-      <h2>Welcome to Jesh AI <span class="hi-sub">स्वागत है — आसान शुरुआत करें</span></h2>
+      <h2>Welcome to Jesh AI <span class="hi-sub">स्वागत है — हर छात्र का अलग खाता व सुरक्षित प्रोग्रेस</span></h2>
       <p>Friendly tutors, live conversation, real-life job courses & smart AI assistant.</p>
 
       <div id="auth-login-box">
@@ -384,7 +380,7 @@
         <input type="text" id="regContact" placeholder="Mobile Number or Email / मोबाइल नंबर" />
         <input type="password" id="regPin" inputmode="numeric" maxlength="6" placeholder="Create 4–6 digit PIN / नया PIN बनाएं" />
         <select id="regTrack">
-          <option value="AutoCheck" selected>Start: Quick 5-Step Level Finder (सही स्तर पहचानें)</option>
+          <option value="AutoCheck" selected>Start: Quick 5-Step Comfort Finder (सही स्तर पहचानें)</option>
           <option value="Foundation">Start: 🌱 Starter Step-by-Step (बिल्कुल शुरू से)</option>
           <option value="FastTrack">Start: 🚀 Achiever Fast-Track (जो पहले से तेज़ हैं)</option>
         </select>
@@ -414,7 +410,7 @@
             <span class="badge-pill badge-green" id="streakBadge">🔥 1 Day</span>
           </div>
         </div>
-        <p id="personalTipBanner">Gradual, friendly progress — levels upgrade step-by-step after steady practice.</p>
+        <p id="personalTipBanner">Your chat & progress stay separate per account. Gradual step-by-step growth.</p>
 
         <div class="grid-2" style="margin-bottom:10px;">
           <select id="speedSelect" style="margin-bottom:0;" onchange="changeLearningSpeed(this.value)">
@@ -429,20 +425,18 @@
           </select>
         </div>
 
-        <!-- PURE GENERAL-PURPOSE AI CHAT -->
         <div class="step-item" style="border-color:#C4B5FD; background:linear-gradient(135deg, #F5F3FF 0%, #EFF6FF 100%);">
           <div class="step-info">
             <strong>✨ Jesh AI Chat (Direct AI Assistant)</strong>
-            <span>Works like ChatGPT / Gemini — ask anything directly, no lectures</span>
+            <span>Personal chat per account — ask anything directly, no lectures</span>
           </div>
           <button class="btn-pro" onclick="openModule('aichat')">Open Chat</button>
         </div>
 
-        <!-- FRIENDLY TEACHER MODULES -->
         <div class="step-item" style="border-color:#BFDBFE; background:#F8FAFF;">
           <div class="step-info">
-            <strong>1. JeshLingo — Friendly English Practice</strong>
-            <span id="lingoSub">Instant load • Colorful • Gradual step-by-step level growth</span>
+            <strong>1. JeshLingo — Non-Repeating Friendly Practice</strong>
+            <span id="lingoSub">Shuffled options • Never repeats • Gradual stage-by-stage growth</span>
           </div>
           <button class="btn-primary" style="width:auto;" onclick="openModule('lingo')">Practice</button>
         </div>
@@ -478,14 +472,14 @@
 
         <div class="grid-2" style="margin-top:10px;">
           <button class="btn-outline btn-sm" onclick="openModule('placement')">🎯 Find My Comfort Level</button>
-          <button class="btn-pro btn-sm" onclick="toggleFastTrackMode()">⚡ Switch Pace (Gentle / Fast)</button>
+          <button class="btn-pro btn-sm" onclick="toggleFastTrackMode()">⚡ Switch Stage Pace</button>
         </div>
       </div>
 
       <div id="zero-code-modules-container"></div>
     </section>
 
-    <!-- PURE GENERAL-PURPOSE AI CHAT -->
+    <!-- PURE AI CHAT (PER-USER ISOLATED) -->
     <section id="view-aichat" class="card hidden">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
         <h2>✨ Jesh AI Chat</h2>
@@ -494,7 +488,7 @@
           <button class="btn-outline btn-sm" onclick="navigate('home')">← Back</button>
         </div>
       </div>
-      <p>Ask anything — coding, writing, ideas, translations, or everyday questions:</p>
+      <p>Ask anything — coding, writing, ideas, translations, or general questions:</p>
 
       <div class="chip-row">
         <button class="chip" onclick="useAiPromptChip('Write a short, polite leave application for school/class.')">📝 Write Application</button>
@@ -512,7 +506,7 @@
       </div>
     </section>
 
-    <!-- FRIENDLY LEVEL FINDER -->
+    <!-- COMFORT LEVEL FINDER -->
     <section id="view-placement" class="card hidden">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
         <h2>🎯 Find Your Comfort Level</h2>
@@ -573,7 +567,7 @@
       </div>
     </section>
 
-    <!-- 5. WARM LIVE VIDEO CALL (ACTIVE TURN-TAKING + CONVERSATION MEMORY + MOVING CHARACTER) -->
+    <!-- 5. WARM LIVE VIDEO CALL -->
     <section id="view-call" class="card hidden">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
         <h2>Live Video Call</h2>
@@ -629,7 +623,7 @@
       </div>
     </section>
 
-    <!-- 6. DEEP PRACTICAL COURSE LESSON & CASE LAB -->
+    <!-- 6. DEEP PRACTICAL COURSE LESSON -->
     <section id="view-academy" class="card hidden">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
         <h2 id="activeCourseTitle">Practical Course Lesson</h2>
@@ -720,7 +714,7 @@
       <button class="btn-primary" onclick="sendLeaveOrHelp()">Send Note / संदेश भेजें</button>
     </section>
 
-    <!-- 11. ADMIN COMMAND CENTER -->
+    <!-- 11. ADMIN COMMAND CENTER: PROMPT UPGRADE + AUTO-DEPLOY + ROLLBACK + GITHUB MCP -->
     <section id="view-admin" class="card hidden">
       <div style="display:flex; justify-content:space-between; align-items:center;">
         <h2>Admin Command Center</h2>
@@ -774,6 +768,13 @@
           <h3>Version Time-Travel & Instant Rollback</h3>
           <button class="btn-outline btn-sm" style="margin-bottom:8px;" onclick="saveManualVersionSnapshot()">💾 Save Current Version Snapshot</button>
           <div id="versionHistoryList"></div>
+        </div>
+
+        <div class="card" style="background:var(--bg-calm);">
+          <h3>GitHub MCP & Repo Reference</h3>
+          <p style="font-size:12px; margin-bottom:4px;"><strong>Repo:</strong> feaaunrihar-maker/jesh-ai-app</p>
+          <p style="font-size:12px; margin-bottom:4px;"><strong>GitMCP Docs Endpoint:</strong> https://gitmcp.io/feaaunrihar-maker/jesh-ai-app</p>
+          <p style="font-size:12px; margin-bottom:0;"><strong>Official GitHub MCP:</strong> https://api.githubcopilot.com/mcp/</p>
         </div>
 
         <h3>Open Alerts & PIN Recovery</h3>
@@ -835,17 +836,17 @@
     ];
 
     const TIERED_LINGO_BANK = [
-      { tier: 0, qEn: 'How do you greet someone politely in the morning?', qHi: 'सुबह किसी का अभिवादन कैसे करेंगे?', opts: ['Good morning!', 'Good night!', 'See you yesterday!'], ans: 0, word: 'morning', whyEn: '"Good morning!" is used when meeting in the morning.', whyHi: 'सुबह मिलने पर "Good morning!" कहते हैं।' },
-      { tier: 0, qEn: 'Complete: "My name ___ Lakshmi."', qHi: 'वाक्य पूरा करें: "मेरा नाम लक्ष्मी है।"', opts: ['is', 'are', 'am'], ans: 0, word: 'name', whyEn: 'With "My name", always use "is".', whyHi: '"My name" के साथ हमेशा "is" लगता है।' },
-      { tier: 0, qEn: 'How do you say: "मैं सुबह 5 बजे उठता/उठती हूँ"?', qHi: 'सही अंग्रेज़ी वाक्य चुनें:', opts: ['I wake up at 5 AM.', 'I waking 5 AM.', 'I wakes up in 5 AM.'], ans: 0, word: 'wake up', whyEn: 'Use "I wake up at 5 AM" for daily habits.', whyHi: 'रोज़ की आदत के लिए "I wake up" और समय से पहले "at" लगाते हैं।' },
-      { tier: 0, qEn: 'How do you say: "मुझे घर का खाना पसंद है"?', qHi: 'सही वाक्य चुनें:', opts: ['I like homemade food.', 'I liking food homemade.', 'I am like food.'], ans: 0, word: 'homemade', whyEn: 'Use "I like + food name" to share what you enjoy.', whyHi: 'पसंद बताने के लिए सीधा "I like..." बोलें।' },
-      { tier: 1, qEn: 'How do you say: "मैं साइकिल से क्लास जाता/जाती हूँ"?', qHi: 'सही वाक्य चुनें:', opts: ['I go to class by bicycle.', 'I going class bicycle.', 'I go class on bicycle.'], ans: 0, word: 'bicycle', whyEn: 'Use "go to" before a place and "by bicycle" for travel.', whyHi: 'जगह से पहले "to" और वाहन से पहले "by" लगता है।' },
-      { tier: 1, qEn: 'Polite request: "क्या आप इसे दोबारा दोहरा सकते हैं?"', qHi: 'विनम्र अनुरोध चुनें:', opts: ['Could you please repeat that?', 'Repeat again fast.', 'You repeat this now.'], ans: 0, word: 'repeat', whyEn: '"Could you please..." is polite and respectful.', whyHi: '"Could you please..." विनम्र तरीका है।' },
-      { tier: 1, qEn: 'Complete: "I practice singing ___ the evening with friends."', qHi: 'सही शब्द ("शाम को") चुनें:', opts: ['in', 'on', 'at'], ans: 0, word: 'evening', whyEn: 'Always say "in the morning" and "in the evening".', whyHi: 'सुबह या शाम के लिए "in the evening" प्रयोग होता है।' },
-      { tier: 2, qEn: 'Connect ideas: "I study daily ___ I want to speak fluently."', qHi: 'सही शब्द ("क्योंकि") चुनें:', opts: ['because', 'but', 'unless'], ans: 0, word: 'because', whyEn: '"Because" explains the reason behind your action.', whyHi: '"Because" का अर्थ है "क्योंकि" — यह कारण बताता है।' },
-      { tier: 2, qEn: 'Choose the natural sentence:', qHi: 'स्वाभाविक वाक्य चुनें:', opts: ['Making small mistakes helps me improve faster.', 'Do mistake is help improve fast.'], ans: 0, word: 'improve', whyEn: 'Starting with "Making..." turns the action into a smooth subject.', whyHi: 'वाक्य की शुरुआत में "Making..." का प्रयोग स्वाभाविक होता है।' },
-      { tier: 3, qEn: 'Pick the clearest workplace update:', qHi: 'सबसे स्पष्ट और सटीक वाक्य चुनें:', opts: ['Despite the slow network, the app saved our progress.', 'Although slow network, app was saving progress.'], ans: 0, word: 'despite', whyEn: '"Despite" is followed directly by a noun phrase ("the slow network").', whyHi: '"Despite" के तुरंत बाद संज्ञा वाक्यांश आता है।' },
-      { tier: 4, qEn: 'Which sentence is concise and natural?', qHi: 'संक्षिप्त और प्रभावशाली वाक्य चुनें:', opts: ['Let us test each feature carefully before sharing the link.', 'Let us do testing of every single feature before we share link.'], ans: 0, word: 'carefully', whyEn: 'Direct action verbs ("test each feature carefully") are crisp and clear.', whyHi: 'सीधी और संक्षिप्त क्रियाएं वाक्य को प्रभावशाली बनाती हैं।' }
+      { id: 's_0', tier: 0, qEn: 'How do you greet someone politely in the morning?', qHi: 'सुबह किसी का अभिवादन कैसे करेंगे?', opts: ['Good morning!', 'Good night!', 'See you yesterday!'], ans: 0, word: 'morning', whyEn: '"Good morning!" is used when meeting in the morning.', whyHi: 'सुबह मिलने पर "Good morning!" कहते हैं।' },
+      { id: 's_1', tier: 0, qEn: 'Complete: "My name ___ Lakshmi."', qHi: 'वाक्य पूरा करें: "मेरा नाम लक्ष्मी है।"', opts: ['is', 'are', 'am'], ans: 0, word: 'name', whyEn: 'With "My name", always use "is".', whyHi: '"My name" के साथ हमेशा "is" लगता है।' },
+      { id: 's_2', tier: 0, qEn: 'How do you say: "मैं सुबह 5 बजे उठता/उठती हूँ"?', qHi: 'सही अंग्रेज़ी वाक्य चुनें:', opts: ['I wake up at 5 AM.', 'I waking 5 AM.', 'I wakes up in 5 AM.'], ans: 0, word: 'wake up', whyEn: 'Use "I wake up at 5 AM" for daily habits.', whyHi: 'रोज़ की आदत के लिए "I wake up" और समय से पहले "at" लगाते हैं।' },
+      { id: 's_3', tier: 0, qEn: 'How do you say: "मुझे घर का खाना पसंद है"?', qHi: 'सही वाक्य चुनें:', opts: ['I like homemade food.', 'I liking food homemade.', 'I am like food.'], ans: 0, word: 'homemade', whyEn: 'Use "I like + food name" to share what you enjoy.', whyHi: 'पसंद बताने के लिए सीधा "I like..." बोलें।' },
+      { id: 's_4', tier: 1, qEn: 'How do you say: "मैं साइकिल से क्लास जाता/जाती हूँ"?', qHi: 'सही वाक्य चुनें:', opts: ['I go to class by bicycle.', 'I going class bicycle.', 'I go class on bicycle.'], ans: 0, word: 'bicycle', whyEn: 'Use "go to" before a place and "by bicycle" for travel.', whyHi: 'जगह से पहले "to" और वाहन से पहले "by" लगता है।' },
+      { id: 's_5', tier: 1, qEn: 'Polite request: "क्या आप इसे दोबारा दोहरा सकते हैं?"', qHi: 'विनम्र अनुरोध चुनें:', opts: ['Could you please repeat that?', 'Repeat again fast.', 'You repeat this now.'], ans: 0, word: 'repeat', whyEn: '"Could you please..." is polite and respectful.', whyHi: '"Could you please..." विनम्र तरीका है।' },
+      { id: 's_6', tier: 1, qEn: 'Complete: "I practice singing ___ the evening with friends."', qHi: 'सही शब्द ("शाम को") चुनें:', opts: ['in', 'on', 'at'], ans: 0, word: 'evening', whyEn: 'Always say "in the morning" and "in the evening".', whyHi: 'सुबह या शाम के लिए "in the evening" प्रयोग होता है।' },
+      { id: 's_7', tier: 2, qEn: 'Connect ideas: "I study daily ___ I want to speak fluently."', qHi: 'सही शब्द ("क्योंकि") चुनें:', opts: ['because', 'but', 'unless'], ans: 0, word: 'because', whyEn: '"Because" explains the reason behind your action.', whyHi: '"Because" का अर्थ है "क्योंकि" — यह कारण बताता है।' },
+      { id: 's_8', tier: 2, qEn: 'Choose the natural sentence:', qHi: 'स्वाभाविक वाक्य चुनें:', opts: ['Making small mistakes helps me improve faster.', 'Do mistake is help improve fast.'], ans: 0, word: 'improve', whyEn: 'Starting with "Making..." turns the action into a smooth subject.', whyHi: 'वाक्य की शुरुआत में "Making..." का प्रयोग स्वाभाविक होता है।' },
+      { id: 's_9', tier: 3, qEn: 'Pick the clearest workplace update:', qHi: 'सबसे स्पष्ट और सटीक वाक्य चुनें:', opts: ['Despite the slow network, the app saved our progress.', 'Although slow network, app was saving progress.'], ans: 0, word: 'despite', whyEn: '"Despite" is followed directly by a noun phrase ("the slow network").', whyHi: '"Despite" के तुरंत बाद संज्ञा वाक्यांश आता है।' },
+      { id: 's_10', tier: 4, qEn: 'Which sentence is concise and natural?', qHi: 'संक्षिप्त और प्रभावशाली वाक्य चुनें:', opts: ['Let us test each feature carefully before sharing the link.', 'Let us do testing of every single feature before we share link.'], ans: 0, word: 'carefully', whyEn: 'Direct action verbs ("test each feature carefully") are crisp and clear.', whyHi: 'सीधी और संक्षिप्त क्रियाएं वाक्य को प्रभावशाली बनाती हैं।' }
     ];
 
     const READ_ALONG_STORIES = [
@@ -964,17 +965,22 @@
       { title: 'Time Management & Focus System', cat: 'Life Skills', ytId: 'iONDivxLe9U' }
     ];
 
+    /* PER-USER ISOLATED STORAGE HELPERS */
+    function getUserKey(baseKey, studentId) {
+      const id = studentId || (state && state.student && state.student.studentId) || 'GUEST';
+      return `${baseKey}__${id}`;
+    }
+
     function loadValidStudentSession() {
       try {
-        const raw = localStorage.getItem('jesh_student');
+        const raw = localStorage.getItem('jesh_active_student');
         const loginAt = Number(localStorage.getItem('jesh_login_at') || '0');
         if (!raw) return null;
         if (loginAt && (Date.now() - loginAt) > SESSION_TTL_MS) {
-          localStorage.removeItem('jesh_student');
+          localStorage.removeItem('jesh_active_student');
           localStorage.removeItem('jesh_login_at');
           return null;
         }
-        if (!loginAt) localStorage.setItem('jesh_login_at', String(Date.now()));
         return JSON.parse(raw);
       } catch (e) {
         return null;
@@ -983,10 +989,32 @@
 
     function saveStudentSession(stu) {
       state.student = stu;
-      localStorage.setItem('jesh_student', JSON.stringify(stu));
+      localStorage.setItem('jesh_active_student', JSON.stringify(stu));
       if (!localStorage.getItem('jesh_login_at')) {
         localStorage.setItem('jesh_login_at', String(Date.now()));
       }
+    }
+
+    function loadPerUserState(stu) {
+      const id = stu ? stu.studentId : 'GUEST';
+      state.stageTier = Number(localStorage.getItem(getUserKey('stage_tier', id)) || mapLegacyLevelToTier(stu && stu.level));
+      state.consecutiveCorrect = Number(localStorage.getItem(getUserKey('consec_ok', id)) || '0');
+      state.lingoQuestionCount = Number(localStorage.getItem(getUserKey('lingo_qcount', id)) || '0');
+      state.seenQuestionIds = JSON.parse(localStorage.getItem(getUserKey('seen_qids', id)) || '[]');
+      state.prefetchedLingoQueue = [];
+      state.aiChatMessages = JSON.parse(localStorage.getItem(getUserKey('ai_chat', id)) || 'null') || [
+        { role: 'bot', text: `Hi ${stu ? stu.name : 'there'}! This is your private Jesh AI chat. Ask anything!` }
+      ];
+    }
+
+    function persistPerUserState() {
+      if (!state.student) return;
+      const id = state.student.studentId;
+      localStorage.setItem(getUserKey('stage_tier', id), String(state.stageTier));
+      localStorage.setItem(getUserKey('consec_ok', id), String(state.consecutiveCorrect));
+      localStorage.setItem(getUserKey('lingo_qcount', id), String(state.lingoQuestionCount));
+      localStorage.setItem(getUserKey('seen_qids', id), JSON.stringify(state.seenQuestionIds));
+      localStorage.setItem(getUserKey('ai_chat', id), JSON.stringify(state.aiChatMessages));
     }
 
     let state = {
@@ -994,14 +1022,14 @@
       selectedChar: CHARACTERS[0],
       selectedCourse: DEEP_COURSES[1],
       courseFilter: 'ALL',
-      stageTier: Number(localStorage.getItem('jesh_stage_tier') || '0'),
-      consecutiveCorrect: Number(localStorage.getItem('jesh_consec_ok') || '0'),
+      stageTier: 0,
+      consecutiveCorrect: 0,
       speed: localStorage.getItem('jesh_speed') || 'normal',
       theme: localStorage.getItem('jesh_theme') || 'calm',
       adminPass: '',
-      offlineQueue: JSON.parse(localStorage.getItem('jesh_offline_queue') || '[]'),
-      lingoQuestionCount: Number(localStorage.getItem('jesh_lingo_qcount') || '0'),
-      seenQuestionIds: JSON.parse(localStorage.getItem('jesh_seen_qids') || '[]'),
+      offlineQueue: [],
+      lingoQuestionCount: 0,
+      seenQuestionIds: [],
       prefetchedLingoQueue: [],
       currentLingoItem: null,
       lingoAnswered: false,
@@ -1018,9 +1046,7 @@
       handsFreeVoice: true,
       camStream: null,
       recognition: null,
-      aiChatMessages: JSON.parse(localStorage.getItem('jesh_ai_chat_hist') || 'null') || [
-        { role: 'bot', text: 'Hi! I am Jesh AI. Ask me anything — coding, writing, translations, ideas, or general questions.' }
-      ],
+      aiChatMessages: [],
       posts: JSON.parse(localStorage.getItem('jesh_fb_posts') || 'null') || [
         { id: 1, author: 'Aarav (Mentor)', tag: 'English & Skills', text: 'Tip: Speak 2 short English sentences out loud every morning—रोज़ थोड़ा अभ्यास आपको तेज़ बनाता है!', likes: 5 },
         { id: 2, author: 'Arya (Tech & AI)', tag: 'Coding & AI', text: 'Always keep a version snapshot before upgrading. Rollback in 1 click keeps you fearless!', likes: 4 }
@@ -1030,10 +1056,7 @@
       ]
     };
 
-    if (state.student && !localStorage.getItem('jesh_stage_tier')) {
-      state.stageTier = mapLegacyLevelToTier(state.student.level);
-      localStorage.setItem('jesh_stage_tier', String(state.stageTier));
-    }
+    loadPerUserState(state.student);
 
     function shuffleQuestionOptions(qObj) {
       const paired = qObj.opts.map((text, idx) => ({ text, isCorrect: idx === qObj.ans }));
@@ -1129,8 +1152,9 @@
         return {
           ok: true,
           student: {
-            studentId: 'STU-LOCAL', name: payload.identifier || 'Learner',
-            level: 'A0', language: 'Bilingual', xp: 10, streak: 1, weakWords: [], courseProgress: 15
+            studentId: 'STU-' + Math.floor(100000 + Math.random() * 900000),
+            name: payload.identifier || 'Learner',
+            level: 'A0', language: 'Bilingual', xp: 0, streak: 1, weakWords: [], courseProgress: 10
           }
         };
       }
@@ -1148,8 +1172,8 @@
           ok: true,
           word: payload.word,
           explanation: dictHit
-            ? `${payload.word} → ${dictHit} (English word meaning: everyday expression). Example: I use "${clean}" in a sentence.`
-            : `"${payload.word}" — सरल अर्थ: रोज़मर्रा के वाक्य में इस्तेमाल होने वाला अंग्रेज़ी शब्द। Example: "I see ${payload.word} today."`
+            ? `${payload.word} → ${dictHit}. Example: I use "${clean}" every day.`
+            : `"${payload.word}" — सरल अर्थ: रोज़मर्रा के वाक्य में इस्तेमाल होने वाला अंग्रेज़ी शब्द।`
         };
       }
       if (payload.action === 'chatWithCharacter') {
@@ -1169,7 +1193,6 @@
     async function flushOfflineQueue() {
       const queue = [...state.offlineQueue];
       state.offlineQueue = [];
-      localStorage.setItem('jesh_offline_queue', '[]');
       for (const item of queue) await apiCall(item);
     }
 
@@ -1290,8 +1313,7 @@
       state.stageTier = nextTier;
       state.consecutiveCorrect = 0;
       state.prefetchedLingoQueue = [];
-      localStorage.setItem('jesh_stage_tier', String(state.stageTier));
-      localStorage.setItem('jesh_consec_ok', '0');
+      persistPerUserState();
       refreshStudentUI();
       prefetchNextLingoQuestion();
       showToast('Stage switched to: ' + getFriendlyStageName(state.stageTier));
@@ -1315,7 +1337,12 @@
         if (!res.student.language) res.student.language = 'Bilingual';
         localStorage.setItem('jesh_login_at', String(Date.now()));
         saveStudentSession(res.student);
+        loadPerUserState(res.student);
+        document.getElementById('charChatLog').innerHTML = '';
+        state.callHistory = [];
         refreshStudentUI();
+        renderJeshAiChatStream();
+        prefetchNextLingoQuestion();
         if (res.requireNewPin) switchAuthMode('newpin');
         else navigate('home');
       } else {
@@ -1330,11 +1357,6 @@
       const track = document.getElementById('regTrack').value || 'AutoCheck';
       const language = document.getElementById('regLang').value || 'Bilingual';
 
-      state.stageTier = track === 'FastTrack' ? 3 : 0;
-      state.consecutiveCorrect = 0;
-      localStorage.setItem('jesh_stage_tier', String(state.stageTier));
-      localStorage.setItem('jesh_consec_ok', '0');
-
       const btn = document.getElementById('btnRegister');
       btn.disabled = true;
       const res = await apiCall({ action: 'registerStudent', name, contact, pin, language, track });
@@ -1343,14 +1365,22 @@
       if (res.ok) {
         localStorage.setItem('jesh_login_at', String(Date.now()));
         saveStudentSession(res.student);
+        state.stageTier = track === 'FastTrack' ? 3 : 0;
+        state.consecutiveCorrect = 0;
+        state.lingoQuestionCount = 0;
+        state.seenQuestionIds = [];
+        state.aiChatMessages = [{ role: 'bot', text: `Hi ${name}! Welcome to your private Jesh AI chat.` }];
+        persistPerUserState();
+        document.getElementById('charChatLog').innerHTML = '';
+        state.callHistory = [];
         refreshStudentUI();
+        renderJeshAiChatStream();
         if (track === 'AutoCheck') {
           openModule('placement');
-          showToast('Welcome ' + name + '! Let us find your comfort stage.');
         } else {
           navigate('home');
-          showToast('Welcome ' + name + '!');
         }
+        showToast('Welcome ' + name + '!');
       } else {
         showToast(res.error || 'Registration failed');
       }
@@ -1359,9 +1389,11 @@
     function handleLogout() {
       stopCallMedia();
       stopReadAlongListening();
-      localStorage.removeItem('jesh_student');
+      localStorage.removeItem('jesh_active_student');
       localStorage.removeItem('jesh_login_at');
       state.student = null;
+      state.callHistory = [];
+      document.getElementById('charChatLog').innerHTML = '';
       document.getElementById('headerStats').textContent = '🌱 Starter • 0 XP';
       navigate('auth');
       showToast('Logged out / लॉगआउट हो गया।');
@@ -1439,8 +1471,7 @@
       state.stageTier = Math.min(4, state.placementScore);
       state.consecutiveCorrect = 0;
       state.prefetchedLingoQueue = [];
-      localStorage.setItem('jesh_stage_tier', String(state.stageTier));
-      localStorage.setItem('jesh_consec_ok', '0');
+      persistPerUserState();
 
       const stageName = getFriendlyStageName(state.stageTier);
       refreshStudentUI();
@@ -1456,30 +1487,35 @@
       `;
     }
 
-    /* INSTANT, NON-REPEATING, GRADUAL JESHLINGO */
+    /* STRICT NON-REPEATING + GRADUAL JESHLINGO */
     function buildDynamicOfflineQuestion(tier) {
       const templatesByTier = [
         [
-          { qEn: 'Choose the polite evening greeting:', qHi: 'शाम को मिलने पर क्या कहेंगे?', opts: ['Good evening!', 'Good night!'], ans: 0, word: 'evening', whyEn: 'Use "Good evening!" when meeting in the evening.', whyHi: 'शाम को मिलने पर "Good evening!" कहते हैं।' },
-          { qEn: 'Complete: "I ___ a student."', qHi: 'वाक्य पूरा करें:', opts: ['am', 'is', 'are'], ans: 0, word: 'student', whyEn: 'Always pair "I" with "am".', whyHi: '"I" के साथ हमेशा "am" लगता है।' },
-          { qEn: 'How do you say: "मुझे पानी चाहिए"?', qHi: 'सही वाक्य चुनें:', opts: ['I would like some water, please.', 'Give water me now.'], ans: 0, word: 'water', whyEn: '"I would like..., please" is polite and clear.', whyHi: '"I would like..., please" विनम्र तरीका है।' }
+          { id: 'dyn_0a', qEn: 'Choose the polite evening greeting:', qHi: 'शाम को मिलने पर क्या कहेंगे?', opts: ['Good evening!', 'Good night!'], ans: 0, word: 'evening', whyEn: 'Use "Good evening!" when meeting in the evening.', whyHi: 'शाम को मिलने पर "Good evening!" कहते हैं।' },
+          { id: 'dyn_0b', qEn: 'Complete: "I ___ a student."', qHi: 'वाक्य पूरा करें:', opts: ['am', 'is', 'are'], ans: 0, word: 'student', whyEn: 'Always pair "I" with "am".', whyHi: '"I" के साथ हमेशा "am" लगता है।' },
+          { id: 'dyn_0c', qEn: 'How do you say: "मुझे पानी चाहिए"?', qHi: 'सही वाक्य चुनें:', opts: ['I would like some water, please.', 'Give water me now.'], ans: 0, word: 'water', whyEn: '"I would like..., please" is polite and clear.', whyHi: '"I would like..., please" विनम्र तरीका है।' },
+          { id: 'dyn_0d', qEn: 'Complete: "This ___ my notebook."', qHi: 'सही शब्द चुनें:', opts: ['is', 'are', 'were'], ans: 0, word: 'notebook', whyEn: 'Use "is" for one single item.', whyHi: 'एक चीज़ के साथ "is" लगता है।' }
         ],
         [
-          { qEn: 'Complete: "She ___ English every evening."', qHi: 'सही क्रिया चुनें:', opts: ['practices', 'practicing', 'practice'], ans: 0, word: 'practices', whyEn: 'With "She" or "He" in daily habits, add "-s" ("practices").', whyHi: '"She" या "He" के साथ रोज़ की आदत में "practices" लगता है।' },
-          { qEn: 'How do you say: "मैं पैदल स्कूल जाता/जाती हूँ"?', qHi: 'सही वाक्य चुनें:', opts: ['I go to school on foot.', 'I going school by foot.'], ans: 0, word: 'school', whyEn: 'We say "by bicycle" or "by bus", and "on foot" for walking.', whyHi: 'पैदल चलने के लिए "on foot" का प्रयोग होता है।' }
+          { id: 'dyn_1a', qEn: 'Complete: "She ___ English every evening."', qHi: 'सही क्रिया चुनें:', opts: ['practices', 'practicing', 'practice'], ans: 0, word: 'practices', whyEn: 'With "She" or "He" in daily habits, use "practices".', whyHi: '"She" या "He" के साथ रोज़ की आदत में "practices" लगता है।' },
+          { id: 'dyn_1b', qEn: 'How do you say: "मैं पैदल स्कूल जाता/जाती हूँ"?', qHi: 'सही वाक्य चुनें:', opts: ['I go to school on foot.', 'I going school by foot.'], ans: 0, word: 'school', whyEn: 'Say "on foot" when walking.', whyHi: 'पैदल चलने के लिए "on foot" प्रयोग होता है।' }
         ],
         [
-          { qEn: 'Complete: "We saved our work ___ the power went out."', qHi: 'सही शब्द ("पहले") चुनें:', opts: ['before', 'unless', 'during'], ans: 0, word: 'before', whyEn: '"Before" shows that saving happened earlier than the power cut.', whyHi: '"Before" का अर्थ है "से पहले"। ' },
-          { qEn: 'Choose the clearest sentence:', qHi: 'सबसे स्पष्ट वाक्य चुनें:', opts: ['Practicing for ten minutes daily builds strong habits.', 'Do practice ten minute daily is build habit.'], ans: 0, word: 'habits', whyEn: 'Using "-ing" ("Practicing...") creates a smooth, natural subject.', whyHi: 'वाक्य की शुरुआत में "Practicing..." स्वाभाविक लगता है।' }
+          { id: 'dyn_2a', qEn: 'Complete: "We saved our work ___ the power went out."', qHi: 'सही शब्द ("पहले") चुनें:', opts: ['before', 'unless', 'during'], ans: 0, word: 'before', whyEn: '"Before" shows saving happened earlier.', whyHi: '"Before" का अर्थ है "से पहले"। ' },
+          { id: 'dyn_2b', qEn: 'Choose the clearest sentence:', qHi: 'सबसे स्पष्ट वाक्य चुनें:', opts: ['Practicing for ten minutes daily builds strong habits.', 'Do practice ten minute daily is build habit.'], ans: 0, word: 'habits', whyEn: 'Starting with "Practicing..." creates a natural subject.', whyHi: 'वाक्य की शुरुआत में "Practicing..." स्वाभाविक लगता है।' }
         ],
         [
-          { qEn: 'Pick the sharpest professional update:', qHi: 'सबसे सटीक अपडेट चुनें:', opts: ['We tested every screen size to ensure smooth layout.', 'We did testing of all screen so layout is smooth.'], ans: 0, word: 'ensure', whyEn: 'Strong action verbs ("tested... to ensure") keep updates concise.', whyHi: 'स्पष्ट क्रियाएं वाक्य को प्रभावशाली बनाती हैं।' }
+          { id: 'dyn_3a', qEn: 'Pick the sharpest workplace update:', qHi: 'सबसे सटीक अपडेट चुनें:', opts: ['We tested every screen size to ensure smooth layout.', 'We did testing of all screen so layout is smooth.'], ans: 0, word: 'ensure', whyEn: 'Strong action verbs keep updates concise.', whyHi: 'स्पष्ट क्रियाएं वाक्य को प्रभावशाली बनाती हैं।' }
         ],
         [
-          { qEn: 'Choose the most concise expression:', qHi: 'सबसे संक्षिप्त और सटीक वाक्य:', opts: ['Had we backed up the file earlier, recovery would have been instant.', 'If we would backup file earlier, recovery was instant.'], ans: 0, word: 'recovery', whyEn: 'Inverted conditional ("Had we + past participle") is crisp and natural.', whyHi: '"Had we..." संरचना शर्त वाले वाक्यों को संक्षिप्त बनाती है।' }
+          { id: 'dyn_4a', qEn: 'Choose the most concise expression:', qHi: 'सबसे संक्षिप्त और सटीक वाक्य:', opts: ['Had we backed up the file earlier, recovery would have been instant.', 'If we would backup file earlier, recovery was instant.'], ans: 0, word: 'recovery', whyEn: 'Inverted conditional is crisp and natural.', whyHi: '"Had we..." संरचना शर्त वाले वाक्यों को संक्षिप्त बनाती है।' }
         ]
       ];
       const pool = templatesByTier[Math.min(4, Math.max(0, tier))];
+      const unseen = pool.filter(q => !state.seenQuestionIds.includes(q.id));
+      if (unseen.length > 0) return unseen[0];
+      // Reset only dynamic pool IDs if all were used
+      state.seenQuestionIds = state.seenQuestionIds.filter(x => !x.startsWith('dyn_'));
       return pool[Math.floor(Math.random() * pool.length)];
     }
 
@@ -1487,10 +1523,10 @@
       if (state.prefetchedLingoQueue.length >= 2) return;
       const tier = state.stageTier;
       const stageName = getFriendlyStageName(tier);
-      const avoid = state.seenQuestionIds.slice(-10).join(', ');
+      const avoid = state.seenQuestionIds.slice(-12).join(', ');
 
-      const prompt = `Create 1 fresh English practice question for difficulty tier ${tier + 1} of 5 (${stageName}). Never repeat: ${avoid}. ` +
-        `Avoid technical grammar jargon. Respond ONLY in JSON: {"id":"q_${Date.now()}","qEn":"...","qHi":"Hindi meaning","opts":["correct option","wrong option 1","wrong option 2"],"ans":0,"word":"keyword","whyEn":"1 short friendly sentence why","whyHi":"1 short Hindi sentence why"}`;
+      const prompt = `Create 1 brand-new English practice question for stage ${stageName} (tier ${tier + 1} of 5). Never repeat IDs/topics: ${avoid}. ` +
+        `No technical grammar jargon. Respond ONLY in JSON: {"id":"ai_${Date.now()}_${Math.floor(Math.random()*999)}","qEn":"...","qHi":"Hindi meaning","opts":["correct option","wrong option 1","wrong option 2"],"ans":0,"word":"keyword","whyEn":"1 short friendly sentence why","whyHi":"1 short Hindi sentence why"}`;
 
       const res = await apiCall({
         action: 'chatWithCharacter',
@@ -1506,7 +1542,9 @@
           const match = res.reply.match(/\{[\s\S]*\}/);
           if (match) {
             const parsed = JSON.parse(match[0]);
-            if (parsed.qEn && Array.isArray(parsed.opts) && parsed.opts.length >= 2) {
+            const qId = parsed.id || ('ai_' + parsed.qEn.slice(0, 18));
+            if (parsed.qEn && Array.isArray(parsed.opts) && parsed.opts.length >= 2 && !state.seenQuestionIds.includes(qId)) {
+              parsed.id = qId;
               state.prefetchedLingoQueue.push(parsed);
             }
           }
@@ -1531,24 +1569,23 @@
       fb.classList.add('hidden');
       document.getElementById('btnNextLingo').classList.add('hidden');
 
-      const unseenSeeds = TIERED_LINGO_BANK.filter((q, idx) => q.tier === tier && !state.seenQuestionIds.includes('seed_' + idx));
+      const unseenSeeds = TIERED_LINGO_BANK.filter(q => q.tier === tier && !state.seenQuestionIds.includes(q.id));
       let rawItem = null;
 
       if (unseenSeeds.length > 0) {
-        const chosenSeed = unseenSeeds[0];
-        const seedIdx = TIERED_LINGO_BANK.indexOf(chosenSeed);
-        state.seenQuestionIds.push('seed_' + seedIdx);
-        rawItem = chosenSeed;
+        rawItem = unseenSeeds[0];
       } else if (state.prefetchedLingoQueue.length > 0) {
         rawItem = state.prefetchedLingoQueue.shift();
-        state.seenQuestionIds.push(rawItem.id || rawItem.qEn.slice(0, 20));
       } else {
         rawItem = buildDynamicOfflineQuestion(tier);
-        state.seenQuestionIds.push(rawItem.qEn.slice(0, 20));
       }
 
-      if (state.seenQuestionIds.length > 40) state.seenQuestionIds = state.seenQuestionIds.slice(-40);
-      localStorage.setItem('jesh_seen_qids', JSON.stringify(state.seenQuestionIds));
+      const qKey = rawItem.id || rawItem.qEn.slice(0, 22);
+      if (!state.seenQuestionIds.includes(qKey)) {
+        state.seenQuestionIds.push(qKey);
+        if (state.seenQuestionIds.length > 60) state.seenQuestionIds = state.seenQuestionIds.slice(-60);
+      }
+      persistPerUserState();
       prefetchNextLingoQuestion();
 
       const shuffled = shuffleQuestionOptions(rawItem);
@@ -1586,6 +1623,7 @@
 
       const showHindi = state.student && state.student.language !== 'English';
       const delayMs = state.speed === 'fast' ? 1200 : (state.speed === 'slow' ? 3400 : 1900);
+      const stageName = getFriendlyStageName(state.stageTier);
 
       if (isCorrect) {
         state.consecutiveCorrect++;
@@ -1594,11 +1632,10 @@
           state.stageTier++;
           state.consecutiveCorrect = 0;
           state.prefetchedLingoQueue = [];
-          localStorage.setItem('jesh_stage_tier', String(state.stageTier));
           levelUpMsg = ` 🌟 Stage Unlocked: ${getFriendlyStageName(state.stageTier)}!`;
           prefetchNextLingoQuestion();
         }
-        localStorage.setItem('jesh_consec_ok', String(state.consecutiveCorrect));
+        persistPerUserState();
 
         const gain = 10 + state.stageTier * 2;
         fb.style.background = '#DCFCE7';
@@ -1607,7 +1644,7 @@
           (showHindi ? `<span class="hi-sub" style="color:#166534;">बहुत बढ़िया! बिल्कुल सही जवाब।</span>` : '');
         speakText(item.opts[item.ans], 1.05, 0.96, false);
 
-        const syncPayload = { action: 'submitLingoProgress', studentId: state.student.studentId, xp: gain, masteredWord: item.word };
+        const syncPayload = { action: 'submitLingoProgress', studentId: state.student.studentId, xp: gain, masteredWord: item.word, stageLabel: stageName };
         const res = await apiCall(syncPayload);
         if (res.ok) {
           state.student.xp = res.xp;
@@ -1615,7 +1652,6 @@
           saveStudentSession(state.student);
         } else {
           state.offlineQueue.push(syncPayload);
-          localStorage.setItem('jesh_offline_queue', JSON.stringify(state.offlineQueue));
         }
         refreshStudentUI();
         document.getElementById('lingoStreakMini').textContent = `${state.consecutiveCorrect} / 4 to Level Up`;
@@ -1625,7 +1661,7 @@
         state.lingoTimer = setTimeout(() => { if (state.lingoAnswered) advanceLingoQuestion(); }, delayMs);
       } else {
         state.consecutiveCorrect = 0;
-        localStorage.setItem('jesh_consec_ok', '0');
+        persistPerUserState();
         document.getElementById('lingoStreakMini').textContent = `0 / 4 to Level Up`;
         document.getElementById('lingoProgressBar').style.width = '15%';
 
@@ -1636,7 +1672,7 @@
           (showHindi && item.whyHi ? `<span class="hi-sub" style="color:#991B1B;"><strong>सरल समझ:</strong> ${item.whyHi}</span>` : '');
         speakText(item.whyEn, 1.0, 0.92, false);
 
-        apiCall({ action: 'submitLingoProgress', studentId: state.student.studentId, xp: 3, weakWord: item.word });
+        apiCall({ action: 'submitLingoProgress', studentId: state.student.studentId, xp: 3, weakWord: item.word, stageLabel: stageName });
         nextBtn.classList.remove('hidden');
         state.lingoTimer = setTimeout(() => { if (state.lingoAnswered) advanceLingoQuestion(); }, delayMs + 2600);
       }
@@ -1645,11 +1681,11 @@
     function advanceLingoQuestion() {
       if (state.lingoTimer) { clearTimeout(state.lingoTimer); state.lingoTimer = null; }
       state.lingoQuestionCount++;
-      localStorage.setItem('jesh_lingo_qcount', String(state.lingoQuestionCount));
+      persistPerUserState();
       renderNextLingoInstantly();
     }
 
-    /* PURE GENERAL-PURPOSE AI CHAT */
+    /* PURE AI CHAT (PER-USER ISOLATED) */
     function renderJeshAiChatStream() {
       const box = document.getElementById('jeshAiChatStream');
       if (!box) return;
@@ -1712,13 +1748,14 @@
       const reply = (res && res.reply) ? res.reply : 'Here is a direct answer: Break your task into small steps and test each one clearly.';
       state.aiChatMessages[state.aiChatMessages.length - 1] = { role: 'bot', text: reply };
       if (state.aiChatMessages.length > 30) state.aiChatMessages = state.aiChatMessages.slice(-30);
-      localStorage.setItem('jesh_ai_chat_hist', JSON.stringify(state.aiChatMessages));
+      persistPerUserState();
       renderJeshAiChatStream();
     }
 
     function clearAiChatHistory() {
-      state.aiChatMessages = [{ role: 'bot', text: 'New chat ready! Ask me anything.' }];
-      localStorage.setItem('jesh_ai_chat_hist', JSON.stringify(state.aiChatMessages));
+      const name = state.student ? state.student.name : 'there';
+      state.aiChatMessages = [{ role: 'bot', text: `New chat ready, ${name}! Ask me anything.` }];
+      persistPerUserState();
       renderJeshAiChatStream();
     }
 
@@ -1793,7 +1830,7 @@
 
         if (wordEls.length > 0 && state.spokenWordsSet.size >= Math.max(3, Math.floor(wordEls.length * 0.7))) {
           if (promptEl) promptEl.textContent = '🎉 Wonderful reading! Almost every word is green! +15 XP';
-          apiCall({ action: 'submitLingoProgress', studentId: state.student.studentId, xp: 15 });
+          apiCall({ action: 'submitLingoProgress', studentId: state.student.studentId, xp: 15, stageLabel: getFriendlyStageName(state.stageTier) });
         }
       };
 
@@ -1847,7 +1884,7 @@
 
       const dictHit = LOCAL_DICTIONARY[word];
       card.innerHTML = dictHit
-        ? `<strong>🔊 ${word}</strong> → ${dictHit} (English word)`
+        ? `<strong>🔊 ${word}</strong> → ${dictHit}`
         : `"${word}" — सरल अर्थ खोजा जा रहा है...`;
 
       const res = await apiCall({
@@ -1861,9 +1898,7 @@
       }
     }
 
-    /* ========================================================================
-     * WARM LIVE VIDEO CALL (ACTIVE TURN-TAKING + CONVERSATION MEMORY)
-     * ======================================================================== */
+    /* WARM LIVE VIDEO CALL */
     function renderCharacterGrid() {
       const grid = document.getElementById('characterGrid');
       const customImg = localStorage.getItem('jesh_custom_avatar');
@@ -1889,6 +1924,7 @@
     function prepareVideoCallScreen() {
       state.liveCallActive = false;
       state.callHistory = [];
+      document.getElementById('charChatLog').innerHTML = '';
       renderStageVisual(false);
       const badge = document.getElementById('callStatusBadge');
       badge.textContent = '● READY TO CONNECT';
@@ -2017,7 +2053,7 @@
       const res = await apiCall({
         action: 'chatWithCharacter',
         message: text,
-        character: `${state.selectedChar.name} (Warm, lively, human-like video call friend speaking to ${studentName}. Recent chat: ${recentContext}. Be expressive, warm, and natural—never cold or robotic. Reply in 1-2 short sentences and ask a friendly follow-up.)`,
+        character: `${state.selectedChar.name} (Warm, lively video call friend speaking to ${studentName}. Recent chat: ${recentContext}. Reply warmly in 1-2 short sentences and ask a friendly follow-up.)`,
         level: getFriendlyStageName(state.stageTier),
         language: state.student ? state.student.language : 'Bilingual',
         mode: 'warm_live_call'
@@ -2196,7 +2232,7 @@
         fb.style.background = '#DCFCE7';
         fb.style.color = '#14532D';
         fb.textContent = `🎉 Correct! +15 XP — ${explainText}`;
-        apiCall({ action: 'submitLingoProgress', studentId: state.student.studentId, xp: 15 });
+        apiCall({ action: 'submitLingoProgress', studentId: state.student.studentId, xp: 15, stageLabel: getFriendlyStageName(state.stageTier) });
       } else {
         btnEl.classList.add('wrong-choice');
         fb.style.background = '#FEE2E2';
