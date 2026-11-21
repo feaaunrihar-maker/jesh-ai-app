@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Jesh AI — Adaptive AI Tutor, Chat, Video & Skill Ecosystem</title>
+  <title>Jesh AI — Friendly, Step-by-Step Skill & Language Ecosystem</title>
   <style>
     :root {
       --bg-calm: #F8FAFC;
@@ -12,12 +12,15 @@
       --primary-soft: #EFF6FF;
       --accent: #16A34A;
       --accent-soft: #DCFCE7;
+      --warm: #F59E0B;
+      --warm-soft: #FEF3C7;
       --pro: #7C3AED;
       --pro-soft: #F5F3FF;
       --text-main: #0F172A;
       --text-muted: #475569;
       --border: #E2E8F0;
       --danger: #DC2626;
+      --danger-soft: #FEE2E2;
       --footer-h: 48px;
     }
 
@@ -118,12 +121,12 @@
     .btn-sm { padding: 7px 11px; font-size: 13px; }
 
     .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .course-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-bottom: 12px; }
+    .course-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; margin-bottom: 12px; }
 
     .course-tile {
       border: 1.5px solid var(--border);
       border-radius: 14px;
-      padding: 12px;
+      padding: 13px;
       background: var(--surface);
       display: flex;
       flex-direction: column;
@@ -149,7 +152,7 @@
     .lingo-header-bar { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
     .progress-track { flex: 1; height: 12px; background: var(--border); border-radius: 999px; overflow: hidden; }
     .progress-fill {
-      height: 100%; width: 15%; background: linear-gradient(90deg, #22C55E, #16A34A);
+      height: 100%; width: 20%; background: linear-gradient(90deg, #22C55E, #16A34A);
       border-radius: 999px; transition: width 0.35s ease;
     }
     .lingo-opt-btn {
@@ -175,6 +178,28 @@
       font-weight: 700; font-size: 13px; flex-shrink: 0;
     }
 
+    /* LESSON CONCEPT BOX IN COURSES */
+    .lesson-concept-card {
+      background: var(--primary-soft);
+      border-left: 4px solid var(--primary);
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-bottom: 12px;
+      font-size: 14px;
+      color: var(--text-main);
+    }
+    .code-snippet-box {
+      background: #0F172A;
+      color: #E2E8F0;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-family: monospace;
+      font-size: 13px;
+      margin-top: 8px;
+      overflow-x: auto;
+      white-space: pre-wrap;
+    }
+
     /* GEMINI / CHATGPT / CLAUDE INSPIRED JESH AI CHAT */
     .ai-chat-stream {
       max-height: 320px; overflow-y: auto; padding: 12px;
@@ -185,15 +210,9 @@
       padding: 11px 14px; border-radius: 14px; margin-bottom: 10px;
       font-size: 14.5px; line-height: 1.55; max-width: 90%;
     }
-    .ai-bubble.bot {
-      background: var(--surface); border: 1px solid var(--border); color: var(--text-main);
-    }
-    .ai-bubble.me {
-      background: var(--primary); color: #FFFFFF; margin-left: auto;
-    }
-    .ai-bubble-tools {
-      display: flex; gap: 8px; margin-top: 6px; font-size: 11px; color: var(--text-muted);
-    }
+    .ai-bubble.bot { background: var(--surface); border: 1px solid var(--border); color: var(--text-main); }
+    .ai-bubble.me { background: var(--primary); color: #FFFFFF; margin-left: auto; }
+    .ai-bubble-tools { display: flex; gap: 10px; margin-top: 6px; font-size: 11px; color: var(--text-muted); }
 
     /* GOOGLE READ-ALONG (BOLO) INSPIRED JESHREAD */
     .read-along-banner {
@@ -355,7 +374,7 @@
       <span class="badge-pill" id="netStatus">Online</span>
     </div>
     <div style="display:flex; gap:6px; align-items:center;">
-      <span class="badge-pill badge-green" id="headerStats">A0 • 0 XP</span>
+      <span class="badge-pill badge-green" id="headerStats">Starter • 0 XP</span>
       <button class="btn-outline btn-sm" onclick="handleLogout()" title="Switch Account / लॉगआउट">🚪</button>
       <button class="btn-outline btn-sm" onclick="navigate('admin')" title="Admin & Prompt Studio">⚙️</button>
     </div>
@@ -364,15 +383,15 @@
   <div id="toast" class="toast"></div>
 
   <main id="app">
-    <!-- 1. AUTH VIEW -->
+    <!-- 1. AUTH VIEW (NO TECHNICAL JARGON) -->
     <section id="view-auth" class="card">
-      <h2>Welcome to Jesh AI <span class="hi-sub">स्वागत है — 24 घंटे सुरक्षित लॉगिन सेशन</span></h2>
-      <p>Personalized learning for English, AI Chat, Coding, AI/ML & Life Skills.</p>
+      <h2>Welcome to Jesh AI <span class="hi-sub">स्वागत है — आसान और मज़ेदार शुरुआत करें</span></h2>
+      <p>Learn Spoken English, Coding, AI & Life Skills step-by-step in English + हिंदी.</p>
 
       <div id="auth-login-box">
         <input type="text" id="loginId" placeholder="Student ID or Mobile / मोबाइल या ID" />
         <input type="password" id="loginPin" inputmode="numeric" maxlength="6" placeholder="4–6 digit PIN / आपका PIN" />
-        <button class="btn-primary" id="btnLogin" onclick="handleLogin()">Login (24h Stay Signed In)</button>
+        <button class="btn-primary" id="btnLogin" onclick="handleLogin()">Login (Stay Signed In 24h)</button>
         <div class="grid-2" style="margin-top:10px;">
           <button class="btn-outline btn-sm" onclick="switchAuthMode('register')">Create Account / नया अकाउंट</button>
           <button class="btn-outline btn-sm" onclick="handleForgotPin()">Forgot PIN? / PIN भूल गए?</button>
@@ -384,9 +403,9 @@
         <input type="text" id="regContact" placeholder="Mobile Number or Email / मोबाइल नंबर" />
         <input type="password" id="regPin" inputmode="numeric" maxlength="6" placeholder="Create 4–6 digit PIN / नया PIN बनाएं" />
         <select id="regTrack">
-          <option value="AutoCheck" selected>Start: Smart A0→C1 Level Check (स्तर जांचकर सिखाएं)</option>
-          <option value="Foundation">Start: A0 Easy Step-by-Step (बिल्कुल शुरू से)</option>
-          <option value="FastTrack">Start: Fast-Track Pro (जो पहले से तेज़ हैं)</option>
+          <option value="AutoCheck" selected>Start: 1-Minute Skill Check (सही शुरुआत चुनें)</option>
+          <option value="Foundation">Start: Step 1 Easy Start (बिल्कुल शुरू से)</option>
+          <option value="FastTrack">Start: Fast-Track Challenge (जो पहले से तेज़ हैं)</option>
         </select>
         <select id="regLang">
           <option value="Bilingual" selected>Language: English + हिंदी (Bilingual Default)</option>
@@ -410,11 +429,11 @@
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
           <h2 id="welcomeText">Hello!</h2>
           <div style="display:flex; gap:6px; flex-wrap:wrap;">
-            <span class="badge-pill badge-pro" id="paceBadge">Level: A0</span>
+            <span class="badge-pill badge-pro" id="paceBadge">Stage 1: Starter</span>
             <span class="badge-pill badge-green" id="streakBadge">🔥 1 Day</span>
           </div>
         </div>
-        <p id="personalTipBanner">Your session stays active for 24 hours. Choose your speed, theme, or check your exact level.</p>
+        <p id="personalTipBanner">Advance step-by-step at your own pace. Every stage builds smoothly on the last!</p>
 
         <div class="grid-2" style="margin-bottom:10px;">
           <select id="speedSelect" style="margin-bottom:0;" onchange="changeLearningSpeed(this.value)">
@@ -429,27 +448,26 @@
           </select>
         </div>
 
-        <!-- NEW: JESH AI CHAT (GEMINI / CHATGPT / CLAUDE INSPIRED) -->
         <div class="step-item" style="border-color:#C4B5FD; background:linear-gradient(135deg, #F5F3FF 0%, #EFF6FF 100%);">
           <div class="step-info">
-            <strong>✨ Jesh AI Chat (Gemini / ChatGPT / Claude Style)</strong>
-            <span>Ask anything in English or हिंदी — coding, study notes, essays, interview & life advice</span>
+            <strong>✨ Jesh AI Chat (Personal AI Assistant)</strong>
+            <span>Ask anything in English or हिंदी — coding, study notes, essays & interview tips</span>
           </div>
           <button class="btn-pro" onclick="openModule('aichat')">Ask AI</button>
         </div>
 
         <div class="step-item" style="border-color:#BFDBFE; background:#F8FAFF;">
           <div class="step-info">
-            <strong>1. JeshLingo — Infinite Non-Repeating Practice</strong>
-            <span id="lingoSub">Shuffled options • Auto A0→C1 placement • AI generates endless new questions</span>
+            <strong>1. JeshLingo — Fast, Colorful & Gradual Practice</strong>
+            <span id="lingoSub">Instant questions • Gradual Stage 1 → 5 growth • English + हिंदी</span>
           </div>
           <button class="btn-primary" style="width:auto;" onclick="openModule('lingo')">Start</button>
         </div>
 
         <div class="step-item" style="border-color:#BBF7D0; background:#F0FDF4;">
           <div class="step-info">
-            <strong>2. JeshRead — Read Along Buddy (सुनता भी है!)</strong>
-            <span>बोलकर पढ़ें — सही शब्दों पर हरा रंग + टैप करते ही English + हिंदी अर्थ</span>
+            <strong>2. JeshRead — Continuous Read-Along Buddy</strong>
+            <span>Non-stop mic listening • Words turn green as you speak • Tap any word for meaning</span>
           </div>
           <button class="btn-accent" onclick="openModule('read')">Read</button>
         </div>
@@ -464,8 +482,8 @@
 
         <div class="step-item">
           <div class="step-info">
-            <strong>4. All 14 Real-Life Courses (Basic, ADCA, Coding, AI/ML)</strong>
-            <span>HTML, CSS, JS, Python, Java, C++, AI, ML, Time Mgmt, Productivity & Self-Help</span>
+            <strong>4. All 14 Real-Life Courses (Practical Lessons + Practice)</strong>
+            <span>Computer Basic, ADCA, HTML, CSS, JS, Python, Java, C++, AI, ML, Time & Self-Help</span>
           </div>
           <button class="btn-outline" onclick="openModule('course')">Courses</button>
         </div>
@@ -476,15 +494,15 @@
         </div>
 
         <div class="grid-2" style="margin-top:10px;">
-          <button class="btn-outline btn-sm" onclick="openModule('placement')">🎯 Smart Level Check (A0→C1)</button>
-          <button class="btn-pro btn-sm" onclick="toggleFastTrackMode()">⚡ Toggle Fast-Track</button>
+          <button class="btn-outline btn-sm" onclick="openModule('placement')">🎯 1-Minute Skill Check</button>
+          <button class="btn-pro btn-sm" onclick="toggleFastTrackMode()">⚡ Fast-Track Boost</button>
         </div>
       </div>
 
       <div id="zero-code-modules-container"></div>
     </section>
 
-    <!-- NEW MODULE: JESH AI CHAT (GEMINI / CHATGPT / CLAUDE INSPIRED) -->
+    <!-- JESH AI CHAT -->
     <section id="view-aichat" class="card hidden">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
         <h2>✨ Jesh AI Chat Assistant</h2>
@@ -493,7 +511,7 @@
           <button class="btn-outline btn-sm" onclick="navigate('home')">← Back</button>
         </div>
       </div>
-      <p>Ask any question in English, हिंदी, or Hinglish — powered by Multi-AI Failover:</p>
+      <p>Ask any question in English, हिंदी, or Hinglish:</p>
 
       <div class="chip-row">
         <button class="chip" onclick="useAiPromptChip('Explain Machine Learning in simple English and Hindi with 1 real-life example.')">🤖 Explain AI/ML</button>
@@ -511,37 +529,37 @@
       </div>
     </section>
 
-    <!-- SMART A0 -> C1 LEVEL PLACEMENT CHECK -->
+    <!-- 1-MINUTE SKILL PLACEMENT CHECK (NO TECHNICAL CODES) -->
     <section id="view-placement" class="card hidden">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-        <h2>🎯 Smart Level Check (A0 → C1)</h2>
+        <h2>🎯 1-Minute Skill Check</h2>
         <button class="btn-outline btn-sm" onclick="navigate('home')">← Back</button>
       </div>
-      <p>Answer 5 quick questions starting from A0 — we will place you at your exact learning level automatically:</p>
+      <p>Answer 5 quick questions — we will place you in the right starting stage:</p>
       <div id="placementBox"></div>
       <div id="placementResult" class="hidden" style="padding:14px; border-radius:12px; background:var(--accent-soft); color:#14532D; margin-top:10px;"></div>
     </section>
 
-    <!-- 3. INFINITE NON-REPEATING JESHLINGO WITH SHUFFLED OPTIONS -->
+    <!-- 3. INSTANT, GRADUAL, NON-REPEATING JESHLINGO -->
     <section id="view-lingo" class="card hidden">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-        <h2 id="lingoTitle">JeshLingo • Adaptive Practice</h2>
+        <h2 id="lingoTitle">Stage 1: Starter</h2>
         <button class="btn-outline btn-sm" onclick="navigate('home')">← Back</button>
       </div>
 
       <div class="lingo-header-bar">
-        <span class="badge-pill badge-green" id="lingoProgressLabel">Q #1</span>
+        <span class="badge-pill badge-green" id="lingoProgressLabel">Step 1 / 4</span>
         <div class="progress-track"><div class="progress-fill" id="lingoProgressBar"></div></div>
-        <span class="badge-pill" id="lingoLevelPill">A0</span>
+        <span class="badge-pill badge-pro" id="lingoStageBadge">Starter</span>
       </div>
 
       <div id="lingoQuestionBox" style="font-size:17px; font-weight:700; margin:12px 0;"></div>
       <div id="lingoOptions"></div>
       <div id="lingoFeedback" class="hidden" style="padding:13px; border-radius:12px; margin-top:10px; font-size:14px; line-height:1.5;"></div>
-      <button id="btnNextLingo" class="btn-primary hidden" style="margin-top:10px;" onclick="advanceLingoQuestion()">Next Fresh Question / अगला नया प्रश्न →</button>
+      <button id="btnNextLingo" class="btn-primary hidden" style="margin-top:10px;" onclick="advanceLingoQuestion()">Next Question / अगला प्रश्न →</button>
     </section>
 
-    <!-- 4. GOOGLE READ-ALONG (BOLO) INSPIRED JESHREAD -->
+    <!-- 4. CONTINUOUS AUTO-RESTARTING JESHREAD (BOLO / READ-ALONG INSPIRED) -->
     <section id="view-read" class="card hidden">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
         <h2>JeshRead • Read Along Buddy</h2>
@@ -551,8 +569,8 @@
       <div class="read-along-banner">
         <div class="diya-buddy" id="diyaBuddyIcon">👩‍🏫</div>
         <div style="flex:1;">
-          <strong style="font-size:14px; color:#1E3A8A;" id="diyaPromptText">Diya: "Tap 'Read Aloud' and speak the lines below, or tap any word to hear & translate!"</strong>
-          <span class="hi-sub" id="diyaSubText">'बोलकर पढ़ें' दबाएं—जैसे-जैसे आप सही पढ़ेंगे, शब्द हरे होते जाएंगे!</span>
+          <strong style="font-size:14px; color:#1E3A8A;" id="diyaPromptText">Diya: "Tap 'Start Reading Mic' and read aloud—or tap any word to hear & learn it!"</strong>
+          <span class="hi-sub" id="diyaSubText">'Start Reading Mic' दबाएं—माइक लगातार सुनता रहेगा और सही शब्द हरे होते जाएंगे!</span>
         </div>
       </div>
 
@@ -563,8 +581,8 @@
       <div id="wordMeaningCard" class="hidden" style="padding:12px; background:var(--primary-soft); border:1.5px solid #BFDBFE; border-radius:12px; margin-bottom:10px; font-size:14px;"></div>
 
       <div class="grid-2">
-        <button class="btn-accent" id="btnReadAloudMic" onclick="startReadAlongListening()">🎙️ बोलकर पढ़ें (Listen)</button>
-        <button class="btn-outline" onclick="listenFullStoryTts()">🔊 पूरा सुनें (Hear Story)</button>
+        <button class="btn-accent" id="btnReadAloudMic" onclick="toggleReadAlongMic()">🎙️ Start Reading Mic</button>
+        <button class="btn-outline" onclick="listenFullStoryTts()">🔊 Hear Full Story</button>
       </div>
       <button class="btn-outline btn-sm" style="width:100%; margin-top:8px;" onclick="nextReadAlongStory()">Next Story / अगली कहानी →</button>
     </section>
@@ -625,15 +643,25 @@
       </div>
     </section>
 
-    <!-- 6. INTERACTIVE REAL-LIFE SKILL LAB -->
+    <!-- 6. DEEP PRACTICAL COURSE LAB (REAL LESSON + CODE/WORKFLOW + MULTI-QUESTION CHALLENGE) -->
     <section id="view-academy" class="card hidden">
-      <div style="display:flex; justify-content:space-between; align-items:center;">
-        <h2 id="activeCourseTitle">Interactive Skill Lab</h2>
-        <button class="btn-outline btn-sm" onclick="navigate('course')">← Courses</button>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+        <h2 id="activeCourseTitle">Course Lesson</h2>
+        <button class="btn-outline btn-sm" onclick="navigate('course')">← All Courses</button>
       </div>
-      <p id="activeCourseTrickNote" style="font-size:12px; color:var(--pro); font-weight:600;"></p>
+
+      <div class="lingo-header-bar">
+        <span class="badge-pill badge-green" id="courseLessonBadge">Lesson 1</span>
+        <div class="progress-track"><div class="progress-fill" id="courseProgressFill"></div></div>
+        <span class="badge-pill badge-pro" id="courseTrickBadge">Practical Skill</span>
+      </div>
+
+      <!-- Real Educational Concept & Example Box -->
+      <div class="lesson-concept-card" id="lessonConceptBox"></div>
+
       <div id="academyStepBox"></div>
-      <div id="academyFeedback" style="font-size:14px; margin-top:10px; font-weight:600;"></div>
+      <div id="academyFeedback" class="hidden" style="padding:12px; border-radius:10px; margin-top:10px; font-size:14px;"></div>
+      <button id="btnNextCourseLesson" class="btn-primary hidden" style="margin-top:10px;" onclick="advanceCourseLesson()">Next Lesson / अगला पाठ →</button>
     </section>
 
     <!-- 7. YOUTUBE-INSPIRED VIDEO HUB -->
@@ -678,7 +706,7 @@
     <!-- 9. ALL REAL-LIFE COURSES & CERTIFICATE -->
     <section id="view-course" class="card hidden">
       <div style="display:flex; justify-content:space-between; align-items:center;">
-        <h2>All Real-Life Courses <span class="hi-sub">सभी रोजगार-उपयोगी कोर्सेस</span></h2>
+        <h2>All Real-Life Courses <span class="hi-sub">प्रैक्टिकल पाठ और अभ्यास के साथ</span></h2>
         <button class="btn-outline btn-sm" onclick="navigate('home')">← Home</button>
       </div>
 
@@ -696,7 +724,7 @@
         <h3 style="font-size:20px; margin:8px 0;">Course Completion Certificate</h3>
         <p>This certifies that / यह प्रमाणित किया जाता है कि</p>
         <div id="certStudentName" style="font-size:22px; font-weight:700; color:var(--text-main); margin:6px 0;">Student Name</div>
-        <p id="certDetails">Level: A0 • Progress: 10% • Date: --</p>
+        <p id="certDetails">Stage 1: Starter • Progress: 10% • Date: --</p>
         <div id="certQrBox" style="margin:12px auto;"></div>
         <div id="certVerifyCode" style="font-size:12px; color:var(--text-muted);">Verify ID: JESH-000</div>
       </div>
@@ -705,7 +733,7 @@
     <!-- 10. LEAVE / HELP -->
     <section id="view-help" class="card hidden">
       <h2>Help or Leave Note / मदद या छुट्टी सूचना</h2>
-      <p>Taking a break or need help? Send a note — your streak stays safe (आपकी Streak सुरक्षित रहेगी):</p>
+      <p>Taking a break or need help? Send a note — your streak stays safe:</p>
       <textarea id="leaveNote" rows="3" placeholder="Example: Busy today, will continue tomorrow / आज काम है, कल अभ्यास करूँगा..."></textarea>
       <button class="btn-primary" onclick="sendLeaveOrHelp()">Send Note / संदेश भेजें</button>
     </section>
@@ -790,7 +818,29 @@
 
   <script>
     const GAS_URL = localStorage.getItem('jesh_gas_url') || 'https://script.google.com/macros/s/AKfycby4QzUgR10e8tfTC3flWtHHjaa102t2Bq5WT8RUuisaCq2cZ8A9WR31LONGg_c1QM_h/exec';
-    const SESSION_TTL_MS = 24 * 60 * 60 * 1000; // 24 Hours Persistent Session
+    const SESSION_TTL_MS = 24 * 60 * 60 * 1000;
+
+    /* FRIENDLY STUDENT-FACING STAGE NAMES (HIDES TECHNICAL CEFR CODES LIKE A0/B1/C1) */
+    const STAGES = [
+      { id: 1, code: 'A0', label: 'Stage 1: Starter', hi: 'चरण 1: आसान शुरुआत' },
+      { id: 2, code: 'A1', label: 'Stage 2: Builder', hi: 'चरण 2: वाक्य निर्माण' },
+      { id: 3, code: 'A2', label: 'Stage 3: Explorer', hi: 'चरण 3: आत्मविश्वास' },
+      { id: 4, code: 'B1', label: 'Stage 4: Achiever', hi: 'चरण 4: तेज़ संवाद' },
+      { id: 5, code: 'C1', label: 'Stage 5: Pro Master', hi: 'चरण 5: विशेषज्ञ' }
+    ];
+
+    function getStageInfo(stageNum) {
+      const idx = Math.max(0, Math.min(STAGES.length - 1, (Number(stageNum) || 1) - 1));
+      return STAGES[idx];
+    }
+
+    function codeToStageNum(code) {
+      if (code === 'A1') return 2;
+      if (code === 'A2') return 3;
+      if (code === 'B1' || code === 'B2') return 4;
+      if (code === 'C1' || code === 'C2') return 5;
+      return 1;
+    }
 
     const CHARACTERS = [
       { id: 'aarav', name: 'Aarav', role: 'Calm Mentor', hair: '#1E293B', shirt: '#2563EB', skin: '#FDBA74', pitch: 1.0, rate: 0.94 },
@@ -800,106 +850,48 @@
       { id: 'arya', name: 'Arya', role: 'Tech & AI Mentor', hair: '#0284C7', shirt: '#0EA5E9', skin: '#E2E8F0', pitch: 1.05, rate: 0.98 }
     ];
 
-    /* 5-STEP PLACEMENT CHECK (STARTS AT A0 -> DETERMINES EXACT LEVEL A0 / A1 / A2 / B1 / C1) */
+    /* 1-MINUTE SKILL PLACEMENT CHECK (GRADUAL STAGE 1 -> 5) */
     const PLACEMENT_QUESTIONS = [
-      {
-        levelTag: 'A0',
-        q: 'Step 1 (A0): Choose the right word — "I ___ a student."',
-        opts: ['am', 'are', 'were'],
-        ans: 0
-      },
-      {
-        levelTag: 'A1',
-        q: 'Step 2 (A1): "She ___ to class by bicycle every day."',
-        opts: ['goes', 'going', 'gone'],
-        ans: 0
-      },
-      {
-        levelTag: 'A2',
-        q: 'Step 3 (A2): "I stayed calm ___ the network was slow."',
-        opts: ['even though', 'despite of', 'because of'],
-        ans: 0
-      },
-      {
-        levelTag: 'B1',
-        q: 'Step 4 (B1): Which sentence is clearest for a team update?',
-        opts: ['We resolved the bug and verified the backup.', 'The bug was doing resolution by us for backup.'],
-        ans: 0
-      },
-      {
-        levelTag: 'C1',
-        q: 'Step 5 (C1): "Had we automated testing earlier, we ___ hours of manual checks."',
-        opts: ['would have saved', 'will save', 'saved'],
-        ans: 0
-      }
+      { stage: 1, q: 'Question 1: Choose the right word — "I ___ a student."', opts: ['am', 'are', 'were'], ans: 0 },
+      { stage: 2, q: 'Question 2: "She ___ to class by bicycle every day."', opts: ['goes', 'going', 'gone'], ans: 0 },
+      { stage: 3, q: 'Question 3: "I stayed calm ___ the internet was slow."', opts: ['even though', 'despite of', 'because of'], ans: 0 },
+      { stage: 4, q: 'Question 4: Which update sounds clearest in an office meeting?', opts: ['We fixed the issue and verified the backup.', 'The issue was doing fix by us for backup.'], ans: 0 },
+      { stage: 5, q: 'Question 5: "Had we tested this earlier, we ___ hours of rework."', opts: ['would have saved', 'will save', 'saved'], ans: 0 }
     ];
 
-    /* SEED QUESTIONS (A0 -> PRO) + INFINITE AI GENERATOR AFTERWARDS (NO REPEATS, SHUFFLED OPTIONS) */
-    const SEED_LINGO_DECK = [
-      {
-        level: 'A0',
-        qEn: 'How do you greet someone politely in the morning?',
-        qHi: 'सुबह किसी का अभिवादन कैसे करेंगे?',
-        opts: ['Good morning!', 'Good night!', 'See you yesterday!'],
-        ans: 0, word: 'morning',
-        whyEn: '"Good morning!" is used when meeting in the morning.',
-        whyHi: 'सुबह मिलने पर "Good morning!" कहते हैं।'
-      },
-      {
-        level: 'A0',
-        qEn: 'Complete: "My name ___ Lakshmi."',
-        qHi: 'वाक्य पूरा करें: "मेरा नाम लक्ष्मी है।"',
-        opts: ['is', 'are', 'am'],
-        ans: 0, word: 'name',
-        whyEn: 'With singular subjects like "My name", use "is".',
-        whyHi: 'एकवचन (My name) के साथ हमेशा "is" लगता है।'
-      },
-      {
-        level: 'A0',
-        qEn: 'How do you say: "मैं सुबह 5 बजे उठता/उठती हूँ"?',
-        qHi: 'सही अंग्रेज़ी वाक्य चुनें:',
-        opts: ['I wake up at 5 AM.', 'I waking 5 AM.', 'I wakes up in 5 AM.'],
-        ans: 0, word: 'wake up',
-        whyEn: 'Use "I wake up at 5 AM" for daily habits.',
-        whyHi: 'रोज़ की आदत के लिए "I wake up" और समय से पहले "at" लगाते हैं।'
-      },
-      {
-        level: 'A1',
-        qEn: 'How do you say: "मैं साइकिल से क्लास जाता/जाती हूँ"?',
-        qHi: 'सही वाक्य चुनें:',
-        opts: ['I go to class by bicycle.', 'I going class bicycle.', 'I go class on bicycle.'],
-        ans: 0, word: 'bicycle',
-        whyEn: 'Use "go to" before a place and "by bicycle" for transport.',
-        whyHi: 'जगह से पहले "to" और वाहन से पहले "by" लगता है।'
-      },
-      {
-        level: 'A1',
-        qEn: 'Polite request: "क्या आप इसे दोबारा दोहरा सकते हैं?"',
-        qHi: 'विनम्र अनुरोध चुनें:',
-        opts: ['Could you please repeat that?', 'Repeat again fast.', 'You repeat this.'],
-        ans: 0, word: 'repeat',
-        whyEn: '"Could you please..." is polite and natural.',
-        whyHi: '"Could you please..." विनम्र और सम्मानजनक तरीका है।'
-      },
-      {
-        level: 'A2',
-        qEn: 'Connect ideas: "I practice daily ___ I want to speak fluently."',
-        qHi: 'सही शब्द ("क्योंकि") चुनें:',
-        opts: ['because', 'but', 'unless'],
-        ans: 0, word: 'because',
-        whyEn: '"Because" introduces the reason for your action.',
-        whyHi: '"Because" का अर्थ है "क्योंकि" — यह कारण बताता है।'
-      },
-      {
-        level: 'B1',
-        qEn: 'Choose the sharpest professional phrasing:',
-        qHi: 'सबसे स्पष्ट और पेशेवर वाक्य चुनें:',
-        opts: ['Despite the delay, she delivered a clear update.', 'Although the delay, she gave a clear update which was concise.'],
-        ans: 0, word: 'despite',
-        whyEn: '"Despite" is followed directly by a noun phrase ("the delay").',
-        whyHi: '"Despite" के तुरंत बाद संज्ञा वाक्यांश (noun phrase) आता है।'
-      }
-    ];
+    /* GRADUAL STAGE-BY-STAGE QUESTION BANK (NO SUDDEN JUMPS, SHUFFLED OPTIONS, NO REPEATS) */
+    const STAGE_LINGO_DECK = {
+      1: [
+        { qEn: 'How do you greet someone politely in the morning?', qHi: 'सुबह किसी का अभिवादन कैसे करेंगे?', opts: ['Good morning!', 'Good night!', 'See you yesterday!'], ans: 0, word: 'morning', whyEn: '"Good morning!" is used when meeting in the morning.', whyHi: 'सुबह मिलने पर "Good morning!" कहते हैं।' },
+        { qEn: 'Complete: "My name ___ Lakshmi."', qHi: 'वाक्य पूरा करें: "मेरा नाम लक्ष्मी है।"', opts: ['is', 'are', 'am'], ans: 0, word: 'name', whyEn: 'With singular subjects like "My name", use "is".', whyHi: 'एकवचन (My name) के साथ हमेशा "is" लगता है।' },
+        { qEn: 'How do you say: "मैं सुबह 5 बजे उठता/उठती हूँ"?', qHi: 'सही अंग्रेज़ी वाक्य चुनें:', opts: ['I wake up at 5 AM.', 'I waking 5 AM.', 'I wakes up in 5 AM.'], ans: 0, word: 'wake up', whyEn: 'Use "I wake up at 5 AM" for daily habits.', whyHi: 'रोज़ की आदत के लिए "I wake up" और समय से पहले "at" लगाते हैं।' },
+        { qEn: 'How do you say: "मुझे आलू पराठा पसंद है"?', qHi: 'सही वाक्य चुनें:', opts: ['I like aloo paratha.', 'I liking paratha.', 'I am like paratha.'], ans: 0, word: 'like', whyEn: 'Use "I like + food name" to share what you enjoy.', whyHi: 'अपनी पसंद बताने के लिए सीधा "I like..." का प्रयोग करें।' },
+        { qEn: 'Choose the right word: "This ___ my new tablet."', qHi: 'सही शब्द चुनें ("यह मेरा नया टैबलेट है"):', opts: ['is', 'are', 'am'], ans: 0, word: 'this', whyEn: '"This" refers to one object, so use "is".', whyHi: '"This" एक वस्तु के लिए आता है, इसलिए "is" लगेगा।' },
+        { qEn: 'How do you thank someone politely?', qHi: 'धन्यवाद कैसे कहेंगे?', opts: ['Thank you very much!', 'Thanks you much.', 'Thanking to you.'], ans: 0, word: 'thank', whyEn: '"Thank you very much!" is warm and polite.', whyHi: '"Thank you very much!" विनम्र और सही तरीका है।' }
+      ],
+      2: [
+        { qEn: 'How do you say: "मैं साइकिल से क्लास जाता/जाती हूँ"?', qHi: 'सही वाक्य चुनें:', opts: ['I go to class by bicycle.', 'I going class bicycle.', 'I go class on bicycle.'], ans: 0, word: 'bicycle', whyEn: 'Use "go to" before a place and "by bicycle" for transport.', whyHi: 'जगह से पहले "to" और वाहन से पहले "by" लगता है।' },
+        { qEn: 'Polite request: "क्या आप इसे दोबारा दोहरा सकते हैं?"', qHi: 'विनम्र अनुरोध चुनें:', opts: ['Could you please repeat that?', 'Repeat again fast.', 'You repeat this now.'], ans: 0, word: 'repeat', whyEn: '"Could you please..." is polite and respectful.', whyHi: '"Could you please..." विनम्र और सम्मानजनक तरीका है।' },
+        { qEn: 'Complete: "I practice singing ___ the evening."', qHi: 'सही शब्द चुनें ("शाम को"):', opts: ['in', 'on', 'at'], ans: 0, word: 'evening', whyEn: 'We say "in the morning" and "in the evening".', whyHi: 'सुबह या शाम के लिए "in the evening" प्रयोग होता है।' },
+        { qEn: 'Choose the right sentence: "मेरे पिताजी एक किसान हैं।"', qHi: 'सही वाक्य चुनें:', opts: ['My father is a farmer.', 'My father are farmer.', 'My father is farmer.'], ans: 0, word: 'farmer', whyEn: 'Use "is a farmer" for a singular profession.', whyHi: 'एकवचन व्यवसाय से पहले "is a" लगता है।' },
+        { qEn: 'How do you ask for help politely?', qHi: 'मदद कैसे मांगेंगे?', opts: ['Excuse me, can you help me?', 'Help me fast you.', 'Give help to me.'], ans: 0, word: 'help', whyEn: 'Starting with "Excuse me, can you..." is polite and clear.', whyHi: '"Excuse me, can you..." विनम्र शुरुआत है।' }
+      ],
+      3: [
+        { qEn: 'Connect ideas: "I study daily ___ I want to build strong skills."', qHi: 'सही शब्द ("क्योंकि") चुनें:', opts: ['because', 'but', 'unless'], ans: 0, word: 'because', whyEn: '"Because" explains the reason behind an action.', whyHi: '"Because" का अर्थ है "क्योंकि" — यह कारण बताता है।' },
+        { qEn: 'Choose the clearest sentence:', qHi: 'सबसे साफ़ वाक्य चुनें:', opts: ['Making small mistakes helps me learn faster.', 'Do mistake is help learn fast.', 'Mistake make learn fast.'], ans: 0, word: 'mistakes', whyEn: 'Using "-ing" ("Making small mistakes") as the subject sounds natural.', whyHi: 'वाक्य की शुरुआत में क्रिया को संज्ञा बनाने के लिए "Making..." सही है।' },
+        { qEn: 'Past habit: "Yesterday, I ___ my homework before dinner."', qHi: 'कल की बात बताएं ("पूरा किया"):', opts: ['finished', 'finish', 'finishing'], ans: 0, word: 'finished', whyEn: 'With "Yesterday", use simple past "finished".', whyHi: '"Yesterday" के साथ भूतकाल (finished) का प्रयोग होता है।' },
+        { qEn: 'Comparison: "Practicing daily is ___ than studying once a week."', qHi: 'तुलना करें ("ज़्यादा बेहतर"):', opts: ['better', 'more good', 'best'], ans: 0, word: 'better', whyEn: 'The comparative form of "good" is "better".', whyHi: '"Good" का तुलनात्मक रूप "better" होता है।' }
+      ],
+      4: [
+        { qEn: 'Pick the sharpest professional update:', qHi: 'सबसे स्पष्ट और पेशेवर वाक्य चुनें:', opts: ['Despite the slow network, the app saved all progress.', 'Although slow network, app was saving progress.'], ans: 0, word: 'despite', whyEn: '"Despite" is followed directly by a noun phrase ("the slow network").', whyHi: '"Despite" के तुरंत बाद संज्ञा वाक्यांश आता है।' },
+        { qEn: 'Choose the most concise workplace phrasing:', qHi: 'संक्षिप्त और स्पष्ट वाक्य चुनें:', opts: ['Let us test each step before launching the update.', 'Let us do testing of every single step before we launch update.'], ans: 0, word: 'launching', whyEn: 'Direct action verbs ("test each step before launching") sound crisp.', whyHi: 'संक्षिप्त और स्पष्ट क्रियाएं वाक्य को प्रभावशाली बनाती हैं।' },
+        { qEn: 'Polite disagreement in a team discussion:', qHi: 'विनम्र असहमति कैसे जताएंगे?', opts: ['I see your point; however, testing on mobile first may be safer.', 'Your idea is wrong, do mobile first.'], ans: 0, word: 'however', whyEn: 'Acknowledging the other view before offering an alternative builds trust.', whyHi: 'दूसरे की बात समझकर विकल्प सुझाना पेशेवर तरीका है।' }
+      ],
+      5: [
+        { qEn: 'Pro Mastery: "Had we automated the check earlier, we ___ hours of manual work."', qHi: 'उन्नत वाक्य पूरा करें:', opts: ['would have saved', 'will save', 'had saved'], ans: 0, word: 'automated', whyEn: 'Inverted third conditional ("Had we + past participle... would have + past participle").', whyHi: 'कल्पित भूतकाल के लिए "would have saved" का प्रयोग होता है।' },
+        { qEn: 'Executive clarity: Which sentence communicates impact best?', qHi: 'सबसे प्रभावशाली वाक्य चुनें:', opts: ['Batching notifications cut distractions in half and doubled output.', 'Notifications were batched by us so distractions became less and output more.'], ans: 0, word: 'output', whyEn: 'Active verbs ("cut", "doubled") deliver high clarity and impact.', whyHi: 'सक्रिय क्रियाएं वाक्य को सीधा और असरदार बनाती हैं।' }
+      ]
+    };
 
     const READ_ALONG_STORIES = [
       {
@@ -942,21 +934,287 @@
       'easy': 'आसान (not difficult)'
     };
 
-    const ALL_REAL_COURSES = [
-      { id: 'eng', cat: 'LIFE', title: 'Spoken English (English + हिंदी)', desc: 'A0 basics to fluent daily & workplace speech', trick: 'Active Recall + Bilingual Instant Fix' },
-      { id: 'comp_basic', cat: 'TECH', title: 'Computer Basic / कंप्यूटर बेसिक', desc: 'Files, keyboard/touch, browser & digital safety', trick: 'Hands-On Micro-Tasks' },
-      { id: 'adca', cat: 'TECH', title: 'ADCA Diploma Essentials', desc: 'Docs, spreadsheets, data entry & office workflows', trick: 'Real Office Scenario Practice' },
-      { id: 'html_css', cat: 'TECH', title: 'HTML & CSS Web Design', desc: 'Structure web pages, layouts, colors & responsive UI', trick: 'Visual Building Blocks' },
-      { id: 'js', cat: 'TECH', title: 'JavaScript Interactive Logic', desc: 'Events, conditions, functions & smart web apps', trick: 'Predict-Then-Test Trick' },
-      { id: 'python', cat: 'TECH', title: 'Python Programming', desc: 'Clean syntax, loops, lists, automation & problem solving', trick: 'Step-by-Step Trace' },
-      { id: 'java', cat: 'TECH', title: 'Java Core & OOP', desc: 'Classes, objects, structured design & reliability', trick: 'Real-World Blueprint Analogy' },
-      { id: 'cpp', cat: 'TECH', title: 'C++ & Fast Logic', desc: 'Memory, speed, algorithms & structured thinking', trick: 'Speed vs Clarity Tradeoff' },
-      { id: 'ai', cat: 'AI_ML', title: 'Artificial Intelligence (AI)', desc: 'How AI works, smart prompting & real job tools', trick: 'Prompt-Refine Loop' },
-      { id: 'ml', cat: 'AI_ML', title: 'Machine Learning (ML)', desc: 'Data, training, patterns, predictions & evaluation', trick: 'Pattern Spotter Method' },
-      { id: 'time_mgmt', cat: 'LIFE', title: 'Time Management / समय प्रबंधन', desc: 'Prioritize high-impact work & beat procrastination', trick: 'Top-2 Priority Rule' },
-      { id: 'productivity', cat: 'LIFE', title: 'Personal Productivity', desc: 'Focus blocks, clean checklists & steady execution', trick: '25-Min Focused Sprint' },
-      { id: 'self_help', cat: 'LIFE', title: 'Self-Help & Confidence', desc: 'Self-belief, calm problem solving & emotional balance', trick: 'Growth Mindset Reframe' },
-      { id: 'punctuality', cat: 'LIFE', title: 'Punctuality & Discipline', desc: 'On-time habits, reminders & reliable commitments', trick: 'Buffer + Evening Prep Trick' }
+    /* DEEP, REAL-LIFE COURSES WITH MULTIPLE PRACTICAL LESSONS EACH */
+    const DEEP_COURSES = [
+      {
+        id: 'eng', cat: 'LIFE', title: 'Spoken English (English + हिंदी)', desc: 'Gradual Stage 1 → 5 daily & workplace fluency', trick: 'Active Recall + Instant Bilingual Fix',
+        lessons: [] // Uses JeshLingo engine
+      },
+      {
+        id: 'comp_basic', cat: 'TECH', title: 'Computer Basic / कंप्यूटर बेसिक', desc: 'Files, shortcuts, browser safety & real digital tasks', trick: 'Hands-On Digital Habits',
+        lessons: [
+          {
+            title: 'Lesson 1: File Organization & Extensions',
+            concept: 'Every file has a name and an extension (like .pdf for documents, .jpg for photos, .xlsx for spreadsheets). Keeping files in named folders (e.g., "Study_Notes", "Certificates") saves hours of searching.',
+            hiConcept: 'हर फ़ाइल के नाम के अंत में उसका प्रकार (.pdf, .jpg, .xlsx) होता है। फ़ाइलों को अलग-अलग फ़ोल्डर में रखने से वे तुरंत मिल जाती हैं।',
+            code: 'Folder Structure:\n📁 My_Career/\n   ├── 📁 Certificates/ (ADCA_Cert.pdf)\n   └── 📁 Projects/ (Jesh_AI_Notes.docx)',
+            q: 'You downloaded an important certificate and want to find it quickly next month. What is the best habit?',
+            opts: ['Rename it clearly (e.g., Certificate_2026.pdf) and move it into a "Certificates" folder', 'Leave it in Downloads named "document(14).pdf"'],
+            ans: 0,
+            explain: 'Clear file names + dedicated folders make finding documents effortless on any computer or tablet.'
+          },
+          {
+            title: 'Lesson 2: Browser Tabs, Bookmarks & Safe Links',
+            concept: 'Pinning or bookmarking daily learning sites avoids typing long URLs repeatedly. Always check that a login site starts with "https://" before entering any PIN or password.',
+            hiConcept: 'रोज़ काम आने वाली वेबसाइट को Bookmark करें और पासवर्ड डालने से पहले हमेशा ऊपर "https://" जांचें।',
+            code: 'Shortcuts:\nCtrl + D  -> Bookmark current page\nCtrl + T  -> Open new tab\nCtrl + Shift + R -> Hard refresh updated page',
+            q: 'You updated a website and want to make sure your browser loads the newest version instead of old cache. Which shortcut helps?',
+            opts: ['Press Ctrl + Shift + R (Hard Refresh)', 'Close the computer without saving'],
+            ans: 0,
+            explain: 'Ctrl + Shift + R forces the browser to fetch the latest files directly from the server.'
+          },
+          {
+            title: 'Lesson 3: Backups & Cloud Sync',
+            concept: 'Devices can lose battery or get reset. Saving important work on cloud storage (like Google Drive) or keeping a backup copy ensures you never lose your progress.',
+            hiConcept: 'जरूरी फ़ाइलों की एक कॉपी Cloud (Google Drive) में सुरक्षित रखें ताकि डिवाइस खराब होने पर भी डेटा न खोए।',
+            code: '3-2-1 Rule: Keep important work in at least 2 places (Device + Cloud).',
+            q: 'Why should you keep a backup of important project files?',
+            opts: ['So you can restore everything in seconds if a device is lost or edited by mistake', 'Because backups make the screen brighter'],
+            ans: 0,
+            explain: 'Backups protect your hard work against accidental deletion or hardware failure.'
+          }
+        ]
+      },
+      {
+        id: 'adca', cat: 'TECH', title: 'ADCA Diploma Essentials', desc: 'Spreadsheets, formulas, office reports & data workflows', trick: 'Real Office Scenario Practice',
+        lessons: [
+          {
+            title: 'Lesson 1: Spreadsheet Formulas (SUM, AVERAGE, IF)',
+            concept: 'In office jobs, spreadsheets calculate totals and results automatically using formulas starting with "=". Never calculate 50 rows manually with a calculator!',
+            hiConcept: 'ऑफ़िस में Excel/Sheets के अंदर "=" से शुरू होने वाले फ़ॉर्मूले (जैसे =SUM) अपने-आप जोड़ और परिणाम निकाल देते हैं।',
+            code: '=SUM(B2:B10)          // Adds all marks from row 2 to 10\n=IF(C2>=33, "PASS", "RETRY")  // Automatic result status',
+            q: 'In an ADCA office test, you need to add monthly expenses listed in cells B2 through B15. Which formula is right?',
+            opts: ['=SUM(B2:B15)', '=ADD(B2 to B15)'],
+            ans: 0,
+            explain: '=SUM(B2:B15) automatically totals every number in that range and updates if any number changes.'
+          },
+          {
+            title: 'Lesson 2: Clean Data Tables & Formatting',
+            concept: 'Every good office report has: 1) Clear header row in Row 1, 2) Consistent date/number formats, and 3) No merged cells inside data columns so sorting and filtering work smoothly.',
+            hiConcept: 'डेटा शीट में पहली पंक्ति में स्पष्ट हेडिंग रखें और बीच में सेल मर्ज न करें ताकि फ़िल्टर और सॉर्टिंग सही काम करे।',
+            code: 'StudentID | Name    | Attendance | Status\nSTU-101   | Lakshmi | 95%        | Active',
+            q: 'Why should you avoid merging cells inside a data table in Excel or Google Sheets?',
+            opts: ['Merged cells break sorting, filtering, and formulas', 'Merged cells change the font color to red'],
+            ans: 0,
+            explain: 'Keeping one value per cell allows clean sorting, filtering, and automated formulas.'
+          }
+        ]
+      },
+      {
+        id: 'html_css', cat: 'TECH', title: 'HTML & CSS Web Design', desc: 'Semantic tags, Flexbox/Grid layouts & mobile responsiveness', trick: 'Visual Building Blocks',
+        lessons: [
+          {
+            title: 'Lesson 1: HTML Structure (Headings, Buttons & Inputs)',
+            concept: 'HTML gives a web page its skeleton. Semantic tags like <header>, <main>, <button>, and <input> help browsers, screen readers, and mobile keyboards work accurately.',
+            hiConcept: 'HTML वेब पेज का ढांचा बनाता है। सही टैग (<button>, <input>) लगाने से मोबाइल कीबोर्ड और स्क्रीन रीडर सही काम करते हैं।',
+            code: '<div class="card">\n  <h2>Welcome Student</h2>\n  <input type="text" placeholder="Enter Name" />\n  <button class="btn-primary">Start</button>\n</div>',
+            q: 'You want mobile phones to automatically show a number keypad when a user types their 4-digit PIN. Which HTML attribute helps?',
+            opts: ['inputmode="numeric" on the <input> tag', 'font-weight="bold"'],
+            ans: 0,
+            explain: 'inputmode="numeric" tells mobile browsers to open the clean numeric keypad immediately.'
+          },
+          {
+            title: 'Lesson 2: Responsive CSS with Grid & Flexbox',
+            concept: 'Fixed widths like "width: 900px" overflow off mobile screens. Using "max-width: 100%" and CSS Grid with "auto-fit" lets cards stack on phones and sit side-by-side on laptops.',
+            hiConcept: 'फ़िक्स चौड़ाई (900px) मोबाइल पर कट जाती है। CSS Grid में auto-fit लगाने से कार्ड मोबाइल और लैपटॉप दोनों पर अपने-आप फिट होते हैं।',
+            code: '.course-grid {\n  display: grid;\n  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));\n  gap: 12px;\n}',
+            q: 'Why does "repeat(auto-fit, minmax(210px, 1fr))" work across mobile, tablet, and laptop?',
+            opts: ['It automatically adjusts the number of columns to fit the screen width', 'It hides the page on mobile devices'],
+            ans: 0,
+            explain: 'auto-fit wraps cards cleanly onto new rows on narrow phones while expanding into multiple columns on wide screens.'
+          }
+        ]
+      },
+      {
+        id: 'js', cat: 'TECH', title: 'JavaScript Interactive Logic', desc: 'State, events, async fetch & safe error handling', trick: 'Predict-Then-Test Trick',
+        lessons: [
+          {
+            title: 'Lesson 1: Events & Updating the Screen (DOM)',
+            concept: 'JavaScript makes pages alive. When a user clicks a button, an event listener runs a function, updates your data state, and refreshes only the needed text on screen.',
+            hiConcept: 'JavaScript बटन क्लिक होने पर डेटा (State) बदलता है और स्क्रीन के उस हिस्से को तुरंत अपडेट करता है।',
+            code: 'let xp = 0;\nfunction addXp(points) {\n  xp += points;\n  document.getElementById("xpBadge").textContent = xp + " XP";\n}',
+            q: 'What happens if you call addXp(10) twice in the code above?',
+            opts: ['xp becomes 20 and #xpBadge shows "20 XP"', 'xp stays 0'],
+            ans: 0,
+            explain: 'Each call adds 10 to the variable xp and immediately updates the badge text.'
+          },
+          {
+            title: 'Lesson 2: Async Fetch with Try/Catch & Local Fallback',
+            concept: 'In real apps, internet connections can drop. Wrapping fetch() in try/catch lets your app save data in localStorage and continue working offline instead of freezing.',
+            hiConcept: 'असली ऐप्स में नेटवर्क धीमा हो सकता है। try/catch और localStorage लगाने से इंटरनेट न होने पर भी ऐप रुकता नहीं है।',
+            code: 'try {\n  const res = await fetch(API_URL);\n  return await res.json();\n} catch (err) {\n  return JSON.parse(localStorage.getItem("backup_data"));\n}',
+            q: 'Why is a try/catch block around fetch() critical in mobile web apps?',
+            opts: ['It catches network failures gracefully so the app can use offline data instead of crashing', 'It makes images load in black and white'],
+            ans: 0,
+            explain: 'Graceful error handling keeps the user experience smooth even on unstable mobile networks.'
+          }
+        ]
+      },
+      {
+        id: 'python', cat: 'TECH', title: 'Python Programming', desc: 'Variables, loops, functions & real-world automation', trick: 'Step-by-Step Trace',
+        lessons: [
+          {
+            title: 'Lesson 1: Lists & Loops for Repetitive Tasks',
+            concept: 'Python is famous for clean, readable code. Instead of writing 100 print statements, a "for" loop processes an entire list of students or files in 2 lines.',
+            hiConcept: 'Python में "for" लूप की मदद से आप सैकड़ों छात्रों या फ़ाइलों का काम सिर्फ़ 2 लाइन के कोड में कर सकते हैं।',
+            code: 'students = ["Lakshmi", "Aarav", "Diya"]\nfor name in students:\n    print("Welcome,", name)',
+            q: 'How many lines will the Python loop above print?',
+            opts: ['3 lines — one welcome message for each student in the list', '1 line only'],
+            ans: 0,
+            explain: 'The for loop runs once for every item in the students list (3 items = 3 outputs).'
+          },
+          {
+            title: 'Lesson 2: Dictionaries for Fast Lookup',
+            concept: 'A Python dictionary stores key-value pairs (like a word and its Hindi meaning). Looking up a key in a dictionary is nearly instantaneous even with 10,000 items.',
+            hiConcept: 'Python Dictionary में शब्द और उसका अर्थ (Key: Value) रखा जाता है, जिससे हज़ारों शब्दों में से भी तुरंत उत्तर मिल जाता है।',
+            code: 'glossary = {"bicycle": "साइकिल", "warm": "गुनगुना"}\nprint(glossary.get("bicycle", "Not found"))',
+            q: 'What does glossary.get("bicycle", "Not found") return?',
+            opts: ['"साइकिल"', '"Not found"'],
+            ans: 0,
+            explain: 'Since "bicycle" exists in the dictionary, .get() returns its mapped value "साइकिल".'
+          }
+        ]
+      },
+      {
+        id: 'java', cat: 'TECH', title: 'Java Core & OOP', desc: 'Classes, objects, type safety & enterprise apps', trick: 'Real-World Blueprint Analogy',
+        lessons: [
+          {
+            title: 'Lesson 1: Classes & Objects (Blueprint vs House)',
+            concept: 'In Java, a Class is a blueprint (like a Student form), and an Object is an actual filled-out student record created from that blueprint.',
+            hiConcept: 'Java में Class एक नक्शा (Blueprint) है और Object उस नक्शे से बना वास्तविक रिकॉर्ड है।',
+            code: 'class Student {\n  String name;\n  int xp;\n  Student(String n) { this.name = n; this.xp = 0; }\n}',
+            q: 'If "Student" is a Java Class, what is "Student s1 = new Student(\"Lakshmi\");"?',
+            opts: ['An Object (instance) created from the Student class', 'A CSS stylesheet'],
+            ans: 0,
+            explain: 'The "new" keyword creates a live Student object in memory with its own name and xp.'
+          }
+        ]
+      },
+      {
+        id: 'cpp', cat: 'TECH', title: 'C++ & Fast Logic', desc: 'Speed, loops, conditions & algorithmic efficiency', trick: 'Speed vs Clarity Tradeoff',
+        lessons: [
+          {
+            title: 'Lesson 1: Why C++ is Used for High-Speed Systems',
+            concept: 'C++ compiles directly to machine instructions and gives tight control over memory, making it ideal for game engines, robotics, and competitive algorithms.',
+            hiConcept: 'C++ सीधे मशीन कोड में बदलता है, इसलिए यह गेम इंजन, रोबोटिक्स और तेज़ एल्गोरिदम के लिए सबसे तेज़ भाषाओं में से है।',
+            code: '#include <iostream>\nusing namespace std;\nint main() {\n  int score = 10;\n  if (score >= 10) cout << "Level Up!";\n  return 0;\n}',
+            q: 'What will the C++ snippet above output when score is 10?',
+            opts: ['Level Up!', 'Nothing'],
+            ans: 0,
+            explain: 'The condition (score >= 10) is true, so cout prints "Level Up!".'
+          }
+        ]
+      },
+      {
+        id: 'ai', cat: 'AI_ML', title: 'Artificial Intelligence (AI)', desc: 'Prompt engineering, AI workflows & hallucination checks', trick: 'Role + Context + Format Rule',
+        lessons: [
+          {
+            title: 'Lesson 1: How to Write High-Precision Prompts',
+            concept: 'Vague prompts produce vague answers. Giving AI 3 things—1) Role, 2) Context/Level, and 3) Exact Output Format—dramatically improves accuracy.',
+            hiConcept: 'अधूरा सवाल पूछने पर अधूरा जवाब मिलता है। AI को 1) भूमिका, 2) अपना स्तर, और 3) जवाब का प्रारूप बताएं।',
+            code: 'Weak: "Teach Python"\nStrong: "Act as a patient tutor. Teach Python lists to a beginner using 1 real-life example in English + Hindi."',
+            q: 'Which prompt will give a cleaner, more useful answer for a beginner?',
+            opts: ['"Explain variables with 1 simple example in 3 short sentences."', '"Tell everything about computer science."'],
+            ans: 0,
+            explain: 'Specific constraints (level, example count, sentence length) prevent overwhelming, unfocused walls of text.'
+          },
+          {
+            title: 'Lesson 2: Verifying AI Outputs (Human-in-the-Loop)',
+            concept: 'AI models predict likely text—they can occasionally make math or factual errors. Always verify important numbers, code, and medical/legal facts before relying on them.',
+            hiConcept: 'AI कभी-कभी तथ्यों या गणित में गलती कर सकता है। महत्वपूर्ण कोड या आंकड़ों को हमेशा खुद परखें।',
+            code: 'Rule: Generate with AI -> Verify with tests -> Deploy safely.',
+            q: 'You use AI to generate a spreadsheet formula for your office. What should you do next?',
+            opts: ['Test the formula on 2–3 sample rows with known answers to verify it works', 'Send the report without checking any numbers'],
+            ans: 0,
+            explain: 'Testing with known sample inputs catches formula mistakes immediately.'
+          }
+        ]
+      },
+      {
+        id: 'ml', cat: 'AI_ML', title: 'Machine Learning (ML)', desc: 'Training data, features, overfitting & real predictions', trick: 'Pattern Spotter Method',
+        lessons: [
+          {
+            title: 'Lesson 1: How Machines Learn from Examples',
+            concept: 'Traditional coding uses hand-written rules. Machine Learning feeds thousands of labeled examples (Features -> Label) so the model discovers patterns on its own.',
+            hiConcept: 'पारंपरिक कोडिंग में हम नियम लिखते हैं; Machine Learning में हम उदाहरण (Data) देते हैं और मॉडल खुद पैटर्न सीखता है।',
+            code: 'Features: [Study_Hours=2, Practice_Tests=3] -> Label: "Pass"\nFeatures: [Study_Hours=0, Practice_Tests=0] -> Label: "Needs_Help"',
+            q: 'What is the main difference between traditional programming and Machine Learning?',
+            opts: ['ML learns patterns from data examples instead of relying only on hard-coded rules', 'ML does not use computers'],
+            ans: 0,
+            explain: 'ML models generalize patterns from training examples to make predictions on new data.'
+          },
+          {
+            title: 'Lesson 2: Overfitting vs Generalization',
+            concept: 'If a student memorizes exact test questions without understanding concepts, they fail when questions change. In ML, memorizing training data is called "Overfitting".',
+            hiConcept: 'जैसे रटने वाला छात्र नए सवाल आने पर अटक जाता है, वैसे ही ट्रेनिंग डेटा को रट लेने वाले ML मॉडल को Overfitting कहते हैं।',
+            code: 'Training Accuracy: 99% | New Test Accuracy: 52%  ==> Overfitting!',
+            q: 'A model gets 99% on practice data but only 55% on new unseen data. What happened?',
+            opts: ['Overfitting — it memorized the practice data instead of learning general patterns', 'The screen brightness was too low'],
+            ans: 0,
+            explain: 'We test models on separate unseen data to make sure they truly learned the underlying pattern.'
+          }
+        ]
+      },
+      {
+        id: 'time_mgmt', cat: 'LIFE', title: 'Time Management / समय प्रबंधन', desc: 'Top-2 priorities, time-blocking & beating procrastination', trick: 'Top-2 Priority Rule',
+        lessons: [
+          {
+            title: 'Lesson 1: The Top-2 Priority Rule',
+            concept: 'Writing a 15-item to-do list creates stress. Instead, pick your Top 2 most important tasks every morning and finish them before checking social media or random videos.',
+            hiConcept: '15 कामों की लंबी सूची तनाव देती है। रोज़ सुबह सबसे ज़रूरी सिर्फ़ 2 काम चुनें और उन्हें सबसे पहले पूरा करें।',
+            code: 'Morning Plan:\n1. [Must Do] 20 min English & Coding practice\n2. [Must Do] Complete class assignment',
+            q: 'You have 45 free minutes before dinner and 8 small tasks. What gives the best result?',
+            opts: ['Finish your 1 most important task completely before starting anything else', 'Switch between all 8 tasks every 3 minutes'],
+            ans: 0,
+            explain: 'Single-tasking on your top priority avoids context-switching fatigue and finishes real work.'
+          }
+        ]
+      },
+      {
+        id: 'productivity', cat: 'LIFE', title: 'Personal Productivity', desc: '25-minute focus sprints & distraction-free study', trick: '25-Min Focused Sprint',
+        lessons: [
+          {
+            title: 'Lesson 1: The 25-Minute Focus Sprint (Pomodoro)',
+            concept: 'Put your phone on silent for just 25 minutes, focus on one skill, and then take a 5-minute stretch or water break. Short sprints beat 3 hours of distracted sitting.',
+            hiConcept: 'सिर्फ़ 25 मिनट फ़ोन दूर रखकर पूरी एकाग्रता से पढ़ें और फिर 5 मिनट आराम करें। यह 3 घंटे के भटकाव से कहीं बेहतर है।',
+            code: '25 min Deep Focus -> 5 min Water & Stretch -> Repeat x 2',
+            q: 'Why is a 25-minute distraction-free sprint so effective for learning?',
+            opts: ['Your brain enters deep focus easily when it knows a break is coming soon', 'Because 25 minutes is longer than 2 hours'],
+            ans: 0,
+            explain: 'Short, time-boxed commitments lower resistance to starting and keep mental energy high.'
+          }
+        ]
+      },
+      {
+        id: 'self_help', cat: 'LIFE', title: 'Self-Help & Confidence', desc: 'Growth mindset, calm recovery & daily self-belief', trick: 'Growth Mindset Reframe',
+        lessons: [
+          {
+            title: 'Lesson 1: Turning Mistakes into Data (Growth Mindset)',
+            concept: 'Nobody speaks fluent English or writes bug-free code on Day 1. Every mistake simply shows which exact word or line to practice next—never treat it as a failure.',
+            hiConcept: 'पहले दिन कोई भी बिना गलती के अंग्रेज़ी या कोडिंग नहीं करता। हर गलती बस यह बताती है कि अगला अभ्यास किस चीज़ का करना है।',
+            code: 'Fixed Thought: "I made a mistake, I am bad at this."\nGrowth Thought: "Great, now I know which exact rule to master next!"',
+            q: 'When you get a question wrong during practice, what is the most helpful response?',
+            opts: ['Read the explanation once, say the right answer aloud, and move forward', 'Close the app and feel discouraged'],
+            ans: 0,
+            explain: 'Immediate calm correction wires the right pattern into memory without stress.'
+          }
+        ]
+      },
+      {
+        id: 'punctuality', cat: 'LIFE', title: 'Punctuality & Discipline', desc: 'Evening prep, 10-minute buffer & reliable habits', trick: 'Evening Prep + 10-Min Buffer',
+        lessons: [
+          {
+            title: 'Lesson 1: The Evening Prep & 10-Minute Buffer Habit',
+            concept: 'People who arrive on time prepare the night before (bag packed, clothes ready, device charged) and always aim to reach 10 minutes early to handle unexpected delays.',
+            hiConcept: 'समय के पाबंद लोग रात को ही तैयारी (बैग, कपड़े, चार्जिंग) कर लेते हैं और हमेशा 10 मिनट पहले पहुँचने का लक्ष्य रखते हैं।',
+            code: '9:30 PM -> Pack bag & charge tablet\nMorning -> Leave 10 mins early for traffic/weather buffer',
+            q: 'Your class starts at 8:00 AM and takes 20 minutes by bicycle. What time should you leave home?',
+            opts: ['7:30 AM (giving a 10-minute safety buffer)', '7:42 AM hoping nothing slows you down'],
+            ans: 0,
+            explain: 'A 10-minute buffer turns unexpected delays into a calm, stress-free arrival.'
+          }
+        ]
+      }
     ];
 
     const CURATED_VIDEOS = [
@@ -966,7 +1224,6 @@
       { title: 'Time Management & Focus System', cat: 'Life Skills', ytId: 'iONDivxLe9U' }
     ];
 
-    /* 24-HOUR SESSION PERSISTENCE HELPER */
     function loadValidStudentSession() {
       try {
         const raw = localStorage.getItem('jesh_student');
@@ -995,24 +1252,28 @@
     let state = {
       student: loadValidStudentSession(),
       selectedChar: CHARACTERS[0],
-      selectedCourse: ALL_REAL_COURSES[1],
+      selectedCourse: DEEP_COURSES[1],
       courseFilter: 'ALL',
+      currentStageNum: Number(localStorage.getItem('jesh_stage_num') || '1'),
+      stageCorrectStreak: Number(localStorage.getItem('jesh_stage_streak') || '0'),
+      usedQuestionHashes: JSON.parse(localStorage.getItem('jesh_used_q') || '[]'),
+      prefetchedQuestion: null,
       fastTrack: localStorage.getItem('jesh_fast_track') === 'true',
       speed: localStorage.getItem('jesh_speed') || 'normal',
       theme: localStorage.getItem('jesh_theme') || 'calm',
       adminPass: '',
       offlineQueue: JSON.parse(localStorage.getItem('jesh_offline_queue') || '[]'),
-      lingoQuestionCount: Number(localStorage.getItem('jesh_lingo_qcount') || '0'),
-      seenTopics: JSON.parse(localStorage.getItem('jesh_seen_topics') || '[]'),
       currentLingoItem: null,
       lingoAnswered: false,
       lingoTimer: null,
       placementStep: 0,
-      placementScore: 0,
+      placementHighestStage: 1,
       storyIndex: 0,
       spokenWordsSet: new Set(),
       readRec: null,
+      readMicActive: false,
       skillStepIndex: 0,
+      lessonAnswered: false,
       handsFreeVoice: true,
       camStream: null,
       recognition: null,
@@ -1028,7 +1289,11 @@
       ]
     };
 
-    /* SHUFFLE OPTIONS SO CORRECT ANSWER IS NEVER ALWAYS FIRST */
+    if (state.student && state.student.level) {
+      const derived = codeToStageNum(state.student.level);
+      if (derived > state.currentStageNum) state.currentStageNum = derived;
+    }
+
     function shuffleQuestionOptions(qObj) {
       const paired = qObj.opts.map((text, idx) => ({ text, isCorrect: idx === qObj.ans }));
       for (let i = paired.length - 1; i > 0; i--) {
@@ -1073,7 +1338,7 @@
 
     async function apiCall(payload) {
       const controller = new AbortController();
-      const timer = setTimeout(() => controller.abort(), 16000);
+      const timer = setTimeout(() => controller.abort(), 14000);
       try {
         const res = await fetch(GAS_URL, {
           method: 'POST',
@@ -1120,7 +1385,7 @@
         const nextXp = (cur.xp || 0) + Number(payload.xp || 10);
         const weak = [...(cur.weakWords || [])];
         if (payload.weakWord && !weak.includes(payload.weakWord)) weak.push(payload.weakWord);
-        return { ok: true, xp: nextXp, level: nextXp >= 200 ? 'B1' : (nextXp >= 60 ? 'A1' : cur.level), weakWords: weak, courseProgress: Math.min(100, (cur.courseProgress || 10) + 5) };
+        return { ok: true, xp: nextXp, level: getStageInfo(state.currentStageNum).code, weakWords: weak, courseProgress: Math.min(100, (cur.courseProgress || 10) + 5) };
       }
       if (payload.action === 'getWordMeaning') {
         const clean = String(payload.word || '').toLowerCase();
@@ -1208,6 +1473,7 @@
         if (!state.student.language) state.student.language = 'Bilingual';
         refreshStudentUI();
         navigate('home');
+        prefetchNextStageQuestion();
       } else {
         navigate('auth');
       }
@@ -1258,7 +1524,7 @@
 
     function openModule(mod) {
       navigate(mod);
-      if (mod === 'lingo') generateAndRenderNextLingo();
+      if (mod === 'lingo') renderInstantLingoQuestion();
       if (mod === 'read') renderReadAlongStory();
       if (mod === 'academy') renderCourseSkillLab();
       if (mod === 'call') startVideoCallExperience();
@@ -1270,14 +1536,22 @@
     function toggleFastTrackMode() {
       state.fastTrack = !state.fastTrack;
       localStorage.setItem('jesh_fast_track', String(state.fastTrack));
+      if (state.fastTrack && state.currentStageNum < 4) {
+        state.currentStageNum = 4;
+      } else if (!state.fastTrack) {
+        state.currentStageNum = 1;
+      }
+      state.stageCorrectStreak = 0;
+      state.prefetchedQuestion = null;
+      localStorage.setItem('jesh_stage_num', String(state.currentStageNum));
+      localStorage.setItem('jesh_stage_streak', '0');
       if (state.student) {
-        if (state.fastTrack && (state.student.level === 'A0' || state.student.level === 'A1')) {
-          state.student.level = 'B1';
-        }
+        state.student.level = getStageInfo(state.currentStageNum).code;
         saveStudentSession(state.student);
       }
       refreshStudentUI();
-      showToast(state.fastTrack ? 'Fast-Track ON — Advanced level active!' : 'Guided Foundation Mode active.');
+      prefetchNextStageQuestion();
+      showToast(state.fastTrack ? 'Fast-Track Boost ON (Stage 4: Achiever)!' : 'Gradual Starter Mode (Stage 1) active.');
     }
 
     function switchAuthMode(mode) {
@@ -1297,8 +1571,11 @@
       if (res.ok) {
         if (!res.student.language) res.student.language = 'Bilingual';
         localStorage.setItem('jesh_login_at', String(Date.now()));
+        state.currentStageNum = codeToStageNum(res.student.level);
+        localStorage.setItem('jesh_stage_num', String(state.currentStageNum));
         saveStudentSession(res.student);
         refreshStudentUI();
+        prefetchNextStageQuestion();
         if (res.requireNewPin) switchAuthMode('newpin');
         else navigate('home');
       } else {
@@ -1312,8 +1589,13 @@
       const pin = document.getElementById('regPin').value.trim();
       const track = document.getElementById('regTrack').value || 'AutoCheck';
       const language = document.getElementById('regLang').value || 'Bilingual';
+
       state.fastTrack = (track === 'FastTrack');
+      state.currentStageNum = state.fastTrack ? 4 : 1;
+      state.stageCorrectStreak = 0;
       localStorage.setItem('jesh_fast_track', String(state.fastTrack));
+      localStorage.setItem('jesh_stage_num', String(state.currentStageNum));
+      localStorage.setItem('jesh_stage_streak', '0');
 
       const btn = document.getElementById('btnRegister');
       btn.disabled = true;
@@ -1324,9 +1606,10 @@
         localStorage.setItem('jesh_login_at', String(Date.now()));
         saveStudentSession(res.student);
         refreshStudentUI();
+        prefetchNextStageQuestion();
         if (track === 'AutoCheck') {
           openModule('placement');
-          showToast('Welcome ' + name + '! Let us check your exact level first.');
+          showToast('Welcome ' + name + '! Let us find your best starting stage.');
         } else {
           navigate('home');
           showToast('Welcome ' + name + '!');
@@ -1342,7 +1625,7 @@
       localStorage.removeItem('jesh_student');
       localStorage.removeItem('jesh_login_at');
       state.student = null;
-      document.getElementById('headerStats').textContent = 'A0 • 0 XP';
+      document.getElementById('headerStats').textContent = 'Starter • 0 XP';
       navigate('auth');
       showToast('Logged out / लॉगआउट हो गया।');
     }
@@ -1363,10 +1646,11 @@
 
     function refreshStudentUI() {
       if (!state.student) return;
+      const stg = getStageInfo(state.currentStageNum);
       document.getElementById('welcomeText').textContent = `Hello, ${state.student.name}!`;
-      document.getElementById('headerStats').textContent = `${state.student.level} • ${state.student.xp} XP`;
+      document.getElementById('headerStats').textContent = `${stg.label.split(':')[1].trim()} • ${state.student.xp} XP`;
       document.getElementById('streakBadge').textContent = `🔥 ${state.student.streak} Day`;
-      document.getElementById('paceBadge').textContent = state.fastTrack ? `⚡ ${state.student.level} Fast-Track` : `Level: ${state.student.level}`;
+      document.getElementById('paceBadge').textContent = stg.label;
       const langLabel = state.student.language === 'Bilingual' ? 'EN + हिं' : state.student.language;
       document.getElementById('navLangLabel').textContent = langLabel;
     }
@@ -1382,11 +1666,11 @@
     }
 
     /* ========================================================================
-     * SMART A0 -> C1 LEVEL PLACEMENT CHECK
+     * 1-MINUTE SKILL PLACEMENT CHECK (NO TECHNICAL CODES)
      * ======================================================================== */
     function startPlacementCheck() {
       state.placementStep = 0;
-      state.placementScore = 0;
+      state.placementHighestStage = 1;
       document.getElementById('placementResult').classList.add('hidden');
       renderPlacementStep();
     }
@@ -1402,83 +1686,165 @@
       box.innerHTML = `
         <p style="font-weight:700; color:var(--text-main);">${item.q}</p>
         ${item.opts.map((o, idx) => `
-          <button class="lingo-opt-btn" onclick="answerPlacement(${idx === item.ans})">
+          <button class="lingo-opt-btn" onclick="answerPlacement(${idx === item.ans}, ${item.stage})">
             <span class="opt-letter">${letters[idx]}</span><span>${o}</span>
           </button>
         `).join('')}
       `;
     }
 
-    function answerPlacement(isRight) {
-      if (isRight) state.placementScore++;
-      state.placementStep++;
-      if (!isRight && state.placementStep >= 2) {
-        // Stop early if learner struggles at lower tier so we train at exact comfort level
-        finishPlacementCheck();
-      } else {
+    function answerPlacement(isRight, itemStage) {
+      if (isRight) {
+        state.placementHighestStage = itemStage;
+        state.placementStep++;
         renderPlacementStep();
+      } else {
+        // Stop immediately on mistake so student starts right at their comfortable stage
+        finishPlacementCheck();
       }
     }
 
     function finishPlacementCheck() {
-      const levels = ['A0', 'A1', 'A2', 'B1', 'C1'];
-      const assigned = levels[Math.min(4, state.placementScore)];
+      state.currentStageNum = state.placementHighestStage;
+      state.stageCorrectStreak = 0;
+      state.prefetchedQuestion = null;
+      localStorage.setItem('jesh_stage_num', String(state.currentStageNum));
+      localStorage.setItem('jesh_stage_streak', '0');
+
+      const stg = getStageInfo(state.currentStageNum);
       if (state.student) {
-        state.student.level = assigned;
-        if (assigned === 'B1' || assigned === 'C1') {
-          state.fastTrack = true;
-          localStorage.setItem('jesh_fast_track', 'true');
-        }
+        state.student.level = stg.code;
         saveStudentSession(state.student);
         refreshStudentUI();
       }
+      prefetchNextStageQuestion();
+
       document.getElementById('placementBox').innerHTML = '';
       const resBox = document.getElementById('placementResult');
       resBox.classList.remove('hidden');
       resBox.innerHTML = `
-        <strong>🎯 Your Personalized Level: ${assigned}</strong>
-        <p style="color:#14532D; margin-top:4px;">We calibrated JeshLingo, JeshRead, and Courses specifically to your ${assigned} level! (अब आपको ठीक आपके स्तर के अनुसार सिखाया जाएगा।)</p>
-        <button class="btn-primary" onclick="openModule('lingo')">Start Training at Level ${assigned} →</button>
+        <strong>🎯 Best Starting Point: ${stg.label} (${stg.hi})</strong>
+        <p style="color:#14532D; margin-top:4px;">You will advance step-by-step from here—no sudden jumps!</p>
+        <button class="btn-primary" onclick="openModule('lingo')">Start Practice Now →</button>
       `;
     }
 
     /* ========================================================================
-     * INFINITE NON-REPEATING JESHLINGO + RANDOM SHUFFLED OPTIONS
+     * INSTANT, GRADUAL, NON-REPEATING JESHLINGO (BACKGROUND PRE-FETCH)
      * ======================================================================== */
-    async function generateAndRenderNextLingo() {
+    function pickInstantQuestionForCurrentStage() {
+      const stagePool = STAGE_LINGO_DECK[state.currentStageNum] || STAGE_LINGO_DECK[1];
+      const unused = stagePool.filter(q => !state.usedQuestionHashes.includes(q.qEn));
+
+      if (unused.length > 0) {
+        const chosen = unused[Math.floor(Math.random() * unused.length)];
+        markQuestionUsed(chosen.qEn);
+        return chosen;
+      }
+
+      if (state.prefetchedQuestion) {
+        const ready = state.prefetchedQuestion;
+        state.prefetchedQuestion = null;
+        markQuestionUsed(ready.qEn);
+        prefetchNextStageQuestion();
+        return ready;
+      }
+
+      // Dynamic instant local generator (zero wait, never repeats)
+      return buildInstantDynamicQuestion(state.currentStageNum);
+    }
+
+    function markQuestionUsed(qText) {
+      state.usedQuestionHashes.push(qText);
+      if (state.usedQuestionHashes.length > 40) state.usedQuestionHashes = state.usedQuestionHashes.slice(-40);
+      localStorage.setItem('jesh_used_q', JSON.stringify(state.usedQuestionHashes));
+    }
+
+    function buildInstantDynamicQuestion(stageNum) {
+      const subjects = ['My brother', 'My friend', 'Our teacher', 'She', 'He', 'We'];
+      const templatesByStage = {
+        1: [
+          { right: 'drinks warm milk every morning.', wrong: 'drinking warm milk morning.', word: 'drinks', hi: 'रोज़ सुबह गुनगुना दूध पीता/पीती है।' },
+          { right: 'wakes up early at 5 AM.', wrong: 'waking up 5 AM.', word: 'wakes up', hi: 'सुबह 5 बजे उठता/उठती है।' },
+          { right: 'likes fresh homemade food.', wrong: 'liking fresh food.', word: 'likes', hi: 'घर का ताज़ा खाना पसंद करता/करती है।' }
+        ],
+        2: [
+          { right: 'goes to class by bicycle.', wrong: 'going class bicycle.', word: 'bicycle', hi: 'साइकिल से क्लास जाता/जाती है।' },
+          { right: 'practices English in the evening.', wrong: 'practicing English on evening.', word: 'evening', hi: 'शाम को अंग्रेज़ी का अभ्यास करता/करती है।' }
+        ],
+        3: [
+          { right: 'completed the task before dinner.', wrong: 'complete task before dinner.', word: 'completed', hi: 'रात के खाने से पहले काम पूरा कर लिया।' },
+          { right: 'stays calm when plans change.', wrong: 'staying calm when plan changing.', word: 'calm', hi: 'योजना बदलने पर भी शांत रहता/रहती है।' }
+        ],
+        4: [
+          { right: 'verified every step before sharing the report.', wrong: 'was verifying step before share report.', word: 'verified', hi: 'रिपोर्ट भेजने से पहले हर चरण की जांच की।' }
+        ],
+        5: [
+          { right: 'streamlined the workflow to eliminate delays.', wrong: 'did streamlining of workflow for no delay.', word: 'streamlined', hi: 'देरी खत्म करने के लिए कार्यप्रणाली को सुव्यवस्थित किया।' }
+        ]
+      };
+      const list = templatesByStage[stageNum] || templatesByStage[1];
+      const sub = subjects[Math.floor(Math.random() * subjects.length)];
+      const tpl = list[Math.floor(Math.random() * list.length)];
+      const adjustedRight = (sub === 'We') ? tpl.right.replace('drinks', 'drink').replace('wakes', 'wake').replace('likes', 'like').replace('goes', 'go').replace('practices', 'practice').replace('stays', 'stay') : tpl.right;
+      const qEn = `Choose the clear, natural sentence:`;
+      return {
+        qEn: qEn,
+        qHi: `सही वाक्य चुनें (${sub} — ${tpl.hi}):`,
+        opts: [`${sub} ${adjustedRight}`, `${sub} ${tpl.wrong}`],
+        ans: 0,
+        word: tpl.word,
+        whyEn: `"${sub} ${adjustedRight}" uses the correct verb form and clear structure.`,
+        whyHi: `सही वाक्य है: "${sub} ${adjustedRight}"।`
+      };
+    }
+
+    async function prefetchNextStageQuestion() {
+      const stg = getStageInfo(state.currentStageNum);
+      const avoid = state.usedQuestionHashes.slice(-6).join(' | ');
+      const prompt = `Generate 1 fresh multiple-choice English question strictly at ${stg.label} (${stg.code}) difficulty. Do NOT repeat: ${avoid}. ` +
+        `Output ONLY valid JSON: {"qEn":"...","qHi":"Hindi meaning of question","opts":["correct answer","wrong answer 1","wrong answer 2"],"ans":0,"word":"keyword","whyEn":"1 short sentence explanation","whyHi":"1 short Hindi explanation"}`;
+
+      const res = await apiCall({
+        action: 'chatWithCharacter',
+        message: prompt,
+        character: 'StageCurriculumEngine',
+        level: stg.code,
+        language: 'English',
+        mode: 'json_quiz'
+      });
+
+      if (res && res.ok && res.reply) {
+        try {
+          const match = res.reply.match(/\{[\s\S]*\}/);
+          if (match) {
+            const parsed = JSON.parse(match[0]);
+            if (parsed.qEn && Array.isArray(parsed.opts) && parsed.opts.length >= 2) {
+              state.prefetchedQuestion = parsed;
+            }
+          }
+        } catch (e) {}
+      }
+    }
+
+    function renderInstantLingoQuestion() {
       state.lingoAnswered = false;
       if (state.lingoTimer) { clearTimeout(state.lingoTimer); state.lingoTimer = null; }
 
-      const qNum = state.lingoQuestionCount + 1;
-      const curLevel = (state.student && state.student.level) ? state.student.level : 'A0';
-      document.getElementById('lingoTitle').textContent = `JeshLingo • Adaptive (${curLevel})`;
-      document.getElementById('lingoProgressLabel').textContent = `Q #${qNum}`;
-      document.getElementById('lingoLevelPill').textContent = curLevel;
-      document.getElementById('lingoProgressBar').style.width = `${Math.min(100, ((qNum % 10) || 10) * 10)}%`;
+      const stg = getStageInfo(state.currentStageNum);
+      const stepInStage = (state.stageCorrectStreak % 4) + 1;
+
+      document.getElementById('lingoTitle').textContent = stg.label;
+      document.getElementById('lingoStageBadge').textContent = stg.label.split(':')[1].trim();
+      document.getElementById('lingoProgressLabel').textContent = `Goal ${stepInStage} / 4`;
+      document.getElementById('lingoProgressBar').style.width = `${stepInStage * 25}%`;
 
       const fb = document.getElementById('lingoFeedback');
       fb.classList.add('hidden');
       document.getElementById('btnNextLingo').classList.add('hidden');
 
-      // Filter seed questions matching learner's current level first, then generate fresh AI questions forever
-      const matchingSeeds = SEED_LINGO_DECK.filter(q =>
-        (curLevel === 'A0' && q.level === 'A0') ||
-        (curLevel === 'A1' && (q.level === 'A0' || q.level === 'A1')) ||
-        (curLevel === 'A2' && (q.level === 'A1' || q.level === 'A2')) ||
-        ((curLevel === 'B1' || curLevel === 'B2' || curLevel === 'C1') && (q.level === 'A2' || q.level === 'B1'))
-      );
-
-      let rawQuestion = null;
-      if (state.lingoQuestionCount < matchingSeeds.length) {
-        rawQuestion = matchingSeeds[state.lingoQuestionCount];
-      } else {
-        // Generate brand-new non-repeating question via Multi-AI Waterfall!
-        document.getElementById('lingoQuestionBox').textContent = 'Creating a brand-new question for your level...';
-        document.getElementById('lingoOptions').innerHTML = '';
-        rawQuestion = await fetchFreshAiLingoQuestion(curLevel);
-      }
-
-      const shuffled = shuffleQuestionOptions(rawQuestion);
+      const rawQ = pickInstantQuestionForCurrentStage();
+      const shuffled = shuffleQuestionOptions(rawQ);
       state.currentLingoItem = shuffled;
 
       const showHindi = state.student && state.student.language !== 'English';
@@ -1495,57 +1861,9 @@
         b.onclick = () => checkLingoAnswer(b, optIdx === shuffled.ans, opt, shuffled);
         optsBox.appendChild(b);
       });
-    }
 
-    async function fetchFreshAiLingoQuestion(level) {
-      const avoid = state.seenTopics.slice(-8).join(', ');
-      const prompt = `Create 1 brand-new English multiple-choice question for CEFR level ${level} (never repeat: ${avoid}). ` +
-        `Respond ONLY in valid JSON with keys: {"qEn":"...","qHi":"Hindi translation of question","opts":["correct option","wrong option 1","wrong option 2"],"ans":0,"word":"key_word","whyEn":"1 short sentence why","whyHi":"1 short Hindi sentence why"}`;
-
-      const res = await apiCall({
-        action: 'chatWithCharacter',
-        message: prompt,
-        character: 'QuestionGenerator',
-        level: level,
-        language: 'English',
-        mode: 'json_quiz'
-      });
-
-      if (res && res.ok && res.reply) {
-        try {
-          const jsonMatch = res.reply.match(/\{[\s\S]*\}/);
-          if (jsonMatch) {
-            const parsed = JSON.parse(jsonMatch[0]);
-            if (parsed.qEn && Array.isArray(parsed.opts) && parsed.opts.length >= 2) {
-              state.seenTopics.push(parsed.word || parsed.qEn.slice(0, 18));
-              if (state.seenTopics.length > 25) state.seenTopics = state.seenTopics.slice(-25);
-              localStorage.setItem('jesh_seen_topics', JSON.stringify(state.seenTopics));
-              return parsed;
-            }
-          }
-        } catch (e) {}
-      }
-
-      // Dynamic offline combinator so even offline it generates fresh variations
-      const subjects = ['My brother', 'Our teacher', 'She', 'We', 'My friend'];
-      const verbs = [
-        { right: 'reads books every evening.', wrong: 'reading books every evening.', word: 'reads' },
-        { right: 'practices coding on a tablet.', wrong: 'practicing coding on tablet.', word: 'practices' },
-        { right: 'arrives on time for class.', wrong: 'arriving time for class.', word: 'arrives' },
-        { right: 'drinks warm water in the morning.', wrong: 'drinking warm water morning.', word: 'drinks' }
-      ];
-      const s = subjects[Math.floor(Math.random() * subjects.length)];
-      const v = verbs[Math.floor(Math.random() * verbs.length)];
-      return {
-        level: level,
-        qEn: `Choose the grammatically correct sentence (${level} Practice):`,
-        qHi: 'सही अंग्रेज़ी वाक्य चुनें:',
-        opts: [`${s} ${v.right}`, `${s} ${v.wrong}`],
-        ans: 0,
-        word: v.word,
-        whyEn: `For regular routines in simple present, "${s} ${v.right}" uses the proper verb form.`,
-        whyHi: `रोज़मर्रा की बात बताने के लिए "${s} ${v.right}" सही रूप है।`
-      };
+      // Pre-fetch next question silently in background so next step has 0ms delay
+      if (!state.prefetchedQuestion) prefetchNextStageQuestion();
     }
 
     async function checkLingoAnswer(clickedBtn, isCorrect, chosenText, item) {
@@ -1563,21 +1881,36 @@
       fb.classList.remove('hidden');
 
       const showHindi = state.student && state.student.language !== 'English';
-      const delayMs = state.speed === 'fast' ? 1200 : (state.speed === 'slow' ? 3500 : 2000);
+      const delayMs = state.speed === 'fast' ? 1100 : (state.speed === 'slow' ? 3200 : 1800);
 
       if (isCorrect) {
-        const gain = state.fastTrack ? 15 : 10;
+        state.stageCorrectStreak++;
+        let stageUpMsg = '';
+
+        // GRADUAL PROMOTION: Requires 4 right answers in current stage before moving +1 stage
+        if (state.stageCorrectStreak >= 4 && state.currentStageNum < STAGES.length) {
+          state.currentStageNum++;
+          state.stageCorrectStreak = 0;
+          state.prefetchedQuestion = null;
+          const newStg = getStageInfo(state.currentStageNum);
+          stageUpMsg = ` 🌟 Promoted to ${newStg.label}!`;
+          if (state.student) state.student.level = newStg.code;
+        }
+
+        localStorage.setItem('jesh_stage_num', String(state.currentStageNum));
+        localStorage.setItem('jesh_stage_streak', String(state.stageCorrectStreak));
+
+        const gain = 10;
         fb.style.background = '#DCFCE7';
         fb.style.color = '#14532D';
-        fb.innerHTML = `<strong>🎉 Awesome! +${gain} XP</strong>` +
-          (showHindi ? `<span class="hi-sub" style="color:#166534;">बहुत बढ़िया! बिल्कुल सही जवाब।</span>` : '');
+        fb.innerHTML = `<strong>🎉 Great job! +${gain} XP${stageUpMsg}</strong>` +
+          (showHindi ? `<span class="hi-sub" style="color:#166534;">बहुत बढ़िया! आप धीरे-धीरे अगले चरण की ओर बढ़ रहे हैं।</span>` : '');
         speakText(item.opts[item.ans], 1.05, 0.96, false);
 
         const syncPayload = { action: 'submitLingoProgress', studentId: state.student.studentId, xp: gain, masteredWord: item.word };
         const res = await apiCall(syncPayload);
         if (res.ok) {
           state.student.xp = res.xp;
-          state.student.level = res.level;
           state.student.weakWords = res.weakWords;
           saveStudentSession(state.student);
           refreshStudentUI();
@@ -1596,21 +1929,169 @@
           (showHindi && item.whyHi ? `<span class="hi-sub" style="color:#991B1B;"><strong>कारण:</strong> ${item.whyHi}</span>` : '');
         speakText(item.whyEn, 1.0, 0.92, false);
 
-        apiCall({ action: 'submitLingoProgress', studentId: state.student.studentId, xp: 3, weakWord: item.word });
+        apiCall({ action: 'submitLingoProgress', studentId: state.student.studentId, xp: 2, weakWord: item.word });
         nextBtn.classList.remove('hidden');
-        state.lingoTimer = setTimeout(() => { if (state.lingoAnswered) advanceLingoQuestion(); }, delayMs + 2800);
+        state.lingoTimer = setTimeout(() => { if (state.lingoAnswered) advanceLingoQuestion(); }, delayMs + 2500);
       }
     }
 
     function advanceLingoQuestion() {
       if (state.lingoTimer) { clearTimeout(state.lingoTimer); state.lingoTimer = null; }
-      state.lingoQuestionCount++;
-      localStorage.setItem('jesh_lingo_qcount', String(state.lingoQuestionCount));
-      generateAndRenderNextLingo();
+      renderInstantLingoQuestion();
     }
 
     /* ========================================================================
-     * JESH AI CHAT (GEMINI / CHATGPT / CLAUDE INSPIRED)
+     * CONTINUOUS AUTO-RESTARTING JESHREAD MIC (NO SUDDEN STOPS)
+     * ======================================================================== */
+    function renderReadAlongStory() {
+      stopReadAlongListening();
+      state.spokenWordsSet = new Set();
+      const story = READ_ALONG_STORIES[state.storyIndex % READ_ALONG_STORIES.length];
+      const box = document.getElementById('readPassageBox');
+      document.getElementById('wordMeaningCard').classList.add('hidden');
+
+      const wordsHtml = story.en.split(/\s+/).map((w, idx) => {
+        const clean = w.replace(/[^a-zA-Z]/g, '').toLowerCase();
+        return `<span class="read-word" id="rw-${idx}" data-clean="${clean}" onclick="explainTappedWord(this, '${clean}')">${w}</span>`;
+      }).join(' ');
+
+      const showHindi = state.student && state.student.language !== 'English';
+      box.innerHTML = `
+        <div style="font-size:13px; font-weight:700; color:var(--primary); margin-bottom:6px;">${story.title}</div>
+        <div>${wordsHtml}</div>
+        ${showHindi ? `<div style="margin-top:10px; padding-top:8px; border-top:1px dashed var(--border); font-size:13px; color:var(--text-muted);"><strong>हिंदी अनुवाद:</strong> ${story.hi}</div>` : ''}
+      `;
+    }
+
+    function toggleReadAlongMic() {
+      if (state.readMicActive) {
+        stopReadAlongListening();
+      } else {
+        startReadAlongListening();
+      }
+    }
+
+    function startReadAlongListening() {
+      const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SpeechRec) {
+        return showToast('Live mic is not supported in this browser — tap any word to hear & translate!');
+      }
+
+      state.readMicActive = true;
+      const buddy = document.getElementById('diyaBuddyIcon');
+      const promptEl = document.getElementById('diyaPromptText');
+      const btn = document.getElementById('btnReadAloudMic');
+
+      buddy.classList.add('listening');
+      btn.textContent = '⏹️ Stop Mic (Listening...)';
+      btn.classList.remove('btn-accent');
+      btn.classList.add('btn-danger');
+      promptEl.textContent = 'Diya is listening continuously! Read the English words aloud...';
+
+      launchContinuousReadRecognizer(SpeechRec);
+    }
+
+    function launchContinuousReadRecognizer(SpeechRec) {
+      if (!state.readMicActive) return;
+      try { if (state.readRec) state.readRec.stop(); } catch (e) {}
+
+      const rec = new SpeechRec();
+      state.readRec = rec;
+      rec.lang = 'en-IN';
+      rec.continuous = true;
+      rec.interimResults = true;
+
+      rec.onresult = (event) => {
+        let heardText = '';
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          heardText += ' ' + event.results[i][0].transcript.toLowerCase();
+        }
+        const heardTokens = heardText.replace(/[^a-z\s]/g, '').split(/\s+/).filter(Boolean);
+        const wordEls = document.querySelectorAll('#readPassageBox .read-word');
+
+        wordEls.forEach(el => {
+          const target = el.getAttribute('data-clean');
+          if (target && heardTokens.includes(target)) {
+            el.classList.add('spoken-ok');
+            state.spokenWordsSet.add(target);
+          }
+        });
+
+        if (wordEls.length > 0 && state.spokenWordsSet.size >= Math.max(3, Math.floor(wordEls.length * 0.75))) {
+          document.getElementById('diyaPromptText').textContent = '🎉 Wonderful! You read the whole story! +15 XP';
+          apiCall({ action: 'submitLingoProgress', studentId: state.student.studentId, xp: 15 });
+          stopReadAlongListening();
+        }
+      };
+
+      rec.onerror = (err) => {
+        if (err && err.error === 'not-allowed') {
+          showToast('Please allow Microphone permission in your browser address bar.');
+          stopReadAlongListening();
+        }
+      };
+
+      // AUTO-RESTART: Mobile browsers stop SpeechRecognition after short silence; restart seamlessly while active!
+      rec.onend = () => {
+        if (state.readMicActive && !document.getElementById('view-read').classList.contains('hidden')) {
+          setTimeout(() => launchContinuousReadRecognizer(SpeechRec), 250);
+        }
+      };
+
+      try { rec.start(); } catch (e) {}
+    }
+
+    function stopReadAlongListening() {
+      state.readMicActive = false;
+      if (state.readRec) { try { state.readRec.stop(); } catch (e) {} state.readRec = null; }
+      const buddy = document.getElementById('diyaBuddyIcon');
+      const btn = document.getElementById('btnReadAloudMic');
+      if (buddy) buddy.classList.remove('listening');
+      if (btn) {
+        btn.textContent = '🎙️ Start Reading Mic';
+        btn.classList.remove('btn-danger');
+        btn.classList.add('btn-accent');
+      }
+    }
+
+    function listenFullStoryTts() {
+      stopReadAlongListening();
+      const story = READ_ALONG_STORIES[state.storyIndex % READ_ALONG_STORIES.length];
+      speakText(story.en, 1.12, 0.88, false);
+    }
+
+    function nextReadAlongStory() {
+      state.storyIndex++;
+      renderReadAlongStory();
+    }
+
+    async function explainTappedWord(el, word) {
+      if (!word) return;
+      document.querySelectorAll('.read-word').forEach(x => x.classList.remove('active-word'));
+      el.classList.add('active-word');
+      speakText(word, 1.1, 0.85, false);
+
+      const card = document.getElementById('wordMeaningCard');
+      card.classList.remove('hidden');
+
+      const dictHit = LOCAL_DICTIONARY[word];
+      card.innerHTML = dictHit
+        ? `<strong>🔊 ${word}</strong> → ${dictHit}`
+        : `Checking "${word}" (English + हिंदी)...`;
+
+      const res = await apiCall({
+        action: 'getWordMeaning',
+        word,
+        language: 'English + Hindi',
+        level: getStageInfo(state.currentStageNum).code
+      });
+      if (res && res.explanation) {
+        card.innerHTML = `<strong>🔊 ${word}:</strong> ${res.explanation}`;
+      }
+    }
+
+    /* ========================================================================
+     * JESH AI CHAT ASSISTANT
      * ======================================================================== */
     function renderJeshAiChatStream() {
       const box = document.getElementById('jeshAiChatStream');
@@ -1665,13 +2146,13 @@
       const res = await apiCall({
         action: 'chatWithCharacter',
         message: q,
-        character: 'Jesh AI Assistant (helpful like Gemini, ChatGPT & Claude; answer clearly in English + Hindi if helpful)',
-        level: state.student ? state.student.level : 'A1',
+        character: 'Jesh AI Assistant (friendly tutor; explain clearly in simple English + Hindi without jargon)',
+        level: getStageInfo(state.currentStageNum).code,
         language: state.student ? state.student.language : 'Bilingual',
         mode: 'assistant_chat'
       });
 
-      const reply = (res && res.reply) ? res.reply : 'Here is a clear answer: Start with the core concept, practice one small example, and test it step by step.';
+      const reply = (res && res.reply) ? res.reply : 'Here is a clear answer: Start with one small practical step, test it right away, and build up gradually!';
       state.aiChatMessages[state.aiChatMessages.length - 1] = { role: 'bot', text: reply };
       if (state.aiChatMessages.length > 30) state.aiChatMessages = state.aiChatMessages.slice(-30);
       localStorage.setItem('jesh_ai_chat_hist', JSON.stringify(state.aiChatMessages));
@@ -1682,118 +2163,6 @@
       state.aiChatMessages = [{ role: 'bot', text: 'Fresh chat started! How can I help you learn today?' }];
       localStorage.setItem('jesh_ai_chat_hist', JSON.stringify(state.aiChatMessages));
       renderJeshAiChatStream();
-    }
-
-    /* ========================================================================
-     * GOOGLE READ-ALONG (BOLO) INSPIRED JESHREAD
-     * ======================================================================== */
-    function renderReadAlongStory() {
-      stopReadAlongListening();
-      state.spokenWordsSet = new Set();
-      const story = READ_ALONG_STORIES[state.storyIndex % READ_ALONG_STORIES.length];
-      const box = document.getElementById('readPassageBox');
-      document.getElementById('wordMeaningCard').classList.add('hidden');
-
-      const wordsHtml = story.en.split(/\s+/).map((w, idx) => {
-        const clean = w.replace(/[^a-zA-Z]/g, '').toLowerCase();
-        return `<span class="read-word" id="rw-${idx}" data-clean="${clean}" onclick="explainTappedWord(this, '${clean}')">${w}</span>`;
-      }).join(' ');
-
-      const showHindi = state.student && state.student.language !== 'English';
-      box.innerHTML = `
-        <div style="font-size:13px; font-weight:700; color:var(--primary); margin-bottom:6px;">${story.title}</div>
-        <div>${wordsHtml}</div>
-        ${showHindi ? `<div style="margin-top:10px; padding-top:8px; border-top:1px dashed var(--border); font-size:13px; color:var(--text-muted);"><strong>हिंदी अनुवाद:</strong> ${story.hi}</div>` : ''}
-      `;
-    }
-
-    function startReadAlongListening() {
-      const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
-      if (!SpeechRec) return showToast('Mic unavailable — tap any word to hear & translate.');
-
-      stopReadAlongListening();
-      const rec = new SpeechRec();
-      state.readRec = rec;
-      rec.lang = 'en-IN';
-      rec.continuous = true;
-      rec.interimResults = true;
-
-      const buddy = document.getElementById('diyaBuddyIcon');
-      const promptEl = document.getElementById('diyaPromptText');
-      const btn = document.getElementById('btnReadAloudMic');
-
-      buddy.classList.add('listening');
-      btn.textContent = '🟢 सुन रही हूँ... (Speak Now)';
-      promptEl.textContent = 'Diya is listening! Read the English words out loud...';
-
-      rec.onresult = (event) => {
-        let heardText = '';
-        for (let i = event.resultIndex; i < event.results.length; i++) {
-          heardText += ' ' + event.results[i][0].transcript.toLowerCase();
-        }
-        const heardTokens = heardText.replace(/[^a-z\s]/g, '').split(/\s+/).filter(Boolean);
-        const wordEls = document.querySelectorAll('#readPassageBox .read-word');
-
-        wordEls.forEach(el => {
-          const target = el.getAttribute('data-clean');
-          if (target && heardTokens.includes(target)) {
-            el.classList.add('spoken-ok');
-            state.spokenWordsSet.add(target);
-          }
-        });
-
-        if (wordEls.length > 0 && state.spokenWordsSet.size >= Math.max(3, Math.floor(wordEls.length * 0.7))) {
-          promptEl.textContent = '🎉 Wonderful reading! You read almost the whole story! +15 XP';
-          apiCall({ action: 'submitLingoProgress', studentId: state.student.studentId, xp: 15 });
-        }
-      };
-
-      rec.onerror = () => { buddy.classList.remove('listening'); btn.textContent = '🎙️ बोलकर पढ़ें (Listen)'; };
-      rec.onend = () => { buddy.classList.remove('listening'); btn.textContent = '🎙️ बोलकर पढ़ें (Listen)'; };
-      try { rec.start(); } catch (e) {}
-    }
-
-    function stopReadAlongListening() {
-      if (state.readRec) { try { state.readRec.stop(); } catch (e) {} state.readRec = null; }
-      const buddy = document.getElementById('diyaBuddyIcon');
-      const btn = document.getElementById('btnReadAloudMic');
-      if (buddy) buddy.classList.remove('listening');
-      if (btn) btn.textContent = '🎙️ बोलकर पढ़ें (Listen)';
-    }
-
-    function listenFullStoryTts() {
-      const story = READ_ALONG_STORIES[state.storyIndex % READ_ALONG_STORIES.length];
-      speakText(story.en, 1.12, 0.88, false);
-    }
-
-    function nextReadAlongStory() {
-      state.storyIndex++;
-      renderReadAlongStory();
-    }
-
-    async function explainTappedWord(el, word) {
-      if (!word) return;
-      document.querySelectorAll('.read-word').forEach(x => x.classList.remove('active-word'));
-      el.classList.add('active-word');
-      speakText(word, 1.1, 0.85, false);
-
-      const card = document.getElementById('wordMeaningCard');
-      card.classList.remove('hidden');
-
-      const dictHit = LOCAL_DICTIONARY[word];
-      card.innerHTML = dictHit
-        ? `<strong>🔊 ${word}</strong> → ${dictHit}`
-        : `Checking "${word}" (English + हिंदी)...`;
-
-      const res = await apiCall({
-        action: 'getWordMeaning',
-        word,
-        language: 'English + Hindi',
-        level: state.student.level
-      });
-      if (res && res.explanation) {
-        card.innerHTML = `<strong>🔊 ${word}:</strong> ${res.explanation}`;
-      }
     }
 
     /* ========================================================================
@@ -1917,7 +2286,7 @@
         action: 'chatWithCharacter',
         message: text,
         character: `${state.selectedChar.name} (${state.selectedChar.role})`,
-        level: state.student.level,
+        level: getStageInfo(state.currentStageNum).code,
         language: 'English + Hindi',
         mode: 'live_video_call'
       });
@@ -1971,7 +2340,7 @@
       await apiCall({
         action: 'saveSessionSummary',
         studentId: state.student.studentId,
-        summary: `Video call with ${state.selectedChar.name} (${state.student.level}).`
+        summary: `Video call with ${state.selectedChar.name} (${getStageInfo(state.currentStageNum).label}).`
       });
       navigate('home');
       showToast('Session summary saved!');
@@ -2012,7 +2381,9 @@
         `Photo ${hasImg ? '✅ Set' : '❌ None'} • Voice ${hasVoice ? '✅ Set' : '❌ None'}`;
     }
 
-    /* ALL REAL-LIFE COURSES & INTERACTIVE SKILL LAB */
+    /* ========================================================================
+     * DEEP PRACTICAL COURSES (MULTI-LESSON CURRICULUM + REAL EXAMPLES)
+     * ======================================================================== */
     function filterCourses(cat, btnEl) {
       state.courseFilter = cat;
       document.querySelectorAll('#courseFilterChips .chip').forEach(c => c.classList.remove('active'));
@@ -2024,24 +2395,27 @@
       const grid = document.getElementById('allCoursesGrid');
       if (!grid) return;
       const list = state.courseFilter === 'ALL'
-        ? ALL_REAL_COURSES
-        : ALL_REAL_COURSES.filter(c => c.cat === state.courseFilter);
+        ? DEEP_COURSES
+        : DEEP_COURSES.filter(c => c.cat === state.courseFilter);
 
-      grid.innerHTML = list.map(c => `
-        <div class="course-tile">
-          <div>
-            <strong style="font-size:14px;">${c.title}</strong>
-            <p style="font-size:12px; margin:4px 0;">${c.desc}</p>
-            <span class="badge-pill badge-pro" style="font-size:10px;">${c.trick}</span>
+      grid.innerHTML = list.map(c => {
+        const countLabel = c.id === 'eng' ? '5 Stages • Infinite Practice' : `${c.lessons.length} Practical Lessons`;
+        return `
+          <div class="course-tile">
+            <div>
+              <strong style="font-size:14px;">${c.title}</strong>
+              <p style="font-size:12px; margin:4px 0;">${c.desc}</p>
+              <span class="badge-pill badge-pro" style="font-size:10px;">${countLabel}</span>
+            </div>
+            <button class="btn-outline btn-sm" onclick="launchCourseLab('${c.id}')">Start Course →</button>
           </div>
-          <button class="btn-outline btn-sm" onclick="launchCourseLab('${c.id}')">Start (${state.fastTrack ? 'Fast-Track' : 'Guided'})</button>
-        </div>
-      `).join('');
+        `;
+      }).join('');
     }
 
     function launchCourseLab(courseId) {
       if (courseId === 'eng') return openModule('lingo');
-      const found = ALL_REAL_COURSES.find(c => c.id === courseId) || ALL_REAL_COURSES[1];
+      const found = DEEP_COURSES.find(c => c.id === courseId) || DEEP_COURSES[1];
       state.selectedCourse = found;
       state.skillStepIndex = 0;
       navigate('academy');
@@ -2049,54 +2423,73 @@
     }
 
     function renderCourseSkillLab() {
+      state.lessonAnswered = false;
       const c = state.selectedCourse;
-      document.getElementById('activeCourseTitle').textContent = `${c.title} ${state.fastTrack ? '⚡ Fast-Track' : ''}`;
-      document.getElementById('activeCourseTrickNote').textContent = `Scientific Trick / तरीका: ${c.trick}`;
-      document.getElementById('academyFeedback').textContent = '';
+      const lessons = c.lessons && c.lessons.length ? c.lessons : DEEP_COURSES[1].lessons;
+      const idx = state.skillStepIndex % lessons.length;
+      const lesson = lessons[idx];
 
-      const rawStep = {
-        q: state.fastTrack
-          ? `[Fast-Track Real-World Scenario in ${c.title}] How do you apply "${c.trick}" under deadline?`
-          : `[Step ${state.skillStepIndex + 1} in ${c.title}] Which practical action applies "${c.trick}" best? (सही तरीका चुनें)`,
-        opts: [
-          `Apply ${c.trick} step-by-step and verify the result (चरण-दर-चरण लागू करें व जांचें)`,
-          `Skip verification and guess randomly (बिना जांचे अंदाज़ा लगाएं)`
-        ],
-        ans: 0
-      };
-      const shuffled = shuffleQuestionOptions(rawStep);
-      const letters = ['A', 'B'];
+      document.getElementById('activeCourseTitle').textContent = c.title;
+      document.getElementById('courseLessonBadge').textContent = `Lesson ${idx + 1} / ${lessons.length}`;
+      document.getElementById('courseProgressFill').style.width = `${Math.round(((idx + 1) / lessons.length) * 100)}%`;
+      document.getElementById('courseTrickBadge').textContent = c.trick;
+
+      const fb = document.getElementById('academyFeedback');
+      fb.classList.add('hidden');
+      document.getElementById('btnNextCourseLesson').classList.add('hidden');
+
+      const showHindi = state.student && state.student.language !== 'English';
+      document.getElementById('lessonConceptBox').innerHTML = `
+        <strong>📘 ${lesson.title}</strong>
+        <p style="color:var(--text-main); margin:6px 0 4px 0;">${lesson.concept}</p>
+        ${showHindi && lesson.hiConcept ? `<p style="font-size:13px; color:var(--text-muted); margin-bottom:6px;">${lesson.hiConcept}</p>` : ''}
+        ${lesson.code ? `<div class="code-snippet-box">${lesson.code.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div>` : ''}
+      `;
+
+      const shuffled = shuffleQuestionOptions({ q: lesson.q, opts: lesson.opts, ans: lesson.ans });
+      const letters = ['A', 'B', 'C'];
 
       document.getElementById('academyStepBox').innerHTML = `
-        <p style="font-weight:600; color:var(--text-main);">${shuffled.q}</p>
+        <p style="font-weight:700; color:var(--text-main);">Practice Check: ${shuffled.q}</p>
         ${shuffled.opts.map((optText, i) => `
-          <button class="lingo-opt-btn" onclick="completeSkillStep(this, ${i === shuffled.ans}, '${c.title}')">
+          <button class="lingo-opt-btn" onclick="completeSkillStep(this, ${i === shuffled.ans}, '${lesson.explain.replace(/'/g, '')}')">
             <span class="opt-letter">${letters[i]}</span><span>${optText}</span>
           </button>
         `).join('')}
       `;
     }
 
-    function completeSkillStep(btnEl, isRight, title) {
+    function completeSkillStep(btnEl, isRight, explainText) {
+      if (state.lessonAnswered) return;
+      state.lessonAnswered = true;
+      document.querySelectorAll('#academyStepBox button').forEach(b => b.disabled = true);
+
       const fb = document.getElementById('academyFeedback');
+      fb.classList.remove('hidden');
+
       if (isRight) {
         btnEl.classList.add('correct-choice');
-        const xpGain = state.fastTrack ? 15 : 10;
-        fb.style.color = '#16A34A';
-        fb.textContent = `🎉 Great mastery in ${title}! +${xpGain} XP earned.`;
-        apiCall({ action: 'submitLingoProgress', studentId: state.student.studentId, xp: xpGain });
-        setTimeout(() => {
-          state.skillStepIndex++;
-          renderCourseSkillLab();
-        }, 1400);
+        fb.style.background = '#DCFCE7';
+        fb.style.color = '#14532D';
+        fb.textContent = `🎉 Correct! +15 XP — ${explainText}`;
+        apiCall({ action: 'submitLingoProgress', studentId: state.student.studentId, xp: 15 });
       } else {
         btnEl.classList.add('wrong-choice');
-        fb.style.color = '#DC2626';
-        fb.textContent = `💡 Explanation: Guessing without checking causes errors. Use ${state.selectedCourse.trick} first! (बिना जांचे अंदाज़ा लगाने से गलती होती है।)`;
+        fb.style.background = '#FEE2E2';
+        fb.style.color = '#7F1D1D';
+        fb.textContent = `💡 Key Takeaway: ${explainText}`;
       }
+      document.getElementById('btnNextCourseLesson').classList.remove('hidden');
     }
 
-    /* YOUTUBE-INSPIRED VIDEO HUB */
+    function advanceCourseLesson() {
+      state.skillStepIndex++;
+      renderCourseSkillLab();
+    }
+
+    /* ========================================================================
+     * YOUTUBE-INSPIRED VIDEO HUB
+     * ======================================================================== */
     function renderVideoHub(activeVid) {
       document.getElementById('nowPlayingTitle').textContent = 'Now Playing: ' + activeVid.title;
       const wrap = document.getElementById('videoPlayerContainer');
@@ -2128,15 +2521,18 @@
       }
     }
 
-    /* FACEBOOK-INSPIRED COMMUNITY FEED */
+    /* ========================================================================
+     * FACEBOOK-INSPIRED COMMUNITY FEED
+     * ======================================================================== */
     function createCommunityPost() {
       const txt = document.getElementById('newPostText').value.trim();
       const tag = document.getElementById('newPostTag').value;
       if (!txt) return showToast('Write a message first');
 
+      const stg = getStageInfo(state.currentStageNum);
       state.posts.unshift({
         id: Date.now(),
-        author: `${state.student.name} (${state.student.level})`,
+        author: `${state.student.name} (${stg.label.split(':')[1].trim()})`,
         tag: tag,
         text: txt,
         likes: 0
@@ -2173,18 +2569,20 @@
       `).join('');
     }
 
-    /* CERTIFICATE & LEAVE/HELP */
+    /* ========================================================================
+     * CERTIFICATE & LEAVE/HELP
+     * ======================================================================== */
     async function loadCourseCertificate() {
+      const stg = getStageInfo(state.currentStageNum);
       const res = await apiCall({ action: 'getCourseCertificate', studentId: state.student.studentId });
       const cert = res.certificate || {
         studentName: state.student.name,
-        level: state.student.level,
         progress: state.student.courseProgress || 10,
         issuedDate: new Date().toLocaleDateString('en-IN'),
         verifyCode: `JESH-${state.student.studentId}`
       };
       document.getElementById('certStudentName').textContent = cert.studentName;
-      document.getElementById('certDetails').textContent = `Level: ${cert.level} • Progress: ${cert.progress}% • Date: ${cert.issuedDate}`;
+      document.getElementById('certDetails').textContent = `${stg.label} • Progress: ${cert.progress}% • Date: ${cert.issuedDate}`;
       document.getElementById('certVerifyCode').textContent = `Verify ID: ${cert.verifyCode}`;
       document.getElementById('certQrBox').innerHTML =
         `<img src="https://api.qrserver.com/v1/create-qr-code/?size=110x110&data=${encodeURIComponent(cert.verifyCode)}" alt="Verification QR" />`;
@@ -2198,7 +2596,9 @@
       navigate('home');
     }
 
-    /* ADMIN: PROMPT UPGRADE + AUTO-DEPLOY + ANY-TIME VERSION ROLLBACK */
+    /* ========================================================================
+     * ADMIN COMMAND CENTER
+     * ======================================================================== */
     async function handleAdminLogin() {
       const pass = document.getElementById('adminPassInput').value.trim();
       const res = await apiCall({ action: 'loginAdmin', adminPass: pass });
