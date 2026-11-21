@@ -11,7 +11,6 @@
       --primary: #2563EB;
       --primary-soft: #EFF6FF;
       --accent: #059669;
-      --accent-soft: #ECFDF5;
       --text-main: #0F172A;
       --text-muted: #475569;
       --border: #E2E8F0;
@@ -19,10 +18,7 @@
       --footer-h: 48px;
     }
 
-    * {
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-    }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
     body {
       margin: 0;
@@ -33,7 +29,6 @@
       line-height: 1.5;
     }
 
-    /* Top Header */
     header {
       background: var(--surface);
       border-bottom: 1px solid var(--border);
@@ -46,30 +41,10 @@
       z-index: 20;
     }
 
-    .brand {
-      font-weight: 700;
-      font-size: 18px;
-      color: var(--primary);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
+    .brand { font-weight: 700; font-size: 18px; color: var(--primary); display: flex; align-items: center; gap: 8px; }
+    .badge-pill { background: var(--primary-soft); color: var(--primary); font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 999px; }
 
-    .badge-pill {
-      background: var(--primary-soft);
-      color: var(--primary);
-      font-size: 12px;
-      font-weight: 600;
-      padding: 4px 10px;
-      border-radius: 999px;
-    }
-
-    /* Main Container */
-    main#app {
-      max-width: 680px;
-      margin: 0 auto;
-      padding: 16px;
-    }
+    main#app { max-width: 680px; margin: 0 auto; padding: 16px; }
 
     .card {
       background: var(--surface);
@@ -80,19 +55,9 @@
       box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
     }
 
-    h2, h3 {
-      margin: 0 0 8px 0;
-      font-size: 17px;
-      color: var(--text-main);
-    }
+    h2, h3 { margin: 0 0 8px 0; font-size: 17px; color: var(--text-main); }
+    p { margin: 0 0 10px 0; color: var(--text-muted); font-size: 14px; }
 
-    p {
-      margin: 0 0 10px 0;
-      color: var(--text-muted);
-      font-size: 14px;
-    }
-
-    /* Buttons & Inputs */
     input, select, textarea {
       width: 100%;
       padding: 11px 12px;
@@ -113,7 +78,6 @@
       font-weight: 600;
       transition: opacity 0.15s ease;
     }
-
     button:active { opacity: 0.8; }
     button:disabled { opacity: 0.55; cursor: not-allowed; }
 
@@ -122,13 +86,8 @@
     .btn-outline { background: var(--surface); border: 1px solid var(--border); color: var(--text-main); }
     .btn-sm { padding: 7px 12px; font-size: 13px; }
 
-    .grid-2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
-    /* 5-Minute Roadmap Steps */
     .step-item {
       display: flex;
       justify-content: space-between;
@@ -138,12 +97,11 @@
       border-radius: 12px;
       margin-bottom: 10px;
       background: #FFFFFF;
+      gap: 8px;
     }
-
     .step-info strong { display: block; font-size: 15px; color: var(--text-main); }
     .step-info span { font-size: 12px; color: var(--text-muted); }
 
-    /* Tap-to-Understand Words in JeshRead */
     .read-word {
       display: inline-block;
       padding: 3px 5px;
@@ -154,137 +112,46 @@
       cursor: pointer;
       border-bottom: 1px dashed #94A3B8;
     }
-    .read-word:hover, .read-word.active-word {
-      background: var(--primary-soft);
-      color: var(--primary);
-    }
+    .read-word:hover, .read-word.active-word { background: var(--primary-soft); color: var(--primary); }
 
-    /* 5 Animated Characters Grid */
-    .char-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      gap: 8px;
-      margin-bottom: 12px;
-    }
-
-    .char-card {
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 10px;
-      text-align: center;
-      cursor: pointer;
-      background: #FFFFFF;
-    }
-
-    .char-card.selected {
-      border-color: var(--primary);
-      background: var(--primary-soft);
-    }
+    .char-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 8px; margin-bottom: 12px; }
+    .char-card { border: 1px solid var(--border); border-radius: 12px; padding: 10px; text-align: center; cursor: pointer; background: #FFFFFF; }
+    .char-card.selected { border-color: var(--primary); background: var(--primary-soft); }
 
     .avatar-circle {
-      width: 54px;
-      height: 54px;
-      border-radius: 50%;
-      margin: 0 auto 6px auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      background: #E2E8F0;
-      overflow: hidden;
-      transition: transform 0.25s ease;
+      width: 54px; height: 54px; border-radius: 50%; margin: 0 auto 6px auto;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px; background: #E2E8F0; overflow: hidden; transition: transform 0.25s ease;
     }
+    .avatar-circle.speaking { transform: scale(1.08); box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.22); }
+    .avatar-circle img { width: 100%; height: 100%; object-fit: cover; }
 
-    .avatar-circle.speaking {
-      transform: scale(1.08);
-      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.22);
-    }
-
-    .avatar-circle img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    /* Chat Box */
     .chat-log {
-      max-height: 230px;
-      overflow-y: auto;
-      padding: 10px;
-      background: var(--bg-calm);
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      margin-bottom: 10px;
+      max-height: 230px; overflow-y: auto; padding: 10px;
+      background: var(--bg-calm); border-radius: 10px; border: 1px solid var(--border); margin-bottom: 10px;
     }
-
-    .msg {
-      padding: 8px 12px;
-      border-radius: 10px;
-      margin-bottom: 8px;
-      font-size: 14px;
-      max-width: 85%;
-    }
+    .msg { padding: 8px 12px; border-radius: 10px; margin-bottom: 8px; font-size: 14px; max-width: 85%; }
     .msg.ai { background: #FFFFFF; border: 1px solid var(--border); color: var(--text-main); }
     .msg.user { background: var(--primary); color: #FFFFFF; margin-left: auto; }
 
-    /* Certificate */
-    .cert-box {
-      border: 2px solid var(--primary);
-      border-radius: 14px;
-      padding: 20px;
-      text-align: center;
-      background: #FFFFFF;
-    }
+    .cert-box { border: 2px solid var(--primary); border-radius: 14px; padding: 20px; text-align: center; background: #FFFFFF; }
 
-    /* Fixed 48px Bottom Navigation (Touch-Safe, Zero-Overlay Conflict) */
     nav.bottom-nav {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: var(--footer-h);
-      background: var(--surface);
-      border-top: 1px solid var(--border);
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      z-index: 30;
+      position: fixed; bottom: 0; left: 0; right: 0; height: var(--footer-h);
+      background: var(--surface); border-top: 1px solid var(--border);
+      display: grid; grid-template-columns: repeat(4, 1fr); z-index: 30;
     }
-
     nav.bottom-nav button {
-      border-radius: 0;
-      background: transparent;
-      color: var(--text-muted);
-      font-size: 12px;
-      padding: 4px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: var(--footer-h);
+      border-radius: 0; background: transparent; color: var(--text-muted); font-size: 12px; padding: 4px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; height: var(--footer-h);
     }
-
-    nav.bottom-nav button.active {
-      color: var(--primary);
-      font-weight: 700;
-      background: var(--primary-soft);
-    }
+    nav.bottom-nav button.active { color: var(--primary); font-weight: 700; background: var(--primary-soft); }
 
     .toast {
-      position: fixed;
-      top: 64px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #0F172A;
-      color: #FFFFFF;
-      padding: 9px 16px;
-      border-radius: 999px;
-      font-size: 13px;
-      z-index: 40;
-      display: none;
-      max-width: 90%;
-      text-align: center;
+      position: fixed; top: 64px; left: 50%; transform: translateX(-50%);
+      background: #0F172A; color: #FFFFFF; padding: 9px 16px; border-radius: 999px;
+      font-size: 13px; z-index: 40; display: none; max-width: 90%; text-align: center;
     }
-
     .hidden { display: none !important; }
   </style>
   <style id="zero-code-css-hook"></style>
@@ -298,7 +165,7 @@
     </div>
     <div style="display:flex; gap:6px; align-items:center;">
       <span class="badge-pill" id="headerStats">A0 • 0 XP</span>
-      <button class="btn-outline btn-sm" onclick="toggleAdminGate()" title="Admin Access">⚙️</button>
+      <button class="btn-outline btn-sm" onclick="navigate('admin')" title="Admin Access">⚙️</button>
     </div>
   </header>
 
@@ -307,7 +174,7 @@
   <main id="app">
     <!-- 1. AUTH VIEW -->
     <section id="view-auth" class="card">
-      <h2 id="authHeading">स्वागत है — आसान शुरुआत करें</h2>
+      <h2>स्वागत है — आसान शुरुआत करें</h2>
       <p>अपना नाम, मोबाइल/ID और 4-6 अंकों का PIN डालें। कोई कठिन सेटअप नहीं।</p>
 
       <div id="auth-login-box">
@@ -340,14 +207,14 @@
       </div>
     </section>
 
-    <!-- 2. STUDENT HOME (5-Minute Daily Roadmap) -->
+    <!-- 2. STUDENT HOME -->
     <section id="view-home" class="hidden">
       <div class="card">
         <div style="display:flex; justify-content:space-between; align-items:center;">
           <h2 id="welcomeText">नमस्ते!</h2>
           <span class="badge-pill" id="streakBadge">🔥 1 Day Streak</span>
         </div>
-        <p id="summaryBanner">आज का 5-मिनट का आसान कदम — बिना किसी दबाव के सीखें।</p>
+        <p>आज का 5-मिनट का आसान कदम — बिना किसी दबाव के सीखें।</p>
 
         <div class="step-item">
           <div class="step-info">
@@ -382,23 +249,21 @@
         </div>
       </div>
 
-      <!-- Zero-Code Future Modules Slot (Populated dynamically from ActiveConfig) -->
       <div id="zero-code-modules-container"></div>
     </section>
 
-    <!-- 3. JESHLINGO (Adaptive Micro-Practice) -->
+    <!-- 3. JESHLINGO -->
     <section id="view-lingo" class="card hidden">
       <div style="display:flex; justify-content:space-between; align-items:center;">
         <h2>JeshLingo अभ्यास</h2>
         <button class="btn-outline btn-sm" onclick="navigate('home')">← वापस</button>
       </div>
-      <p id="lingoPrompt">सही वाक्य चुनें या पूरा करें:</p>
       <div id="lingoQuestionBox" style="font-size:17px; font-weight:600; margin:10px 0;"></div>
       <div id="lingoOptions"></div>
       <div id="lingoFeedback" style="margin-top:10px; font-size:14px;"></div>
     </section>
 
-    <!-- 4. JESHREAD (Tap-to-Understand Reading) -->
+    <!-- 4. JESHREAD -->
     <section id="view-read" class="card hidden">
       <div style="display:flex; justify-content:space-between; align-items:center;">
         <h2>JeshRead — टैप करके अर्थ जानें</h2>
@@ -412,7 +277,7 @@
       <button class="btn-outline btn-sm" onclick="loadJeshReadPassage()">नया पाठ लाएं</button>
     </section>
 
-    <!-- 5. VIDEO & VOICE CHAT (5 Animated Characters + Custom Student Model) -->
+    <!-- 5. VIDEO & VOICE CHAT -->
     <section id="view-call" class="card hidden">
       <div style="display:flex; justify-content:space-between; align-items:center;">
         <h2>Video & Voice अभ्यास</h2>
@@ -422,7 +287,6 @@
 
       <div class="char-grid" id="characterGrid"></div>
 
-      <!-- Student Custom Image & Voice Model Control (Local Device Storage) -->
       <div style="padding:10px; border:1px dashed var(--border); border-radius:10px; margin-bottom:12px;">
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
           <span style="font-size:13px; font-weight:600;">मेरा कस्टम अवतार व आवाज़ (केवल इस डिवाइस पर):</span>
@@ -438,11 +302,10 @@
         <div id="customModelStatus" style="font-size:12px; color:var(--text-muted); margin-top:4px;"></div>
       </div>
 
-      <!-- Active Call Stage -->
       <div style="text-align:center; padding:12px; background:var(--bg-calm); border-radius:12px; margin-bottom:10px;">
         <div class="avatar-circle" id="activeCallAvatar" style="width:74px; height:74px; font-size:34px;">🧑‍🏫</div>
         <div id="activeCharName" style="font-weight:700; font-size:15px;">Aarav (शांत मार्गदर्शक)</div>
-        <div id="callModeHint" style="font-size:12px; color:var(--text-muted);">Voice + Video सुरक्षित मोड तैयार</div>
+        <div style="font-size:12px; color:var(--text-muted);">Multi-AI Non-Stop Voice + Video मोड तैयार</div>
       </div>
 
       <div class="chat-log" id="charChatLog"></div>
@@ -454,24 +317,22 @@
       </div>
     </section>
 
-    <!-- 6. JESH ACADEMY (Visual Logic & Coding) -->
+    <!-- 6. JESH ACADEMY -->
     <section id="view-academy" class="card hidden">
       <div style="display:flex; justify-content:space-between; align-items:center;">
         <h2>Jesh Academy — लॉजिक अभ्यास</h2>
         <button class="btn-outline btn-sm" onclick="navigate('home')">← वापस</button>
       </div>
       <p>सही क्रम समझें: यदि आपको स्कूल जाना है, तो सबसे पहले क्या करेंगे?</p>
-      <div id="academyStepList">
-        <button class="btn-outline" style="width:100%; margin-bottom:8px; text-align:left;" onclick="checkAcademyLogic(false)">1. सीधे साइकिल चलाना शुरू करेंगे</button>
-        <button class="btn-outline" style="width:100%; margin-bottom:8px; text-align:left;" onclick="checkAcademyLogic(true)">2. पहले बैग तैयार करेंगे, फिर साइकिल से जाएंगे</button>
-      </div>
+      <button class="btn-outline" style="width:100%; margin-bottom:8px; text-align:left;" onclick="checkAcademyLogic(false)">1. सीधे साइकिल चलाना शुरू करेंगे</button>
+      <button class="btn-outline" style="width:100%; margin-bottom:8px; text-align:left;" onclick="checkAcademyLogic(true)">2. पहले बैग तैयार करेंगे, फिर साइकिल से जाएंगे</button>
       <div id="academyFeedback" style="font-size:14px; margin-top:8px;"></div>
     </section>
 
-    <!-- 7. COURSE CERTIFICATE VIEW -->
+    <!-- 7. COURSE CERTIFICATE -->
     <section id="view-course" class="card hidden">
       <h2>आपका Course सर्टिफिकेट</h2>
-      <div class="cert-box" id="certificateBox">
+      <div class="cert-box">
         <div style="font-size:12px; color:var(--primary); font-weight:700; letter-spacing:1px;">JESH AI VERIFIED</div>
         <h3 style="font-size:20px; margin:8px 0;">Course Completion Certificate</h3>
         <p>यह प्रमाणित किया जाता है कि</p>
@@ -482,7 +343,7 @@
       </div>
     </section>
 
-    <!-- 8. LEAVE / HELP VIEW -->
+    <!-- 8. LEAVE / HELP -->
     <section id="view-help" class="card hidden">
       <h2>मदद या छुट्टी सूचना (Streak सुरक्षित रहेगी)</h2>
       <p>यदि आज आप व्यस्त हैं या किसी चीज़ में मदद चाहिए, तो यहाँ लिखें:</p>
@@ -490,7 +351,7 @@
       <button class="btn-primary" onclick="sendLeaveOrHelp()">संदेश भेजें</button>
     </section>
 
-    <!-- 9. ADMIN COMMAND CENTER & ZERO-CODE CO-ARCHITECT -->
+    <!-- 9. ADMIN COMMAND CENTER & ZERO-CODE MULTI-API MANAGER -->
     <section id="view-admin" class="card hidden">
       <div style="display:flex; justify-content:space-between; align-items:center;">
         <h2>Admin Command Center</h2>
@@ -514,18 +375,31 @@
           </div>
         </div>
 
-        <h3>Zero-Code Co-Architect अपग्रेड (बिना कोड लिखे नया मॉड्यूल जोड़ें)</h3>
+        <!-- ZERO-CODE ADD NEW API FEATURE -->
+        <div class="card" style="background:var(--bg-calm);">
+          <h3>Zero-Code Multi-AI API Manager (बिना कोड खोले नया API जोड़ें)</h3>
+          <p>यदि किसी API का कोटा खत्म हो जाए, तो अगला इंजन अपने-आप काम करेगा। यहाँ से कोई भी नया API जोड़ें या बदलें:</p>
+          <div id="aiEnginesList" style="margin-bottom:10px;"></div>
+
+          <input type="text" id="newApiName" placeholder="API का नाम (जैसे: DeepSeek, Gemini, Groq-2)" />
+          <input type="text" id="newApiKey" placeholder="API Key पेस्ट करें (gsk_..., sk-or-..., AIza..., आदि)" />
+          <div class="grid-2">
+            <input type="text" id="newApiModel" placeholder="Model नाम (वैकल्पिक — खाली छोड़ सकते हैं)" />
+            <input type="number" id="newApiPriority" value="1" min="1" max="20" placeholder="क्रम (1 = सबसे पहले)" />
+          </div>
+          <input type="text" id="newApiEndpoint" placeholder="Custom Endpoint URL (Groq/OpenRouter/Gemini के लिए खाली छोड़ें)" />
+          <div class="grid-2">
+            <button class="btn-primary" onclick="saveNewAiApiZeroCode()">नया API जोड़ें / चालू करें</button>
+            <button class="btn-outline" onclick="testAllAiEnginesUi()">सभी API एक साथ जांचें</button>
+          </div>
+        </div>
+
+        <h3>Zero-Code Co-Architect अपग्रेड (नया फ़ीचर जोड़ें)</h3>
         <input type="text" id="coModTitle" placeholder="नए फीचर का नाम (जैसे: Daily Quiz)" />
-        <textarea id="coModInstruction" rows="2" placeholder="Co-Architect को निर्देश दें कि यह फीचर छात्रों के लिए क्या करेगा..."></textarea>
+        <textarea id="coModInstruction" rows="2" placeholder="यह फीचर छात्रों के लिए क्या करेगा..."></textarea>
         <div class="grid-2" style="margin-bottom:12px;">
           <button class="btn-primary" onclick="runZeroCodeUpgrade()">1-क्लिक सुरक्षित अपग्रेड</button>
           <button class="btn-outline" onclick="runAdminSelfCheck()">Pre-Action Risk Scan</button>
-        </div>
-
-        <h3>Monetization व ब्रांड कंट्रोल</h3>
-        <div class="grid-2" style="margin-bottom:12px;">
-          <button class="btn-outline btn-sm" onclick="toggleAdsConfig('TRUE')">Ads चालू करें</button>
-          <button class="btn-outline btn-sm" onclick="toggleAdsConfig('FALSE')">Ads बंद रखें</button>
         </div>
 
         <h3>ओपन अलर्ट्स और PIN रिकवरी</h3>
@@ -534,7 +408,6 @@
     </section>
   </main>
 
-  <!-- 48px Fixed Bottom Navigation -->
   <nav class="bottom-nav">
     <button id="nav-home" class="active" onclick="navigate('home')">🏠<span>Home</span></button>
     <button id="nav-course" onclick="navigate('course')">🎓<span>Course</span></button>
@@ -543,11 +416,8 @@
   </nav>
 
   <script>
-    // Default Apps Script Web App URL provided by user
-    const DEFAULT_GAS_URL = 'https://script.google.com/macros/s/AKfycby4QzUgR10e8tfTC3flWtHHjaa102t2Bq5WT8RUuisaCq2cZ8A9WR31LONGg_c1QM_h/exec';
-    const GAS_URL = localStorage.getItem('jesh_gas_url') || DEFAULT_GAS_URL;
+    const GAS_URL = localStorage.getItem('jesh_gas_url') || 'https://script.google.com/macros/s/AKfycby4QzUgR10e8tfTC3flWtHHjaa102t2Bq5WT8RUuisaCq2cZ8A9WR31LONGg_c1QM_h/exec';
 
-    // 5 Animated Characters tailored for 100+ diverse students
     const CHARACTERS = [
       { id: 'aarav', name: 'Aarav', role: 'शांत मार्गदर्शक', emoji: '🧑‍🏫', pitch: 1.0, rate: 0.9 },
       { id: 'diya', name: 'Diya', role: 'दोस्ताना साथी', emoji: '👩‍🎓', pitch: 1.15, rate: 1.0 },
@@ -570,7 +440,6 @@
       { q: 'मैं साइकिल से स्कूल जाता हूँ:', opts: ['I go to school by bicycle.', 'I going school bicycle.'], ans: 0, word: 'bicycle' }
     ];
 
-    // Safe Fetch Wrapper with 25-Second Anti-Freeze Timeout
     async function apiCall(payload) {
       const controller = new AbortController();
       const timer = setTimeout(() => controller.abort(), 25000);
@@ -603,25 +472,17 @@
       const queue = [...state.offlineQueue];
       state.offlineQueue = [];
       localStorage.setItem('jesh_offline_queue', '[]');
-      for (const item of queue) {
-        await apiCall(item);
-      }
+      for (const item of queue) await apiCall(item);
     }
 
     function showToast(msg) {
       const t = document.getElementById('toast');
       t.textContent = msg;
       t.style.display = 'block';
-      setTimeout(() => { t.style.display = 'none'; }, 3200);
+      setTimeout(() => { t.style.display = 'none'; }, 3400);
     }
 
-    // Bootstrap & ?safe=1 Recovery Check
     async function initApp() {
-      const params = new URLSearchParams(window.location.search);
-      if (params.get('safe') === '1') {
-        showToast('Safe Mode (?safe=1) सक्रिय है।');
-      }
-
       const boot = await apiCall({ action: 'getPublicBootstrap' });
       if (boot && boot.ok) {
         if (boot.brandName) document.getElementById('brandTitle').textContent = boot.brandName;
@@ -652,7 +513,6 @@
       });
     }
 
-    // Navigation (Zero-Overlay Touch Safe)
     function navigate(viewName) {
       const views = ['auth', 'home', 'lingo', 'read', 'call', 'academy', 'course', 'help', 'admin'];
       views.forEach(v => {
@@ -681,7 +541,6 @@
       if (mod === 'read') loadJeshReadPassage();
     }
 
-    // Auth Handlers
     function switchAuthMode(mode) {
       document.getElementById('auth-login-box').classList.toggle('hidden', mode !== 'login');
       document.getElementById('auth-register-box').classList.toggle('hidden', mode !== 'register');
@@ -700,11 +559,8 @@
         state.student = res.student;
         localStorage.setItem('jesh_student', JSON.stringify(res.student));
         refreshStudentUI();
-        if (res.requireNewPin) {
-          switchAuthMode('newpin');
-        } else {
-          navigate('home');
-        }
+        if (res.requireNewPin) switchAuthMode('newpin');
+        else navigate('home');
       } else {
         showToast(res.error || 'लॉगिन नहीं हो सका');
       }
@@ -741,12 +597,8 @@
     async function handleSetNewPin() {
       const newPin = document.getElementById('newPinInput').value.trim();
       const res = await apiCall({ action: 'resetStudentPin', studentId: state.student.studentId, newPin });
-      if (res.ok) {
-        showToast(res.message);
-        navigate('home');
-      } else {
-        showToast(res.error);
-      }
+      if (res.ok) { showToast(res.message); navigate('home'); }
+      else showToast(res.error);
     }
 
     function refreshStudentUI() {
@@ -770,7 +622,6 @@
       showToast('भाषा बदली गई: ' + next);
     }
 
-    // Adaptive JeshLingo
     function renderLingoQuestion() {
       const item = LINGO_BANK[state.lingoIndex % LINGO_BANK.length];
       document.getElementById('lingoQuestionBox').textContent = item.q;
@@ -813,7 +664,6 @@
       }
     }
 
-    // Adaptive JeshRead
     async function loadJeshReadPassage() {
       const box = document.getElementById('readPassageBox');
       box.textContent = 'आपके स्तर के अनुसार पाठ तैयार हो रहा है...';
@@ -843,7 +693,6 @@
       card.textContent = res.explanation || `${word}: रोज़मर्रा का उपयोगी शब्द।`;
     }
 
-    // 5 Animated Characters + Student Device-First Custom Model
     function renderCharacterGrid() {
       const grid = document.getElementById('characterGrid');
       const customImg = localStorage.getItem('jesh_custom_avatar');
@@ -871,11 +720,8 @@
       renderCharacterGrid();
       const stage = document.getElementById('activeCallAvatar');
       const customImg = localStorage.getItem('jesh_custom_avatar');
-      if (isCustom && customImg) {
-        stage.innerHTML = `<img src="${customImg}" alt="Custom"/>`;
-      } else {
-        stage.textContent = charObj.emoji;
-      }
+      if (isCustom && customImg) stage.innerHTML = `<img src="${customImg}" alt="Custom"/>`;
+      else stage.textContent = charObj.emoji;
       document.getElementById('activeCharName').textContent = `${charObj.name} (${charObj.role})`;
     }
 
@@ -976,19 +822,14 @@
       showToast('सत्र सुरक्षित सेव हो गया!');
     }
 
-    // Jesh Academy Logic
     function checkAcademyLogic(correct) {
       const fb = document.getElementById('academyFeedback');
-      if (correct) {
-        fb.style.color = '#059669';
-        fb.textContent = 'सही लॉजिक! कंप्यूटर प्रोग्राम भी इसी तरह पहले तैयारी (Setup) और फिर कार्य (Action) करता है।';
-      } else {
-        fb.style.color = '#DC2626';
-        fb.textContent = 'फिर सोचें: बिना बैग तैयार किए जाने पर ज़रूरी सामान छूट जाएगा।';
-      }
+      fb.style.color = correct ? '#059669' : '#DC2626';
+      fb.textContent = correct
+        ? 'सही लॉजिक! कंप्यूटर प्रोग्राम भी इसी तरह पहले तैयारी (Setup) और फिर कार्य (Action) करता है।'
+        : 'फिर सोचें: बिना बैग तैयार किए जाने पर ज़रूरी सामान छूट जाएगा।';
     }
 
-    // Course Certificate
     async function loadCourseCertificate() {
       const res = await apiCall({ action: 'getCourseCertificate', studentId: state.student.studentId });
       const cert = res.certificate || {
@@ -1005,7 +846,6 @@
         `<img src="https://api.qrserver.com/v1/create-qr-code/?size=110x110&data=${encodeURIComponent(cert.verifyCode)}" alt="Verification QR" />`;
     }
 
-    // Leave / Help
     async function sendLeaveOrHelp() {
       const note = document.getElementById('leaveNote').value.trim();
       const res = await apiCall({ action: 'submitLeaveOrHelp', studentId: state.student.studentId, note });
@@ -1014,11 +854,7 @@
       navigate('home');
     }
 
-    // Admin Command Center & Zero-Code Co-Architect
-    function toggleAdminGate() {
-      navigate('admin');
-    }
-
+    // ADMIN & ZERO-CODE MULTI-API MANAGER
     async function handleAdminLogin() {
       const pass = document.getElementById('adminPassInput').value.trim();
       const res = await apiCall({ action: 'loginAdmin', adminPass: pass });
@@ -1038,6 +874,19 @@
       document.getElementById('adminTotalStudents').textContent = res.totalStudents;
       document.getElementById('adminAlertCount').textContent = res.openAlerts.length;
 
+      // Render Multi-AI Failover Engines
+      const aiBox = document.getElementById('aiEnginesList');
+      aiBox.innerHTML = '';
+      (res.aiEngines || []).forEach(eng => {
+        const row = document.createElement('div');
+        row.className = 'step-item';
+        row.style.padding = '8px 10px';
+        row.innerHTML = `<div class="step-info"><strong>#${eng.priority} ${eng.name}</strong><span>${eng.model} • ${eng.status}</span></div>` +
+          `<button class="btn-outline btn-sm" onclick="toggleEngineUi('${eng.name}', ${!eng.enabled})">${eng.enabled ? '✅ ON' : '⏸️ OFF'}</button>`;
+        aiBox.appendChild(row);
+      });
+
+      // Render Open Alerts
       const list = document.getElementById('adminAlertsList');
       list.innerHTML = res.openAlerts.length ? '' : '<p>कोई नया अलर्ट नहीं है।</p>';
       res.openAlerts.forEach(a => {
@@ -1047,6 +896,46 @@
           (a.type === 'PIN_RESET' ? `<button class="btn-primary btn-sm" style="width:auto;" onclick="approvePin('${a.studentId}')">PIN दें</button>` : '');
         list.appendChild(div);
       });
+    }
+
+    async function saveNewAiApiZeroCode() {
+      const engineName = document.getElementById('newApiName').value.trim();
+      const apiKey = document.getElementById('newApiKey').value.trim();
+      const model = document.getElementById('newApiModel').value.trim();
+      const priority = Number(document.getElementById('newApiPriority').value || 1);
+      const endpoint = document.getElementById('newApiEndpoint').value.trim();
+
+      if (!engineName || !apiKey) return showToast('API नाम और Key दोनों भरें');
+      const res = await apiCall({
+        action: 'addOrUpdateAiEngine',
+        adminPass: state.adminPass,
+        engineName, apiKey, model, priority, endpoint
+      });
+      showToast(res.message || res.error);
+      if (res.ok) {
+        document.getElementById('newApiName').value = '';
+        document.getElementById('newApiKey').value = '';
+        document.getElementById('newApiModel').value = '';
+        document.getElementById('newApiEndpoint').value = '';
+        loadAdminDashboard();
+      }
+    }
+
+    async function toggleEngineUi(engineName, enabled) {
+      const res = await apiCall({ action: 'toggleAiEngine', adminPass: state.adminPass, engineName, enabled });
+      showToast(res.message || res.error);
+      loadAdminDashboard();
+    }
+
+    async function testAllAiEnginesUi() {
+      showToast('सभी AI इंजनों की जांच हो रही है...');
+      const res = await apiCall({ action: 'testAllAiEngines', adminPass: state.adminPass });
+      if (res.ok) {
+        showToast(`सक्रिय इंजन: ${res.activeCount} | जवाब: "${res.sampleResponse}"`);
+        loadAdminDashboard();
+      } else {
+        showToast(res.error || 'जांच विफल');
+      }
     }
 
     async function approvePin(studentId) {
@@ -1077,11 +966,6 @@
         proposedHtml: document.documentElement.outerHTML
       });
       showToast(res.message || 'Self-Check Complete');
-    }
-
-    async function toggleAdsConfig(val) {
-      const res = await apiCall({ action: 'updateConfig', adminPass: state.adminPass, key: 'ENABLE_ADS', value: val });
-      showToast(res.message || res.error);
     }
 
     window.addEventListener('DOMContentLoaded', initApp);
