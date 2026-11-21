@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Jesh AI — Student-First Learning Ecosystem</title>
+  <style>
+    :root {
+      --bg-calm: #F8FAFC;
+      --surface: #FFFFFF;
+      --primary: #2563EB;
+      --primary-soft: #EFF6FF;
+      --accent: #059669;
+      --accent-soft: #ECFDF5;
+      --text-main: #0F172A;
+      --text-muted: #475569;
+      --border: #E2E8F0;
+      --danger: #DC2626;
+      --footer-h: 48px;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      margin: 0;
+      padding: 0 0 calc(var(--footer-h) + 16px) 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg-calm);
+      color: var(--text-main);
+      line-height: 1.5;
+    }
+
+    /* Top Header */
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+
+    .brand {
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .badge-pill {
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 999px;
+    }
+
+    /* Main Container */
+    main#app {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 14px;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+    }
+
+    h2, h3 {
+      margin: 0 0 8px 0;
+      font-size: 17px;
+      color: var(--text-main);
+    }
+
+    p {
+      margin: 0 0 10px 0;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    /* Buttons & Inputs */
+    input, select, textarea {
+      width: 100%;
+      padding: 11px 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 15px;
+      margin-bottom: 10px;
+      background: #FFFFFF;
+      color: var(--text-main);
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      border-radius: 10px;
+      padding: 11px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      transition: opacity 0.15s ease;
+    }
+
+    button:active { opacity: 0.8; }
+    button:disabled { opacity: 0.55; cursor: not-allowed; }
+
+    .btn-primary { background: var(--primary); color: #FFFFFF; width: 100%; }
+    .btn-accent { background: var(--accent); color: #FFFFFF; }
+    .btn-outline { background: var(--surface); border: 1px solid var(--border); color: var(--text-main); }
+    .btn-sm { padding: 7px 12px; font-size: 13px; }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    /* 5-Minute Roadmap Steps */
+    .step-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin-bottom: 10px;
+      background: #FFFFFF;
+    }
+
+    .step-info strong { display: block; font-size: 15px; color: var(--text-main); }
+    .step-info span { font-size: 12px; color: var(--text-muted); }
+
+    /* Tap-to-Understand Words in JeshRead */
+    .read-word {
+      display: inline-block;
+      padding: 3px 5px;
+      margin: 2px 1px;
+      border-radius: 6px;
+      font-size: 17px;
+      color: var(--text-main);
+      cursor: pointer;
+      border-bottom: 1px dashed #94A3B8;
+    }
+    .read-word:hover, .read-word.active-word {
+      background: var(--primary-soft);
+      color: var(--primary);
+    }
+
+    /* 5 Animated Characters Grid */
+    .char-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .char-card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px;
+      text-align: center;
+      cursor: pointer;
+      background: #FFFFFF;
+    }
+
+    .char-card.selected {
+      border-color: var(--primary);
+      background: var(--primary-soft);
+    }
+
+    .avatar-circle {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      margin: 0 auto 6px auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      background: #E2E8F0;
+      overflow: hidden;
+      transition: transform 0.25s ease;
+    }
+
+    .avatar-circle.speaking {
+      transform: scale(1.08);
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.22);
+    }
+
+    .avatar-circle img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Chat Box */
+    .chat-log {
+      max-height: 230px;
+      overflow-y: auto;
+      padding: 10px;
+      background: var(--bg-calm);
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      margin-bottom: 10px;
+    }
+
+    .msg {
+      padding: 8px 12px;
+      border-radius: 10px;
+      margin-bottom: 8px;
+      font-size: 14px;
+      max-width: 85%;
+    }
+    .msg.ai { background: #FFFFFF; border: 1px solid var(--border); color: var(--text-main); }
+    .msg.user { background: var(--primary); color: #FFFFFF; margin-left: auto; }
+
+    /* Certificate */
+    .cert-box {
+      border: 2px solid var(--primary);
+      border-radius: 14px;
+      padding: 20px;
+      text-align: center;
+      background: #FFFFFF;
+    }
+
+    /* Fixed 48px Bottom Navigation (Touch-Safe, Zero-Overlay Conflict) */
+    nav.bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: var(--footer-h);
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      z-index: 30;
+    }
+
+    nav.bottom-nav button {
+      border-radius: 0;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 12px;
+      padding: 4px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: var(--footer-h);
+    }
+
+    nav.bottom-nav button.active {
+      color: var(--primary);
+      font-weight: 700;
+      background: var(--primary-soft);
+    }
+
+    .toast {
+      position: fixed;
+      top: 64px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #0F172A;
+      color: #FFFFFF;
+      padding: 9px 16px;
+      border-radius: 999px;
+      font-size: 13px;
+      z-index: 40;
+      display: none;
+      max-width: 90%;
+      text-align: center;
+    }
+
+    .hidden { display: none !important; }
+  </style>
+  <style id="zero-code-css-hook"></style>
+</head>
+<body>
+
+  <header>
+    <div class="brand">
+      <span id="brandTitle">Jesh AI</span>
+      <span class="badge-pill" id="netStatus">Online</span>
+    </div>
+    <div style="display:flex; gap:6px; align-items:center;">
+      <span class="badge-pill" id="headerStats">A0 • 0 XP</span>
+      <button class="btn-outline btn-sm" onclick="toggleAdminGate()" title="Admin Access">⚙️</button>
+    </div>
+  </header>
+
+  <div id="toast" class="toast"></div>
+
+  <main id="app">
+    <!-- 1. AUTH VIEW -->
+    <section id="view-auth" class="card">
+      <h2 id="authHeading">स्वागत है — आसान शुरुआत करें</h2>
+      <p>अपना नाम, मोबाइल/ID और 4-6 अंकों का PIN डालें। कोई कठिन सेटअप नहीं।</p>
+
+      <div id="auth-login-box">
+        <input type="text" id="loginId" placeholder="Student ID या मोबाइल/ईमेल" />
+        <input type="password" id="loginPin" inputmode="numeric" maxlength="6" placeholder="आपका 4-6 अंकों का PIN" />
+        <button class="btn-primary" id="btnLogin" onclick="handleLogin()">लॉगिन करें</button>
+        <div class="grid-2" style="margin-top:10px;">
+          <button class="btn-outline btn-sm" onclick="switchAuthMode('register')">नया अकाउंट बनाएं</button>
+          <button class="btn-outline btn-sm" onclick="handleForgotPin()">PIN भूल गए?</button>
+        </div>
+      </div>
+
+      <div id="auth-register-box" class="hidden">
+        <input type="text" id="regName" placeholder="आपका पूरा नाम" />
+        <input type="text" id="regContact" placeholder="मोबाइल नंबर या ईमेल" />
+        <input type="password" id="regPin" inputmode="numeric" maxlength="6" placeholder="नया 4-6 अंकों का PIN बनाएं" />
+        <select id="regLang">
+          <option value="Hindi">माध्यम भाषा: हिंदी (Hindi)</option>
+          <option value="Bhojpuri">माध्यम भाषा: भोजपुरी (Bhojpuri)</option>
+          <option value="English">Medium: English</option>
+        </select>
+        <button class="btn-primary" id="btnRegister" onclick="handleRegister()">अकाउंट शुरू करें</button>
+        <button class="btn-outline btn-sm" style="width:100%; margin-top:8px;" onclick="switchAuthMode('login')">वापस लॉगिन पर जाएं</button>
+      </div>
+
+      <div id="auth-newpin-box" class="hidden">
+        <p><strong>नया PIN सेट करें:</strong> एडमिन द्वारा आपका रीसेट मंजूर हो गया है।</p>
+        <input type="password" id="newPinInput" inputmode="numeric" maxlength="6" placeholder="नया 4-6 अंकों का PIN" />
+        <button class="btn-primary" onclick="handleSetNewPin()">नया PIN सेव करें</button>
+      </div>
+    </section>
+
+    <!-- 2. STUDENT HOME (5-Minute Daily Roadmap) -->
+    <section id="view-home" class="hidden">
+      <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <h2 id="welcomeText">नमस्ते!</h2>
+          <span class="badge-pill" id="streakBadge">🔥 1 Day Streak</span>
+        </div>
+        <p id="summaryBanner">आज का 5-मिनट का आसान कदम — बिना किसी दबाव के सीखें।</p>
+
+        <div class="step-item">
+          <div class="step-info">
+            <strong>1. JeshLingo (2 मिनट)</strong>
+            <span id="lingoSub">छोटे वाक्य और कमज़ोर शब्दों का स्मार्ट अभ्यास</span>
+          </div>
+          <button class="btn-primary" style="width:auto;" onclick="openModule('lingo')">शुरू करें</button>
+        </div>
+
+        <div class="step-item">
+          <div class="step-info">
+            <strong>2. JeshRead (2 मिनट)</strong>
+            <span>पढ़ें और किसी भी शब्द पर टैप कर तुरंत अर्थ जानें</span>
+          </div>
+          <button class="btn-accent" onclick="openModule('read')">पढ़ें</button>
+        </div>
+
+        <div class="step-item">
+          <div class="step-info">
+            <strong>3. Video & Voice Call (1 मिनट)</strong>
+            <span>5 Animated Characters या अपने अवतार से बात करें</span>
+          </div>
+          <button class="btn-outline" onclick="openModule('call')">बात करें</button>
+        </div>
+
+        <div class="step-item" style="margin-bottom:0;">
+          <div class="step-info">
+            <strong>4. Jesh Academy (लॉजिक व कोडिंग)</strong>
+            <span>आसान विज़ुअल स्टेप्स और कंप्यूटर लॉजिक</span>
+          </div>
+          <button class="btn-outline" onclick="openModule('academy')">सीखें</button>
+        </div>
+      </div>
+
+      <!-- Zero-Code Future Modules Slot (Populated dynamically from ActiveConfig) -->
+      <div id="zero-code-modules-container"></div>
+    </section>
+
+    <!-- 3. JESHLINGO (Adaptive Micro-Practice) -->
+    <section id="view-lingo" class="card hidden">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h2>JeshLingo अभ्यास</h2>
+        <button class="btn-outline btn-sm" onclick="navigate('home')">← वापस</button>
+      </div>
+      <p id="lingoPrompt">सही वाक्य चुनें या पूरा करें:</p>
+      <div id="lingoQuestionBox" style="font-size:17px; font-weight:600; margin:10px 0;"></div>
+      <div id="lingoOptions"></div>
+      <div id="lingoFeedback" style="margin-top:10px; font-size:14px;"></div>
+    </section>
+
+    <!-- 4. JESHREAD (Tap-to-Understand Reading) -->
+    <section id="view-read" class="card hidden">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h2>JeshRead — टैप करके अर्थ जानें</h2>
+        <button class="btn-outline btn-sm" onclick="navigate('home')">← वापस</button>
+      </div>
+      <p>किसी भी अंग्रेजी शब्द पर टैप करें—उसका सरल अर्थ तुरंत नीचे दिखेगा।</p>
+      <div id="readPassageBox" style="padding:12px; background:var(--bg-calm); border-radius:10px; border:1px solid var(--border); margin-bottom:10px;">
+        लोड हो रहा है...
+      </div>
+      <div id="wordMeaningCard" class="hidden" style="padding:10px; background:var(--primary-soft); border-radius:10px; margin-bottom:10px;"></div>
+      <button class="btn-outline btn-sm" onclick="loadJeshReadPassage()">नया पाठ लाएं</button>
+    </section>
+
+    <!-- 5. VIDEO & VOICE CHAT (5 Animated Characters + Custom Student Model) -->
+    <section id="view-call" class="card hidden">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h2>Video & Voice अभ्यास</h2>
+        <button class="btn-outline btn-sm" onclick="endCharacterCall()">समाप्त करें</button>
+      </div>
+      <p>अपना पसंदीदा कैरेक्टर चुनें या खुद की इमेज/आवाज़ मॉडल सेट करें:</p>
+
+      <div class="char-grid" id="characterGrid"></div>
+
+      <!-- Student Custom Image & Voice Model Control (Local Device Storage) -->
+      <div style="padding:10px; border:1px dashed var(--border); border-radius:10px; margin-bottom:12px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+          <span style="font-size:13px; font-weight:600;">मेरा कस्टम अवतार व आवाज़ (केवल इस डिवाइस पर):</span>
+          <div style="display:flex; gap:6px;">
+            <label class="btn-outline btn-sm" style="cursor:pointer; margin:0;">
+              📷 इमेज चुनें
+              <input type="file" accept="image/*" class="hidden" onchange="handleCustomAvatarUpload(event)" />
+            </label>
+            <button class="btn-outline btn-sm" onclick="recordVoicePitchSample()">🎙️ आवाज़ सेट</button>
+            <button class="btn-outline btn-sm" onclick="clearCustomModel()">रीसेट</button>
+          </div>
+        </div>
+        <div id="customModelStatus" style="font-size:12px; color:var(--text-muted); margin-top:4px;"></div>
+      </div>
+
+      <!-- Active Call Stage -->
+      <div style="text-align:center; padding:12px; background:var(--bg-calm); border-radius:12px; margin-bottom:10px;">
+        <div class="avatar-circle" id="activeCallAvatar" style="width:74px; height:74px; font-size:34px;">🧑‍🏫</div>
+        <div id="activeCharName" style="font-weight:700; font-size:15px;">Aarav (शांत मार्गदर्शक)</div>
+        <div id="callModeHint" style="font-size:12px; color:var(--text-muted);">Voice + Video सुरक्षित मोड तैयार</div>
+      </div>
+
+      <div class="chat-log" id="charChatLog"></div>
+
+      <div style="display:flex; gap:8px;">
+        <input type="text" id="chatInput" placeholder="यहाँ लिखें या माइक दबाएं..." style="margin-bottom:0;" />
+        <button class="btn-outline" onclick="startVoiceInput()" title="बोलें">🎙️</button>
+        <button class="btn-primary" style="width:auto;" onclick="sendCharacterMessage()">भेजें</button>
+      </div>
+    </section>
+
+    <!-- 6. JESH ACADEMY (Visual Logic & Coding) -->
+    <section id="view-academy" class="card hidden">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h2>Jesh Academy — लॉजिक अभ्यास</h2>
+        <button class="btn-outline btn-sm" onclick="navigate('home')">← वापस</button>
+      </div>
+      <p>सही क्रम समझें: यदि आपको स्कूल जाना है, तो सबसे पहले क्या करेंगे?</p>
+      <div id="academyStepList">
+        <button class="btn-outline" style="width:100%; margin-bottom:8px; text-align:left;" onclick="checkAcademyLogic(false)">1. सीधे साइकिल चलाना शुरू करेंगे</button>
+        <button class="btn-outline" style="width:100%; margin-bottom:8px; text-align:left;" onclick="checkAcademyLogic(true)">2. पहले बैग तैयार करेंगे, फिर साइकिल से जाएंगे</button>
+      </div>
+      <div id="academyFeedback" style="font-size:14px; margin-top:8px;"></div>
+    </section>
+
+    <!-- 7. COURSE CERTIFICATE VIEW -->
+    <section id="view-course" class="card hidden">
+      <h2>आपका Course सर्टिफिकेट</h2>
+      <div class="cert-box" id="certificateBox">
+        <div style="font-size:12px; color:var(--primary); font-weight:700; letter-spacing:1px;">JESH AI VERIFIED</div>
+        <h3 style="font-size:20px; margin:8px 0;">Course Completion Certificate</h3>
+        <p>यह प्रमाणित किया जाता है कि</p>
+        <div id="certStudentName" style="font-size:22px; font-weight:700; color:var(--text-main); margin:6px 0;">Student Name</div>
+        <p id="certDetails">स्तर: A0 • प्रगति: 10% • दिनांक: --</p>
+        <div id="certQrBox" style="margin:12px auto;"></div>
+        <div id="certVerifyCode" style="font-size:12px; color:var(--text-muted);">Verify ID: JESH-000</div>
+      </div>
+    </section>
+
+    <!-- 8. LEAVE / HELP VIEW -->
+    <section id="view-help" class="card hidden">
+      <h2>मदद या छुट्टी सूचना (Streak सुरक्षित रहेगी)</h2>
+      <p>यदि आज आप व्यस्त हैं या किसी चीज़ में मदद चाहिए, तो यहाँ लिखें:</p>
+      <textarea id="leaveNote" rows="3" placeholder="उदाहरण: आज घर पर काम है, कल अभ्यास करूँगा..."></textarea>
+      <button class="btn-primary" onclick="sendLeaveOrHelp()">संदेश भेजें</button>
+    </section>
+
+    <!-- 9. ADMIN COMMAND CENTER & ZERO-CODE CO-ARCHITECT -->
+    <section id="view-admin" class="card hidden">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h2>Admin Command Center</h2>
+        <button class="btn-outline btn-sm" onclick="navigate('home')">बंद करें</button>
+      </div>
+
+      <div id="admin-login-panel">
+        <input type="password" id="adminPassInput" placeholder="Admin Password दर्ज करें" />
+        <button class="btn-primary" onclick="handleAdminLogin()">Command Center खोलें</button>
+      </div>
+
+      <div id="admin-dashboard-panel" class="hidden">
+        <div class="grid-2" style="margin-bottom:12px;">
+          <div class="card" style="margin:0; padding:10px;">
+            <strong id="adminTotalStudents">0</strong>
+            <p style="margin:0; font-size:12px;">कुल छात्र</p>
+          </div>
+          <div class="card" style="margin:0; padding:10px;">
+            <strong id="adminAlertCount">0</strong>
+            <p style="margin:0; font-size:12px;">ओपन अलर्ट्स</p>
+          </div>
+        </div>
+
+        <h3>Zero-Code Co-Architect अपग्रेड (बिना कोड लिखे नया मॉड्यूल जोड़ें)</h3>
+        <input type="text" id="coModTitle" placeholder="नए फीचर का नाम (जैसे: Daily Quiz)" />
+        <textarea id="coModInstruction" rows="2" placeholder="Co-Architect को निर्देश दें कि यह फीचर छात्रों के लिए क्या करेगा..."></textarea>
+        <div class="grid-2" style="margin-bottom:12px;">
+          <button class="btn-primary" onclick="runZeroCodeUpgrade()">1-क्लिक सुरक्षित अपग्रेड</button>
+          <button class="btn-outline" onclick="runAdminSelfCheck()">Pre-Action Risk Scan</button>
+        </div>
+
+        <h3>Monetization व ब्रांड कंट्रोल</h3>
+        <div class="grid-2" style="margin-bottom:12px;">
+          <button class="btn-outline btn-sm" onclick="toggleAdsConfig('TRUE')">Ads चालू करें</button>
+          <button class="btn-outline btn-sm" onclick="toggleAdsConfig('FALSE')">Ads बंद रखें</button>
+        </div>
+
+        <h3>ओपन अलर्ट्स और PIN रिकवरी</h3>
+        <div id="adminAlertsList"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 48px Fixed Bottom Navigation -->
+  <nav class="bottom-nav">
+    <button id="nav-home" class="active" onclick="navigate('home')">🏠<span>Home</span></button>
+    <button id="nav-course" onclick="navigate('course')">🎓<span>Course</span></button>
+    <button id="nav-lang" onclick="cycleLanguage()">🌐<span id="navLangLabel">हिंदी</span></button>
+    <button id="nav-help" onclick="navigate('help')">💬<span>Leave/Help</span></button>
+  </nav>
+
+  <script>
+    // Default Apps Script Web App URL provided by user
+    const DEFAULT_GAS_URL = 'https://script.google.com/macros/s/AKfycby4QzUgR10e8tfTC3flWtHHjaa102t2Bq5WT8RUuisaCq2cZ8A9WR31LONGg_c1QM_h/exec';
+    const GAS_URL = localStorage.getItem('jesh_gas_url') || DEFAULT_GAS_URL;
+
+    // 5 Animated Characters tailored for 100+ diverse students
+    const CHARACTERS = [
+      { id: 'aarav', name: 'Aarav', role: 'शांत मार्गदर्शक', emoji: '🧑‍🏫', pitch: 1.0, rate: 0.9 },
+      { id: 'diya', name: 'Diya', role: 'दोस्ताना साथी', emoji: '👩‍🎓', pitch: 1.15, rate: 1.0 },
+      { id: 'kabir', name: 'Kabir', role: 'रोलप्ले कोच', emoji: '🧑‍💼', pitch: 0.95, rate: 1.0 },
+      { id: 'meera', name: 'Meera', role: 'कहानी साथी', emoji: '📖', pitch: 1.1, rate: 0.95 },
+      { id: 'robo', name: 'Arya', role: 'कोडिंग मेंटर', emoji: '🤖', pitch: 1.0, rate: 0.95 }
+    ];
+
+    let state = {
+      student: JSON.parse(localStorage.getItem('jesh_student') || 'null'),
+      selectedChar: CHARACTERS[0],
+      adminPass: '',
+      offlineQueue: JSON.parse(localStorage.getItem('jesh_offline_queue') || '[]'),
+      lingoIndex: 0
+    };
+
+    const LINGO_BANK = [
+      { q: 'मैं रोज़ सुबह जल्दी उठता हूँ — सही अंग्रेज़ी चुनें:', opts: ['I wake up early every morning.', 'I waking morning early.'], ans: 0, word: 'wake up' },
+      { q: 'मुझे घर का बना आलू पराठा पसंद है:', opts: ['I like homemade aloo paratha.', 'I liking paratha homemade.'], ans: 0, word: 'homemade' },
+      { q: 'मैं साइकिल से स्कूल जाता हूँ:', opts: ['I go to school by bicycle.', 'I going school bicycle.'], ans: 0, word: 'bicycle' }
+    ];
+
+    // Safe Fetch Wrapper with 25-Second Anti-Freeze Timeout
+    async function apiCall(payload) {
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), 25000);
+      try {
+        const res = await fetch(GAS_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(payload),
+          signal: controller.signal
+        });
+        clearTimeout(timer);
+        updateNetworkBadge(true);
+        return await res.json();
+      } catch (err) {
+        clearTimeout(timer);
+        updateNetworkBadge(false);
+        return { ok: false, offline: true, error: 'नेटवर्क धीमा है — आपकी प्रगति डिवाइस में सुरक्षित है।' };
+      }
+    }
+
+    function updateNetworkBadge(online) {
+      const el = document.getElementById('netStatus');
+      el.textContent = online ? 'Online' : 'Offline Safe';
+      el.style.background = online ? '#EFF6FF' : '#FEF3C7';
+      el.style.color = online ? '#2563EB' : '#B45309';
+      if (online && state.offlineQueue.length > 0) flushOfflineQueue();
+    }
+
+    async function flushOfflineQueue() {
+      const queue = [...state.offlineQueue];
+      state.offlineQueue = [];
+      localStorage.setItem('jesh_offline_queue', '[]');
+      for (const item of queue) {
+        await apiCall(item);
+      }
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.style.display = 'block';
+      setTimeout(() => { t.style.display = 'none'; }, 3200);
+    }
+
+    // Bootstrap & ?safe=1 Recovery Check
+    async function initApp() {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('safe') === '1') {
+        showToast('Safe Mode (?safe=1) सक्रिय है।');
+      }
+
+      const boot = await apiCall({ action: 'getPublicBootstrap' });
+      if (boot && boot.ok) {
+        if (boot.brandName) document.getElementById('brandTitle').textContent = boot.brandName;
+        if (boot.themeBg) document.documentElement.style.setProperty('--bg-calm', boot.themeBg);
+        if (boot.customCssHook) document.getElementById('zero-code-css-hook').textContent = boot.customCssHook;
+        renderZeroCodeModules(boot.customModules || []);
+      }
+
+      renderCharacterGrid();
+      updateCustomModelStatus();
+
+      if (state.student) {
+        refreshStudentUI();
+        navigate('home');
+      } else {
+        navigate('auth');
+      }
+    }
+
+    function renderZeroCodeModules(mods) {
+      const container = document.getElementById('zero-code-modules-container');
+      container.innerHTML = '';
+      mods.filter(m => m.enabled).forEach(m => {
+        const div = document.createElement('div');
+        div.className = 'card';
+        div.innerHTML = `<h3>${m.title}</h3><p>${m.description}</p>`;
+        container.appendChild(div);
+      });
+    }
+
+    // Navigation (Zero-Overlay Touch Safe)
+    function navigate(viewName) {
+      const views = ['auth', 'home', 'lingo', 'read', 'call', 'academy', 'course', 'help', 'admin'];
+      views.forEach(v => {
+        const el = document.getElementById('view-' + v);
+        if (el) el.classList.add('hidden');
+      });
+
+      if (!state.student && viewName !== 'admin') {
+        document.getElementById('view-auth').classList.remove('hidden');
+        return;
+      }
+
+      const target = document.getElementById('view-' + viewName);
+      if (target) target.classList.remove('hidden');
+
+      document.querySelectorAll('nav.bottom-nav button').forEach(b => b.classList.remove('active'));
+      const navBtn = document.getElementById('nav-' + viewName);
+      if (navBtn) navBtn.classList.add('active');
+
+      if (viewName === 'course') loadCourseCertificate();
+    }
+
+    function openModule(mod) {
+      navigate(mod);
+      if (mod === 'lingo') renderLingoQuestion();
+      if (mod === 'read') loadJeshReadPassage();
+    }
+
+    // Auth Handlers
+    function switchAuthMode(mode) {
+      document.getElementById('auth-login-box').classList.toggle('hidden', mode !== 'login');
+      document.getElementById('auth-register-box').classList.toggle('hidden', mode !== 'register');
+      document.getElementById('auth-newpin-box').classList.toggle('hidden', mode !== 'newpin');
+    }
+
+    async function handleLogin() {
+      const identifier = document.getElementById('loginId').value.trim();
+      const pin = document.getElementById('loginPin').value.trim();
+      const btn = document.getElementById('btnLogin');
+      btn.disabled = true;
+      const res = await apiCall({ action: 'loginStudent', identifier, pin });
+      btn.disabled = false;
+
+      if (res.ok) {
+        state.student = res.student;
+        localStorage.setItem('jesh_student', JSON.stringify(res.student));
+        refreshStudentUI();
+        if (res.requireNewPin) {
+          switchAuthMode('newpin');
+        } else {
+          navigate('home');
+        }
+      } else {
+        showToast(res.error || 'लॉगिन नहीं हो सका');
+      }
+    }
+
+    async function handleRegister() {
+      const name = document.getElementById('regName').value.trim();
+      const contact = document.getElementById('regContact').value.trim();
+      const pin = document.getElementById('regPin').value.trim();
+      const language = document.getElementById('regLang').value;
+      const btn = document.getElementById('btnRegister');
+      btn.disabled = true;
+      const res = await apiCall({ action: 'registerStudent', name, contact, pin, language });
+      btn.disabled = false;
+
+      if (res.ok) {
+        state.student = res.student;
+        localStorage.setItem('jesh_student', JSON.stringify(res.student));
+        refreshStudentUI();
+        navigate('home');
+        showToast('स्वागत है ' + name + '!');
+      } else {
+        showToast(res.error || 'पंजीकरण विफल');
+      }
+    }
+
+    async function handleForgotPin() {
+      const identifier = document.getElementById('loginId').value.trim();
+      if (!identifier) return showToast('पहले ऊपर अपना ID या मोबाइल नंबर लिखें');
+      const res = await apiCall({ action: 'requestPinReset', identifier });
+      showToast(res.message || res.error);
+    }
+
+    async function handleSetNewPin() {
+      const newPin = document.getElementById('newPinInput').value.trim();
+      const res = await apiCall({ action: 'resetStudentPin', studentId: state.student.studentId, newPin });
+      if (res.ok) {
+        showToast(res.message);
+        navigate('home');
+      } else {
+        showToast(res.error);
+      }
+    }
+
+    function refreshStudentUI() {
+      if (!state.student) return;
+      document.getElementById('welcomeText').textContent = `नमस्ते, ${state.student.name}!`;
+      document.getElementById('headerStats').textContent = `${state.student.level} • ${state.student.xp} XP`;
+      document.getElementById('streakBadge').textContent = `🔥 ${state.student.streak} Day Streak`;
+      document.getElementById('navLangLabel').textContent = state.student.language || 'हिंदी';
+      if (state.student.weakWords && state.student.weakWords.length > 0) {
+        document.getElementById('lingoSub').textContent = `दोहराने वाले शब्द: ${state.student.weakWords.slice(-3).join(', ')}`;
+      }
+    }
+
+    function cycleLanguage() {
+      if (!state.student) return;
+      const langs = ['Hindi', 'Bhojpuri', 'English'];
+      const next = langs[(langs.indexOf(state.student.language) + 1) % langs.length];
+      state.student.language = next;
+      localStorage.setItem('jesh_student', JSON.stringify(state.student));
+      refreshStudentUI();
+      showToast('भाषा बदली गई: ' + next);
+    }
+
+    // Adaptive JeshLingo
+    function renderLingoQuestion() {
+      const item = LINGO_BANK[state.lingoIndex % LINGO_BANK.length];
+      document.getElementById('lingoQuestionBox').textContent = item.q;
+      document.getElementById('lingoFeedback').textContent = '';
+      const optsBox = document.getElementById('lingoOptions');
+      optsBox.innerHTML = '';
+      item.opts.forEach((opt, idx) => {
+        const b = document.createElement('button');
+        b.className = 'btn-outline';
+        b.style.cssText = 'width:100%; margin-bottom:8px; text-align:left;';
+        b.textContent = opt;
+        b.onclick = () => checkLingoAnswer(idx === item.ans, item.word);
+        optsBox.appendChild(b);
+      });
+    }
+
+    async function checkLingoAnswer(isCorrect, word) {
+      const fb = document.getElementById('lingoFeedback');
+      if (isCorrect) {
+        fb.style.color = '#059669';
+        fb.textContent = 'बहुत बढ़िया! बिल्कुल सही वाक्य। +10 XP';
+        state.lingoIndex++;
+        const syncPayload = { action: 'submitLingoProgress', studentId: state.student.studentId, xp: 10, masteredWord: word };
+        const res = await apiCall(syncPayload);
+        if (res.ok) {
+          state.student.xp = res.xp;
+          state.student.level = res.level;
+          state.student.weakWords = res.weakWords;
+          localStorage.setItem('jesh_student', JSON.stringify(state.student));
+          refreshStudentUI();
+        } else {
+          state.offlineQueue.push(syncPayload);
+          localStorage.setItem('jesh_offline_queue', JSON.stringify(state.offlineQueue));
+        }
+        setTimeout(renderLingoQuestion, 1100);
+      } else {
+        fb.style.color = '#DC2626';
+        fb.textContent = `कोई बात नहीं! "${word}" को हम अगले अभ्यास में फिर से आसान तरीके से दोहराएंगे।`;
+        apiCall({ action: 'submitLingoProgress', studentId: state.student.studentId, xp: 2, weakWord: word });
+      }
+    }
+
+    // Adaptive JeshRead
+    async function loadJeshReadPassage() {
+      const box = document.getElementById('readPassageBox');
+      box.textContent = 'आपके स्तर के अनुसार पाठ तैयार हो रहा है...';
+      const res = await apiCall({
+        action: 'getJeshReadContent',
+        level: state.student.level,
+        language: state.student.language,
+        weakWords: state.student.weakWords || []
+      });
+      const text = (res && res.passage) ? res.passage : 'I wake up at 5 AM. I drink warm milk and study with my friends.';
+      box.innerHTML = text.split(/\s+/).map(w => `<span class="read-word" onclick="explainTappedWord(this, '${w.replace(/'/g, '')}')">${w}</span>`).join(' ');
+    }
+
+    async function explainTappedWord(el, word) {
+      document.querySelectorAll('.read-word').forEach(x => x.classList.remove('active-word'));
+      el.classList.add('active-word');
+      speakText(word, 1.0, 0.9);
+      const card = document.getElementById('wordMeaningCard');
+      card.classList.remove('hidden');
+      card.textContent = `"${word}" का अर्थ खोजा जा रहा है...`;
+      const res = await apiCall({
+        action: 'getWordMeaning',
+        word,
+        language: state.student.language,
+        level: state.student.level
+      });
+      card.textContent = res.explanation || `${word}: रोज़मर्रा का उपयोगी शब्द।`;
+    }
+
+    // 5 Animated Characters + Student Device-First Custom Model
+    function renderCharacterGrid() {
+      const grid = document.getElementById('characterGrid');
+      const customImg = localStorage.getItem('jesh_custom_avatar');
+      grid.innerHTML = '';
+
+      CHARACTERS.forEach(c => {
+        const div = document.createElement('div');
+        div.className = 'char-card' + (state.selectedChar.id === c.id ? ' selected' : '');
+        div.innerHTML = `<div class="avatar-circle">${c.emoji}</div><strong style="font-size:13px;">${c.name}</strong><div style="font-size:11px;color:#64748B;">${c.role}</div>`;
+        div.onclick = () => selectCharacter(c, false);
+        grid.appendChild(div);
+      });
+
+      if (customImg) {
+        const div = document.createElement('div');
+        div.className = 'char-card' + (state.selectedChar.id === 'custom' ? ' selected' : '');
+        div.innerHTML = `<div class="avatar-circle"><img src="${customImg}" alt="My Avatar"/></div><strong style="font-size:13px;">मेरा अवतार</strong><div style="font-size:11px;color:#64748B;">कस्टम मॉडल</div>`;
+        div.onclick = () => selectCharacter({ id: 'custom', name: state.student.name + ' (My Model)', role: 'कस्टम अवतार', emoji: '⭐', pitch: Number(localStorage.getItem('jesh_custom_pitch') || 1.05), rate: 0.95 }, true);
+        grid.appendChild(div);
+      }
+    }
+
+    function selectCharacter(charObj, isCustom) {
+      state.selectedChar = charObj;
+      renderCharacterGrid();
+      const stage = document.getElementById('activeCallAvatar');
+      const customImg = localStorage.getItem('jesh_custom_avatar');
+      if (isCustom && customImg) {
+        stage.innerHTML = `<img src="${customImg}" alt="Custom"/>`;
+      } else {
+        stage.textContent = charObj.emoji;
+      }
+      document.getElementById('activeCharName').textContent = `${charObj.name} (${charObj.role})`;
+    }
+
+    function handleCustomAvatarUpload(e) {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        localStorage.setItem('jesh_custom_avatar', reader.result);
+        updateCustomModelStatus();
+        renderCharacterGrid();
+        showToast('आपका कस्टम अवतार डिवाइस में सेव हो गया!');
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function recordVoicePitchSample() {
+      const nextPitch = localStorage.getItem('jesh_custom_pitch') === '1.2' ? '0.9' : '1.2';
+      localStorage.setItem('jesh_custom_pitch', nextPitch);
+      updateCustomModelStatus();
+      speakText('Hello! My custom voice model is ready.', Number(nextPitch), 0.95);
+      showToast('कस्टम आवाज़ सैंपल सेट हो गया!');
+    }
+
+    function clearCustomModel() {
+      localStorage.removeItem('jesh_custom_avatar');
+      localStorage.removeItem('jesh_custom_pitch');
+      selectCharacter(CHARACTERS[0], false);
+      updateCustomModelStatus();
+      showToast('कस्टम मॉडल हटा दिया गया।');
+    }
+
+    function updateCustomModelStatus() {
+      const hasImg = !!localStorage.getItem('jesh_custom_avatar');
+      const hasVoice = !!localStorage.getItem('jesh_custom_pitch');
+      document.getElementById('customModelStatus').textContent =
+        `स्थिति: इमेज ${hasImg ? '✅ सेट' : '❌ नहीं'} • आवाज़ सैंपल ${hasVoice ? '✅ सेट' : '❌ नहीं'}`;
+    }
+
+    async function sendCharacterMessage() {
+      const input = document.getElementById('chatInput');
+      const text = input.value.trim();
+      if (!text) return;
+      input.value = '';
+
+      const log = document.getElementById('charChatLog');
+      log.innerHTML += `<div class="msg user">${text}</div>`;
+      log.scrollTop = log.scrollHeight;
+
+      const avatarEl = document.getElementById('activeCallAvatar');
+      avatarEl.classList.add('speaking');
+
+      const res = await apiCall({
+        action: 'chatWithCharacter',
+        message: text,
+        character: `${state.selectedChar.name} (${state.selectedChar.role})`,
+        level: state.student.level,
+        language: state.student.language,
+        mode: 'video_voice'
+      });
+
+      const reply = res.reply || 'Great job! Keep speaking step by step.';
+      log.innerHTML += `<div class="msg ai">${reply}</div>`;
+      log.scrollTop = log.scrollHeight;
+      speakText(reply, state.selectedChar.pitch, state.selectedChar.rate);
+      setTimeout(() => avatarEl.classList.remove('speaking'), 2000);
+    }
+
+    function startVoiceInput() {
+      const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SpeechRec) return showToast('इस ब्राउज़र में माइक उपलब्ध नहीं है — कृपया टाइप करें।');
+      const rec = new SpeechRec();
+      rec.lang = 'en-IN';
+      rec.onresult = (e) => {
+        document.getElementById('chatInput').value = e.results[0][0].transcript;
+        sendCharacterMessage();
+      };
+      rec.onerror = () => showToast('माइक अनुमति नहीं मिली — टेक्स्ट मोड चालू है।');
+      rec.start();
+    }
+
+    function speakText(text, pitch = 1.0, rate = 0.95) {
+      if (!('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(text);
+      u.pitch = pitch;
+      u.rate = rate;
+      window.speechSynthesis.speak(u);
+    }
+
+    async function endCharacterCall() {
+      await apiCall({
+        action: 'saveSessionSummary',
+        studentId: state.student.studentId,
+        summary: `Practiced spoken English with ${state.selectedChar.name} at level ${state.student.level}.`
+      });
+      navigate('home');
+      showToast('सत्र सुरक्षित सेव हो गया!');
+    }
+
+    // Jesh Academy Logic
+    function checkAcademyLogic(correct) {
+      const fb = document.getElementById('academyFeedback');
+      if (correct) {
+        fb.style.color = '#059669';
+        fb.textContent = 'सही लॉजिक! कंप्यूटर प्रोग्राम भी इसी तरह पहले तैयारी (Setup) और फिर कार्य (Action) करता है।';
+      } else {
+        fb.style.color = '#DC2626';
+        fb.textContent = 'फिर सोचें: बिना बैग तैयार किए जाने पर ज़रूरी सामान छूट जाएगा।';
+      }
+    }
+
+    // Course Certificate
+    async function loadCourseCertificate() {
+      const res = await apiCall({ action: 'getCourseCertificate', studentId: state.student.studentId });
+      const cert = res.certificate || {
+        studentName: state.student.name,
+        level: state.student.level,
+        progress: state.student.courseProgress || 10,
+        issuedDate: new Date().toLocaleDateString('en-IN'),
+        verifyCode: `JESH-${state.student.studentId}`
+      };
+      document.getElementById('certStudentName').textContent = cert.studentName;
+      document.getElementById('certDetails').textContent = `स्तर: ${cert.level} • प्रगति: ${cert.progress}% • दिनांक: ${cert.issuedDate}`;
+      document.getElementById('certVerifyCode').textContent = `Verify ID: ${cert.verifyCode}`;
+      document.getElementById('certQrBox').innerHTML =
+        `<img src="https://api.qrserver.com/v1/create-qr-code/?size=110x110&data=${encodeURIComponent(cert.verifyCode)}" alt="Verification QR" />`;
+    }
+
+    // Leave / Help
+    async function sendLeaveOrHelp() {
+      const note = document.getElementById('leaveNote').value.trim();
+      const res = await apiCall({ action: 'submitLeaveOrHelp', studentId: state.student.studentId, note });
+      document.getElementById('leaveNote').value = '';
+      showToast(res.message || 'संदेश सुरक्षित भेज दिया गया!');
+      navigate('home');
+    }
+
+    // Admin Command Center & Zero-Code Co-Architect
+    function toggleAdminGate() {
+      navigate('admin');
+    }
+
+    async function handleAdminLogin() {
+      const pass = document.getElementById('adminPassInput').value.trim();
+      const res = await apiCall({ action: 'loginAdmin', adminPass: pass });
+      if (res.ok) {
+        state.adminPass = pass;
+        document.getElementById('admin-login-panel').classList.add('hidden');
+        document.getElementById('admin-dashboard-panel').classList.remove('hidden');
+        loadAdminDashboard();
+      } else {
+        showToast(res.error || 'गलत एडमिन पासवर्ड');
+      }
+    }
+
+    async function loadAdminDashboard() {
+      const res = await apiCall({ action: 'getAdminDashboard', adminPass: state.adminPass });
+      if (!res.ok) return;
+      document.getElementById('adminTotalStudents').textContent = res.totalStudents;
+      document.getElementById('adminAlertCount').textContent = res.openAlerts.length;
+
+      const list = document.getElementById('adminAlertsList');
+      list.innerHTML = res.openAlerts.length ? '' : '<p>कोई नया अलर्ट नहीं है।</p>';
+      res.openAlerts.forEach(a => {
+        const div = document.createElement('div');
+        div.className = 'step-item';
+        div.innerHTML = `<div class="step-info"><strong>${a.type} (${a.studentId})</strong><span>${a.details}</span></div>` +
+          (a.type === 'PIN_RESET' ? `<button class="btn-primary btn-sm" style="width:auto;" onclick="approvePin('${a.studentId}')">PIN दें</button>` : '');
+        list.appendChild(div);
+      });
+    }
+
+    async function approvePin(studentId) {
+      const res = await apiCall({ action: 'approvePinReset', adminPass: state.adminPass, studentId });
+      showToast(res.message || res.error);
+      loadAdminDashboard();
+    }
+
+    async function runZeroCodeUpgrade() {
+      const moduleTitle = document.getElementById('coModTitle').value.trim();
+      const instruction = document.getElementById('coModInstruction').value.trim();
+      if (!instruction) return showToast('Co-Architect के लिए निर्देश लिखें');
+      const res = await apiCall({
+        action: 'coArchitectUpgrade',
+        adminPass: state.adminPass,
+        upgradeType: 'MODULE_CONFIG',
+        moduleTitle,
+        instruction
+      });
+      showToast(res.message || res.error);
+      if (res.ok) initApp();
+    }
+
+    async function runAdminSelfCheck() {
+      const res = await apiCall({
+        action: 'runSelfCheckScan',
+        adminPass: state.adminPass,
+        proposedHtml: document.documentElement.outerHTML
+      });
+      showToast(res.message || 'Self-Check Complete');
+    }
+
+    async function toggleAdsConfig(val) {
+      const res = await apiCall({ action: 'updateConfig', adminPass: state.adminPass, key: 'ENABLE_ADS', value: val });
+      showToast(res.message || res.error);
+    }
+
+    window.addEventListener('DOMContentLoaded', initApp);
+  </script>
+</body>
+</html>
