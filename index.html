@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -32,7 +32,7 @@
     header {
       background: var(--surface);
       border-bottom: 1px solid var(--border);
-      padding: 12px 16px;
+      padding: 10px 14px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -44,7 +44,7 @@
     .brand { font-weight: 700; font-size: 18px; color: var(--primary); display: flex; align-items: center; gap: 8px; }
     .badge-pill { background: var(--primary-soft); color: var(--primary); font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 999px; }
 
-    main#app { max-width: 680px; margin: 0 auto; padding: 16px; }
+    main#app { max-width: 680px; margin: 0 auto; padding: 14px; }
 
     .card {
       background: var(--surface);
@@ -83,8 +83,9 @@
 
     .btn-primary { background: var(--primary); color: #FFFFFF; width: 100%; }
     .btn-accent { background: var(--accent); color: #FFFFFF; }
+    .btn-danger { background: var(--danger); color: #FFFFFF; }
     .btn-outline { background: var(--surface); border: 1px solid var(--border); color: var(--text-main); }
-    .btn-sm { padding: 7px 12px; font-size: 13px; }
+    .btn-sm { padding: 7px 11px; font-size: 13px; }
 
     .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
@@ -114,20 +115,81 @@
     }
     .read-word:hover, .read-word.active-word { background: var(--primary-soft); color: var(--primary); }
 
-    .char-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 8px; margin-bottom: 12px; }
-    .char-card { border: 1px solid var(--border); border-radius: 12px; padding: 10px; text-align: center; cursor: pointer; background: #FFFFFF; }
+    /* TRUE VIDEO CALL STAGE */
+    .video-stage {
+      position: relative;
+      background: #0F172A;
+      color: #FFFFFF;
+      border-radius: 16px;
+      padding: 20px 14px;
+      text-align: center;
+      margin-bottom: 12px;
+      overflow: hidden;
+      min-height: 210px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .ai-video-avatar {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      background: #1E293B;
+      border: 3px solid #38BDF8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+      margin-bottom: 10px;
+      overflow: hidden;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .ai-video-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+    @keyframes pulseTalk {
+      0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.7); }
+      50% { transform: scale(1.07); box-shadow: 0 0 0 14px rgba(56, 189, 248, 0); }
+      100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(56, 189, 248, 0); }
+    }
+    .ai-video-avatar.speaking { animation: pulseTalk 1s infinite; border-color: #34D399; }
+
+    .voice-bars { display: flex; gap: 4px; height: 18px; align-items: center; justify-content: center; margin: 4px 0; }
+    .voice-bars span { width: 4px; height: 6px; background: #38BDF8; border-radius: 4px; transition: height 0.15s ease; }
+    .voice-bars.active span:nth-child(1) { height: 14px; }
+    .voice-bars.active span:nth-child(2) { height: 18px; }
+    .voice-bars.active span:nth-child(3) { height: 10px; }
+    .voice-bars.active span:nth-child(4) { height: 16px; }
+
+    .pip-self-cam {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      width: 74px;
+      height: 96px;
+      border-radius: 10px;
+      background: #1E293B;
+      border: 2px solid rgba(255,255,255,0.35);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+    .pip-self-cam video { width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1); }
+
+    .call-controls { display: flex; justify-content: center; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
+    .call-btn { border-radius: 999px; padding: 9px 14px; font-size: 13px; background: rgba(255,255,255,0.14); color: #FFFFFF; }
+    .call-btn.on { background: #059669; }
+    .call-btn.end { background: #DC2626; }
+
+    .char-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(105px, 1fr)); gap: 8px; margin-bottom: 12px; }
+    .char-card { border: 1px solid var(--border); border-radius: 12px; padding: 8px; text-align: center; cursor: pointer; background: #FFFFFF; }
     .char-card.selected { border-color: var(--primary); background: var(--primary-soft); }
 
-    .avatar-circle {
-      width: 54px; height: 54px; border-radius: 50%; margin: 0 auto 6px auto;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 24px; background: #E2E8F0; overflow: hidden; transition: transform 0.25s ease;
-    }
-    .avatar-circle.speaking { transform: scale(1.08); box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.22); }
-    .avatar-circle img { width: 100%; height: 100%; object-fit: cover; }
-
     .chat-log {
-      max-height: 230px; overflow-y: auto; padding: 10px;
+      max-height: 180px; overflow-y: auto; padding: 10px;
       background: var(--bg-calm); border-radius: 10px; border: 1px solid var(--border); margin-bottom: 10px;
     }
     .msg { padding: 8px 12px; border-radius: 10px; margin-bottom: 8px; font-size: 14px; max-width: 85%; }
@@ -148,7 +210,7 @@
     nav.bottom-nav button.active { color: var(--primary); font-weight: 700; background: var(--primary-soft); }
 
     .toast {
-      position: fixed; top: 64px; left: 50%; transform: translateX(-50%);
+      position: fixed; top: 60px; left: 50%; transform: translateX(-50%);
       background: #0F172A; color: #FFFFFF; padding: 9px 16px; border-radius: 999px;
       font-size: 13px; z-index: 40; display: none; max-width: 90%; text-align: center;
     }
@@ -165,7 +227,8 @@
     </div>
     <div style="display:flex; gap:6px; align-items:center;">
       <span class="badge-pill" id="headerStats">A0 • 0 XP</span>
-      <button class="btn-outline btn-sm" onclick="navigate('admin')" title="Admin Access">⚙️</button>
+      <button class="btn-outline btn-sm" id="btnLogout" onclick="handleLogout()" title="Switch Student">🚪</button>
+      <button class="btn-outline btn-sm" onclick="navigate('admin')" title="Admin Settings">⚙️</button>
     </div>
   </header>
 
@@ -174,36 +237,36 @@
   <main id="app">
     <!-- 1. AUTH VIEW -->
     <section id="view-auth" class="card">
-      <h2>स्वागत है — आसान शुरुआत करें</h2>
-      <p>अपना नाम, मोबाइल/ID और 4-6 अंकों का PIN डालें। कोई कठिन सेटअप नहीं।</p>
+      <h2>Welcome — Start Your Easy Path</h2>
+      <p>Enter your name, Mobile/ID, and a 4–6 digit PIN. Simple and distraction-free.</p>
 
       <div id="auth-login-box">
-        <input type="text" id="loginId" placeholder="Student ID या मोबाइल/ईमेल" />
-        <input type="password" id="loginPin" inputmode="numeric" maxlength="6" placeholder="आपका 4-6 अंकों का PIN" />
-        <button class="btn-primary" id="btnLogin" onclick="handleLogin()">लॉगिन करें</button>
+        <input type="text" id="loginId" placeholder="Student ID or Mobile / Email" />
+        <input type="password" id="loginPin" inputmode="numeric" maxlength="6" placeholder="Your 4–6 digit PIN" />
+        <button class="btn-primary" id="btnLogin" onclick="handleLogin()">Login</button>
         <div class="grid-2" style="margin-top:10px;">
-          <button class="btn-outline btn-sm" onclick="switchAuthMode('register')">नया अकाउंट बनाएं</button>
-          <button class="btn-outline btn-sm" onclick="handleForgotPin()">PIN भूल गए?</button>
+          <button class="btn-outline btn-sm" onclick="switchAuthMode('register')">Create New Account</button>
+          <button class="btn-outline btn-sm" onclick="handleForgotPin()">Forgot PIN?</button>
         </div>
       </div>
 
       <div id="auth-register-box" class="hidden">
-        <input type="text" id="regName" placeholder="आपका पूरा नाम" />
-        <input type="text" id="regContact" placeholder="मोबाइल नंबर या ईमेल" />
-        <input type="password" id="regPin" inputmode="numeric" maxlength="6" placeholder="नया 4-6 अंकों का PIN बनाएं" />
+        <input type="text" id="regName" placeholder="Your Full Name" />
+        <input type="text" id="regContact" placeholder="Mobile Number or Email" />
+        <input type="password" id="regPin" inputmode="numeric" maxlength="6" placeholder="Create a 4–6 digit PIN" />
         <select id="regLang">
-          <option value="Hindi">माध्यम भाषा: हिंदी (Hindi)</option>
-          <option value="Bhojpuri">माध्यम भाषा: भोजपुरी (Bhojpuri)</option>
-          <option value="English">Medium: English</option>
+          <option value="English" selected>Medium: English (Default)</option>
+          <option value="Hindi">Medium: Hindi (हिंदी)</option>
+          <option value="Bhojpuri">Medium: Bhojpuri (भोजपुरी)</option>
         </select>
-        <button class="btn-primary" id="btnRegister" onclick="handleRegister()">अकाउंट शुरू करें</button>
-        <button class="btn-outline btn-sm" style="width:100%; margin-top:8px;" onclick="switchAuthMode('login')">वापस लॉगिन पर जाएं</button>
+        <button class="btn-primary" id="btnRegister" onclick="handleRegister()">Start Learning</button>
+        <button class="btn-outline btn-sm" style="width:100%; margin-top:8px;" onclick="switchAuthMode('login')">Back to Login</button>
       </div>
 
       <div id="auth-newpin-box" class="hidden">
-        <p><strong>नया PIN सेट करें:</strong> एडमिन द्वारा आपका रीसेट मंजूर हो गया है।</p>
-        <input type="password" id="newPinInput" inputmode="numeric" maxlength="6" placeholder="नया 4-6 अंकों का PIN" />
-        <button class="btn-primary" onclick="handleSetNewPin()">नया PIN सेव करें</button>
+        <p><strong>Set New PIN:</strong> Your PIN reset was approved.</p>
+        <input type="password" id="newPinInput" inputmode="numeric" maxlength="6" placeholder="New 4–6 digit PIN" />
+        <button class="btn-primary" onclick="handleSetNewPin()">Save New PIN</button>
       </div>
     </section>
 
@@ -211,133 +274,150 @@
     <section id="view-home" class="hidden">
       <div class="card">
         <div style="display:flex; justify-content:space-between; align-items:center;">
-          <h2 id="welcomeText">नमस्ते!</h2>
+          <h2 id="welcomeText">Hello!</h2>
           <span class="badge-pill" id="streakBadge">🔥 1 Day Streak</span>
         </div>
-        <p>आज का 5-मिनट का आसान कदम — बिना किसी दबाव के सीखें।</p>
+        <p id="summaryBanner">Today's 5-minute gentle step — learn at your own pace.</p>
 
         <div class="step-item">
           <div class="step-info">
-            <strong>1. JeshLingo (2 मिनट)</strong>
-            <span id="lingoSub">छोटे वाक्य और कमज़ोर शब्दों का स्मार्ट अभ्यास</span>
+            <strong>1. JeshLingo (2 min)</strong>
+            <span id="lingoSub">Smart sentence practice with instant mistake explanation</span>
           </div>
-          <button class="btn-primary" style="width:auto;" onclick="openModule('lingo')">शुरू करें</button>
+          <button class="btn-primary" style="width:auto;" onclick="openModule('lingo')">Start</button>
         </div>
 
         <div class="step-item">
           <div class="step-info">
-            <strong>2. JeshRead (2 मिनट)</strong>
-            <span>पढ़ें और किसी भी शब्द पर टैप कर तुरंत अर्थ जानें</span>
+            <strong>2. JeshRead (2 min)</strong>
+            <span>Tap any English word for instant meaning & pronunciation</span>
           </div>
-          <button class="btn-accent" onclick="openModule('read')">पढ़ें</button>
+          <button class="btn-accent" onclick="openModule('read')">Read</button>
         </div>
 
         <div class="step-item">
           <div class="step-info">
-            <strong>3. Video & Voice Call (1 मिनट)</strong>
-            <span>5 Animated Characters या अपने अवतार से बात करें</span>
+            <strong>3. Live Video & Voice Call (1 min)</strong>
+            <span>Face-to-face practice with 5 Animated Characters or My Avatar</span>
           </div>
-          <button class="btn-outline" onclick="openModule('call')">बात करें</button>
+          <button class="btn-outline" onclick="openModule('call')">Video Call</button>
         </div>
 
         <div class="step-item" style="margin-bottom:0;">
           <div class="step-info">
-            <strong>4. Jesh Academy (लॉजिक व कोडिंग)</strong>
-            <span>आसान विज़ुअल स्टेप्स और कंप्यूटर लॉजिक</span>
+            <strong>4. Jesh Academy (Logic & Coding)</strong>
+            <span>Step-by-step visual logic & Scratch thinking</span>
           </div>
-          <button class="btn-outline" onclick="openModule('academy')">सीखें</button>
+          <button class="btn-outline" onclick="openModule('academy')">Practice</button>
         </div>
       </div>
 
       <div id="zero-code-modules-container"></div>
     </section>
 
-    <!-- 3. JESHLINGO -->
+    <!-- 3. JESHLINGO (AUTO-EXPLAIN ON MISTAKE + AUTO-ADVANCE) -->
     <section id="view-lingo" class="card hidden">
       <div style="display:flex; justify-content:space-between; align-items:center;">
-        <h2>JeshLingo अभ्यास</h2>
-        <button class="btn-outline btn-sm" onclick="navigate('home')">← वापस</button>
+        <h2>JeshLingo Smart Practice</h2>
+        <button class="btn-outline btn-sm" onclick="navigate('home')">← Back</button>
       </div>
-      <div id="lingoQuestionBox" style="font-size:17px; font-weight:600; margin:10px 0;"></div>
+      <div id="lingoQuestionBox" style="font-size:17px; font-weight:600; margin:12px 0;"></div>
       <div id="lingoOptions"></div>
-      <div id="lingoFeedback" style="margin-top:10px; font-size:14px;"></div>
+      <div id="lingoFeedback" class="hidden" style="padding:12px; border-radius:10px; margin-top:10px; font-size:14px;"></div>
+      <button id="btnNextLingo" class="btn-primary hidden" style="margin-top:10px;" onclick="advanceLingoQuestion()">Next Question →</button>
     </section>
 
     <!-- 4. JESHREAD -->
     <section id="view-read" class="card hidden">
       <div style="display:flex; justify-content:space-between; align-items:center;">
-        <h2>JeshRead — टैप करके अर्थ जानें</h2>
-        <button class="btn-outline btn-sm" onclick="navigate('home')">← वापस</button>
+        <h2>JeshRead — Tap Any Word</h2>
+        <button class="btn-outline btn-sm" onclick="navigate('home')">← Back</button>
       </div>
-      <p>किसी भी अंग्रेजी शब्द पर टैप करें—उसका सरल अर्थ तुरंत नीचे दिखेगा।</p>
+      <p>Tap any word below to hear it and see its simple explanation:</p>
       <div id="readPassageBox" style="padding:12px; background:var(--bg-calm); border-radius:10px; border:1px solid var(--border); margin-bottom:10px;">
-        लोड हो रहा है...
+        Loading passage...
       </div>
       <div id="wordMeaningCard" class="hidden" style="padding:10px; background:var(--primary-soft); border-radius:10px; margin-bottom:10px;"></div>
-      <button class="btn-outline btn-sm" onclick="loadJeshReadPassage()">नया पाठ लाएं</button>
+      <button class="btn-outline btn-sm" onclick="loadJeshReadPassage()">New Passage</button>
     </section>
 
-    <!-- 5. VIDEO & VOICE CHAT -->
+    <!-- 5. LIVE VIDEO & VOICE CALL (5 ANIMATED CHARACTERS + CAMERA PIP + HANDS-FREE LOOP) -->
     <section id="view-call" class="card hidden">
-      <div style="display:flex; justify-content:space-between; align-items:center;">
-        <h2>Video & Voice अभ्यास</h2>
-        <button class="btn-outline btn-sm" onclick="endCharacterCall()">समाप्त करें</button>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+        <h2>Live Video & Voice Call</h2>
+        <button class="btn-danger btn-sm" onclick="endCharacterCall()">End Call</button>
       </div>
-      <p>अपना पसंदीदा कैरेक्टर चुनें या खुद की इमेज/आवाज़ मॉडल सेट करें:</p>
 
+      <!-- LIVE SPLIT VIDEO STAGE -->
+      <div class="video-stage">
+        <div class="ai-video-avatar" id="activeCallAvatar">🧑‍🏫</div>
+        <div id="activeCharName" style="font-weight:700; font-size:16px;">Aarav • Calm Mentor</div>
+        <div id="callLiveSubtitle" style="font-size:13px; color:#CBD5E1; max-width:82%; margin-top:4px;">
+          "Hi! Tap Mic or speak anytime. I am listening."
+        </div>
+        <div class="voice-bars" id="voiceBars">
+          <span></span><span></span><span></span><span></span>
+        </div>
+
+        <div class="call-controls">
+          <button class="call-btn on" id="btnToggleMic" onclick="toggleHandsFreeVoice()">🎙️ Live Voice: ON</button>
+          <button class="call-btn" id="btnToggleCam" onclick="toggleSelfCamera()">📷 Camera: OFF</button>
+        </div>
+
+        <!-- Student Self-View PIP -->
+        <div class="pip-self-cam" id="pipCamBox" title="Your Video">
+          <span id="pipFallbackEmoji">🙂</span>
+          <video id="selfVideoEl" autoplay playsinline muted class="hidden"></video>
+        </div>
+      </div>
+
+      <p style="font-size:12px; margin-bottom:6px;">Choose Character or Your Custom Avatar:</p>
       <div class="char-grid" id="characterGrid"></div>
 
-      <div style="padding:10px; border:1px dashed var(--border); border-radius:10px; margin-bottom:12px;">
+      <!-- Student-Controlled Custom Avatar & Voice Model -->
+      <div style="padding:10px; border:1px dashed var(--border); border-radius:10px; margin-bottom:10px;">
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
-          <span style="font-size:13px; font-weight:600;">मेरा कस्टम अवतार व आवाज़ (केवल इस डिवाइस पर):</span>
+          <span style="font-size:12px; font-weight:600;">My Custom Avatar & Voice (Saved on Device):</span>
           <div style="display:flex; gap:6px;">
             <label class="btn-outline btn-sm" style="cursor:pointer; margin:0;">
-              📷 इमेज चुनें
+              📷 Photo
               <input type="file" accept="image/*" class="hidden" onchange="handleCustomAvatarUpload(event)" />
             </label>
-            <button class="btn-outline btn-sm" onclick="recordVoicePitchSample()">🎙️ आवाज़ सेट</button>
-            <button class="btn-outline btn-sm" onclick="clearCustomModel()">रीसेट</button>
+            <button class="btn-outline btn-sm" onclick="recordVoicePitchSample()">🎙️ Voice</button>
+            <button class="btn-outline btn-sm" onclick="clearCustomModel()">Reset</button>
           </div>
         </div>
-        <div id="customModelStatus" style="font-size:12px; color:var(--text-muted); margin-top:4px;"></div>
-      </div>
-
-      <div style="text-align:center; padding:12px; background:var(--bg-calm); border-radius:12px; margin-bottom:10px;">
-        <div class="avatar-circle" id="activeCallAvatar" style="width:74px; height:74px; font-size:34px;">🧑‍🏫</div>
-        <div id="activeCharName" style="font-weight:700; font-size:15px;">Aarav (शांत मार्गदर्शक)</div>
-        <div style="font-size:12px; color:var(--text-muted);">Multi-AI Non-Stop Voice + Video मोड तैयार</div>
+        <div id="customModelStatus" style="font-size:11px; color:var(--text-muted); margin-top:4px;"></div>
       </div>
 
       <div class="chat-log" id="charChatLog"></div>
 
       <div style="display:flex; gap:8px;">
-        <input type="text" id="chatInput" placeholder="यहाँ लिखें या माइक दबाएं..." style="margin-bottom:0;" />
-        <button class="btn-outline" onclick="startVoiceInput()" title="बोलें">🎙️</button>
-        <button class="btn-primary" style="width:auto;" onclick="sendCharacterMessage()">भेजें</button>
+        <input type="text" id="chatInput" placeholder="Speak or type here..." style="margin-bottom:0;" onkeydown="if(event.key==='Enter') sendCharacterMessage()" />
+        <button class="btn-outline" onclick="startSingleVoiceListen()" title="Speak">🎙️</button>
+        <button class="btn-primary" style="width:auto;" onclick="sendCharacterMessage()">Send</button>
       </div>
     </section>
 
-    <!-- 6. JESH ACADEMY -->
+    <!-- 6. JESH ACADEMY (MULTI-STEP LOGIC) -->
     <section id="view-academy" class="card hidden">
       <div style="display:flex; justify-content:space-between; align-items:center;">
-        <h2>Jesh Academy — लॉजिक अभ्यास</h2>
-        <button class="btn-outline btn-sm" onclick="navigate('home')">← वापस</button>
+        <h2>Jesh Academy — Coding & Logic</h2>
+        <button class="btn-outline btn-sm" onclick="navigate('home')">← Back</button>
       </div>
-      <p>सही क्रम समझें: यदि आपको स्कूल जाना है, तो सबसे पहले क्या करेंगे?</p>
-      <button class="btn-outline" style="width:100%; margin-bottom:8px; text-align:left;" onclick="checkAcademyLogic(false)">1. सीधे साइकिल चलाना शुरू करेंगे</button>
-      <button class="btn-outline" style="width:100%; margin-bottom:8px; text-align:left;" onclick="checkAcademyLogic(true)">2. पहले बैग तैयार करेंगे, फिर साइकिल से जाएंगे</button>
-      <div id="academyFeedback" style="font-size:14px; margin-top:8px;"></div>
+      <div id="academyStepBox"></div>
+      <div id="academyFeedback" style="font-size:14px; margin-top:10px; font-weight:600;"></div>
     </section>
 
     <!-- 7. COURSE CERTIFICATE -->
     <section id="view-course" class="card hidden">
-      <h2>आपका Course सर्टिफिकेट</h2>
+      <h2>Your Course Certificate</h2>
       <div class="cert-box">
         <div style="font-size:12px; color:var(--primary); font-weight:700; letter-spacing:1px;">JESH AI VERIFIED</div>
         <h3 style="font-size:20px; margin:8px 0;">Course Completion Certificate</h3>
-        <p>यह प्रमाणित किया जाता है कि</p>
+        <p>This certifies that</p>
         <div id="certStudentName" style="font-size:22px; font-weight:700; color:var(--text-main); margin:6px 0;">Student Name</div>
-        <p id="certDetails">स्तर: A0 • प्रगति: 10% • दिनांक: --</p>
+        <p id="certDetails">Level: A0 • Progress: 10% • Date: --</p>
         <div id="certQrBox" style="margin:12px auto;"></div>
         <div id="certVerifyCode" style="font-size:12px; color:var(--text-muted);">Verify ID: JESH-000</div>
       </div>
@@ -345,64 +425,63 @@
 
     <!-- 8. LEAVE / HELP -->
     <section id="view-help" class="card hidden">
-      <h2>मदद या छुट्टी सूचना (Streak सुरक्षित रहेगी)</h2>
-      <p>यदि आज आप व्यस्त हैं या किसी चीज़ में मदद चाहिए, तो यहाँ लिखें:</p>
-      <textarea id="leaveNote" rows="3" placeholder="उदाहरण: आज घर पर काम है, कल अभ्यास करूँगा..."></textarea>
-      <button class="btn-primary" onclick="sendLeaveOrHelp()">संदेश भेजें</button>
+      <h2>Help or Leave Note (Streak Protected)</h2>
+      <p>Need help or taking a short break? Send a quick note — your streak stays safe:</p>
+      <textarea id="leaveNote" rows="3" placeholder="Example: Busy with family work today, will continue tomorrow..."></textarea>
+      <button class="btn-primary" onclick="sendLeaveOrHelp()">Send Note</button>
     </section>
 
-    <!-- 9. ADMIN COMMAND CENTER & ZERO-CODE MULTI-API MANAGER -->
+    <!-- 9. ADMIN COMMAND CENTER -->
     <section id="view-admin" class="card hidden">
       <div style="display:flex; justify-content:space-between; align-items:center;">
         <h2>Admin Command Center</h2>
-        <button class="btn-outline btn-sm" onclick="navigate('home')">बंद करें</button>
+        <button class="btn-outline btn-sm" onclick="navigate('home')">Close</button>
       </div>
 
       <div id="admin-login-panel">
-        <input type="password" id="adminPassInput" placeholder="Admin Password दर्ज करें" />
-        <button class="btn-primary" onclick="handleAdminLogin()">Command Center खोलें</button>
+        <input type="password" id="adminPassInput" placeholder="Enter Admin Password" />
+        <button class="btn-primary" onclick="handleAdminLogin()">Open Command Center</button>
       </div>
 
       <div id="admin-dashboard-panel" class="hidden">
         <div class="grid-2" style="margin-bottom:12px;">
           <div class="card" style="margin:0; padding:10px;">
             <strong id="adminTotalStudents">0</strong>
-            <p style="margin:0; font-size:12px;">कुल छात्र</p>
+            <p style="margin:0; font-size:12px;">Total Students</p>
           </div>
           <div class="card" style="margin:0; padding:10px;">
             <strong id="adminAlertCount">0</strong>
-            <p style="margin:0; font-size:12px;">ओपन अलर्ट्स</p>
+            <p style="margin:0; font-size:12px;">Open Alerts</p>
           </div>
         </div>
 
-        <!-- ZERO-CODE ADD NEW API FEATURE -->
         <div class="card" style="background:var(--bg-calm);">
-          <h3>Zero-Code Multi-AI API Manager (बिना कोड खोले नया API जोड़ें)</h3>
-          <p>यदि किसी API का कोटा खत्म हो जाए, तो अगला इंजन अपने-आप काम करेगा। यहाँ से कोई भी नया API जोड़ें या बदलें:</p>
+          <h3>Zero-Code Multi-AI API Manager</h3>
+          <p>Auto-failover runs in priority order. Add any new API key without touching code:</p>
           <div id="aiEnginesList" style="margin-bottom:10px;"></div>
 
-          <input type="text" id="newApiName" placeholder="API का नाम (जैसे: DeepSeek, Gemini, Groq-2)" />
-          <input type="text" id="newApiKey" placeholder="API Key पेस्ट करें (gsk_..., sk-or-..., AIza..., आदि)" />
+          <input type="text" id="newApiName" placeholder="API Name (e.g., DeepSeek, Gemini, Groq-2)" />
+          <input type="text" id="newApiKey" placeholder="Paste API Key (gsk_..., sk-or-..., AIza...)" />
           <div class="grid-2">
-            <input type="text" id="newApiModel" placeholder="Model नाम (वैकल्पिक — खाली छोड़ सकते हैं)" />
-            <input type="number" id="newApiPriority" value="1" min="1" max="20" placeholder="क्रम (1 = सबसे पहले)" />
+            <input type="text" id="newApiModel" placeholder="Model Name (Optional)" />
+            <input type="number" id="newApiPriority" value="1" min="1" max="20" placeholder="Priority (1 = First)" />
           </div>
-          <input type="text" id="newApiEndpoint" placeholder="Custom Endpoint URL (Groq/OpenRouter/Gemini के लिए खाली छोड़ें)" />
+          <input type="text" id="newApiEndpoint" placeholder="Custom Endpoint URL (Optional)" />
           <div class="grid-2">
-            <button class="btn-primary" onclick="saveNewAiApiZeroCode()">नया API जोड़ें / चालू करें</button>
-            <button class="btn-outline" onclick="testAllAiEnginesUi()">सभी API एक साथ जांचें</button>
+            <button class="btn-primary" onclick="saveNewAiApiZeroCode()">Add / Activate API</button>
+            <button class="btn-outline" onclick="testAllAiEnginesUi()">Test All APIs</button>
           </div>
         </div>
 
-        <h3>Zero-Code Co-Architect अपग्रेड (नया फ़ीचर जोड़ें)</h3>
-        <input type="text" id="coModTitle" placeholder="नए फीचर का नाम (जैसे: Daily Quiz)" />
-        <textarea id="coModInstruction" rows="2" placeholder="यह फीचर छात्रों के लिए क्या करेगा..."></textarea>
+        <h3>Zero-Code Co-Architect Upgrade</h3>
+        <input type="text" id="coModTitle" placeholder="New Feature Title (e.g., Daily Vocabulary)" />
+        <textarea id="coModInstruction" rows="2" placeholder="Describe what this module does..."></textarea>
         <div class="grid-2" style="margin-bottom:12px;">
-          <button class="btn-primary" onclick="runZeroCodeUpgrade()">1-क्लिक सुरक्षित अपग्रेड</button>
+          <button class="btn-primary" onclick="runZeroCodeUpgrade()">1-Click Safe Upgrade</button>
           <button class="btn-outline" onclick="runAdminSelfCheck()">Pre-Action Risk Scan</button>
         </div>
 
-        <h3>ओपन अलर्ट्स और PIN रिकवरी</h3>
+        <h3>Open Alerts & PIN Recovery</h3>
         <div id="adminAlertsList"></div>
       </div>
     </section>
@@ -411,7 +490,7 @@
   <nav class="bottom-nav">
     <button id="nav-home" class="active" onclick="navigate('home')">🏠<span>Home</span></button>
     <button id="nav-course" onclick="navigate('course')">🎓<span>Course</span></button>
-    <button id="nav-lang" onclick="cycleLanguage()">🌐<span id="navLangLabel">हिंदी</span></button>
+    <button id="nav-lang" onclick="cycleLanguage()">🌐<span id="navLangLabel">English</span></button>
     <button id="nav-help" onclick="navigate('help')">💬<span>Leave/Help</span></button>
   </nav>
 
@@ -419,11 +498,57 @@
     const GAS_URL = localStorage.getItem('jesh_gas_url') || 'https://script.google.com/macros/s/AKfycby4QzUgR10e8tfTC3flWtHHjaa102t2Bq5WT8RUuisaCq2cZ8A9WR31LONGg_c1QM_h/exec';
 
     const CHARACTERS = [
-      { id: 'aarav', name: 'Aarav', role: 'शांत मार्गदर्शक', emoji: '🧑‍🏫', pitch: 1.0, rate: 0.9 },
-      { id: 'diya', name: 'Diya', role: 'दोस्ताना साथी', emoji: '👩‍🎓', pitch: 1.15, rate: 1.0 },
-      { id: 'kabir', name: 'Kabir', role: 'रोलप्ले कोच', emoji: '🧑‍💼', pitch: 0.95, rate: 1.0 },
-      { id: 'meera', name: 'Meera', role: 'कहानी साथी', emoji: '📖', pitch: 1.1, rate: 0.95 },
-      { id: 'robo', name: 'Arya', role: 'कोडिंग मेंटर', emoji: '🤖', pitch: 1.0, rate: 0.95 }
+      { id: 'aarav', name: 'Aarav', role: 'Calm Mentor', emoji: '🧑‍🏫', pitch: 1.0, rate: 0.92 },
+      { id: 'diya', name: 'Diya', role: 'Friendly Peer', emoji: '👩‍🎓', pitch: 1.15, rate: 1.0 },
+      { id: 'kabir', name: 'Kabir', role: 'Roleplay Coach', emoji: '🧑‍💼', pitch: 0.95, rate: 1.0 },
+      { id: 'meera', name: 'Meera', role: 'Story Guide', emoji: '📖', pitch: 1.1, rate: 0.95 },
+      { id: 'arya', name: 'Arya', role: 'Coding Tutor', emoji: '🤖', pitch: 1.0, rate: 0.95 }
+    ];
+
+    const LINGO_BANK = [
+      {
+        q: 'Choose the correct morning sentence:',
+        opts: ['I wake up early every morning.', 'I waking morning early.'],
+        ans: 0,
+        word: 'wake up',
+        whyWrong: 'With "I" for daily habits, use the simple base verb "wake up", not "waking". Correct: "I wake up early every morning."'
+      },
+      {
+        q: 'How do you say you enjoy homemade food?',
+        opts: ['I like homemade aloo paratha.', 'I liking paratha homemade.'],
+        ans: 0,
+        word: 'homemade',
+        whyWrong: 'In English, the describing word ("homemade") comes before the food name ("aloo paratha"), and we use "I like".'
+      },
+      {
+        q: 'How do you tell how you travel to class?',
+        opts: ['I go to class by bicycle.', 'I going class bicycle.'],
+        ans: 0,
+        word: 'bicycle',
+        whyWrong: 'Use "go to" for destination and "by bicycle" for transport. Correct: "I go to class by bicycle."'
+      },
+      {
+        q: 'Polite greeting when meeting someone in the evening:',
+        opts: ['Good evening! How are you?', 'Good night! Where you go?'],
+        ans: 0,
+        word: 'evening',
+        whyWrong: '"Good night" is only used when leaving or sleeping. When meeting in the evening, say "Good evening! How are you?"'
+      }
+    ];
+
+    const ACADEMY_STEPS = [
+      {
+        q: 'Step 1 (Sequence): To go to school on time, what comes FIRST?',
+        opts: ['1. Pack your bag first, then ride your bicycle.', '2. Start riding first without packing your books.'],
+        ans: 0,
+        explain: 'In coding and daily life, Setup/Preparation always comes before Action!'
+      },
+      {
+        q: 'Step 2 (Loop): If you want a Scratch sprite to walk 4 steps smoothly, what is smartest?',
+        opts: ['1. Use a "Repeat 4 times -> Move 10 steps" block.', '2. Write 40 separate lines manually.'],
+        ans: 0,
+        explain: 'Loops save time and keep programs clean and bug-free!'
+      }
     ];
 
     let state = {
@@ -431,14 +556,13 @@
       selectedChar: CHARACTERS[0],
       adminPass: '',
       offlineQueue: JSON.parse(localStorage.getItem('jesh_offline_queue') || '[]'),
-      lingoIndex: 0
+      lingoIndex: 0,
+      lingoAnswered: false,
+      academyIndex: 0,
+      handsFreeVoice: true,
+      camStream: null,
+      recognition: null
     };
-
-    const LINGO_BANK = [
-      { q: 'मैं रोज़ सुबह जल्दी उठता हूँ — सही अंग्रेज़ी चुनें:', opts: ['I wake up early every morning.', 'I waking morning early.'], ans: 0, word: 'wake up' },
-      { q: 'मुझे घर का बना आलू पराठा पसंद है:', opts: ['I like homemade aloo paratha.', 'I liking paratha homemade.'], ans: 0, word: 'homemade' },
-      { q: 'मैं साइकिल से स्कूल जाता हूँ:', opts: ['I go to school by bicycle.', 'I going school bicycle.'], ans: 0, word: 'bicycle' }
-    ];
 
     async function apiCall(payload) {
       const controller = new AbortController();
@@ -456,7 +580,7 @@
       } catch (err) {
         clearTimeout(timer);
         updateNetworkBadge(false);
-        return { ok: false, offline: true, error: 'नेटवर्क धीमा है — आपकी प्रगति डिवाइस में सुरक्षित है।' };
+        return { ok: false, offline: true, error: 'Slow network — progress saved safely on device.' };
       }
     }
 
@@ -495,6 +619,7 @@
       updateCustomModelStatus();
 
       if (state.student) {
+        if (!state.student.language) state.student.language = 'English';
         refreshStudentUI();
         navigate('home');
       } else {
@@ -514,6 +639,8 @@
     }
 
     function navigate(viewName) {
+      if (viewName !== 'call') stopCallMedia();
+
       const views = ['auth', 'home', 'lingo', 'read', 'call', 'academy', 'course', 'help', 'admin'];
       views.forEach(v => {
         const el = document.getElementById('view-' + v);
@@ -539,6 +666,8 @@
       navigate(mod);
       if (mod === 'lingo') renderLingoQuestion();
       if (mod === 'read') loadJeshReadPassage();
+      if (mod === 'academy') renderAcademyStep();
+      if (mod === 'call') startVideoCallExperience();
     }
 
     function switchAuthMode(mode) {
@@ -557,12 +686,13 @@
 
       if (res.ok) {
         state.student = res.student;
-        localStorage.setItem('jesh_student', JSON.stringify(res.student));
+        if (!state.student.language) state.student.language = 'English';
+        localStorage.setItem('jesh_student', JSON.stringify(state.student));
         refreshStudentUI();
         if (res.requireNewPin) switchAuthMode('newpin');
         else navigate('home');
       } else {
-        showToast(res.error || 'लॉगिन नहीं हो सका');
+        showToast(res.error || 'Login failed');
       }
     }
 
@@ -570,7 +700,7 @@
       const name = document.getElementById('regName').value.trim();
       const contact = document.getElementById('regContact').value.trim();
       const pin = document.getElementById('regPin').value.trim();
-      const language = document.getElementById('regLang').value;
+      const language = document.getElementById('regLang').value || 'English';
       const btn = document.getElementById('btnRegister');
       btn.disabled = true;
       const res = await apiCall({ action: 'registerStudent', name, contact, pin, language });
@@ -581,15 +711,24 @@
         localStorage.setItem('jesh_student', JSON.stringify(res.student));
         refreshStudentUI();
         navigate('home');
-        showToast('स्वागत है ' + name + '!');
+        showToast('Welcome ' + name + '!');
       } else {
-        showToast(res.error || 'पंजीकरण विफल');
+        showToast(res.error || 'Registration failed');
       }
+    }
+
+    function handleLogout() {
+      stopCallMedia();
+      localStorage.removeItem('jesh_student');
+      state.student = null;
+      document.getElementById('headerStats').textContent = 'A0 • 0 XP';
+      navigate('auth');
+      showToast('Logged out. Ready for next student.');
     }
 
     async function handleForgotPin() {
       const identifier = document.getElementById('loginId').value.trim();
-      if (!identifier) return showToast('पहले ऊपर अपना ID या मोबाइल नंबर लिखें');
+      if (!identifier) return showToast('Enter your Student ID or Mobile first');
       const res = await apiCall({ action: 'requestPinReset', identifier });
       showToast(res.message || res.error);
     }
@@ -603,29 +742,40 @@
 
     function refreshStudentUI() {
       if (!state.student) return;
-      document.getElementById('welcomeText').textContent = `नमस्ते, ${state.student.name}!`;
+      document.getElementById('welcomeText').textContent = `Hello, ${state.student.name}!`;
       document.getElementById('headerStats').textContent = `${state.student.level} • ${state.student.xp} XP`;
       document.getElementById('streakBadge').textContent = `🔥 ${state.student.streak} Day Streak`;
-      document.getElementById('navLangLabel').textContent = state.student.language || 'हिंदी';
+      document.getElementById('navLangLabel').textContent = state.student.language || 'English';
+      if (state.student.oneLineSummary) {
+        document.getElementById('summaryBanner').textContent = state.student.oneLineSummary;
+      }
       if (state.student.weakWords && state.student.weakWords.length > 0) {
-        document.getElementById('lingoSub').textContent = `दोहराने वाले शब्द: ${state.student.weakWords.slice(-3).join(', ')}`;
+        document.getElementById('lingoSub').textContent = `Focus words: ${state.student.weakWords.slice(-3).join(', ')}`;
       }
     }
 
     function cycleLanguage() {
       if (!state.student) return;
-      const langs = ['Hindi', 'Bhojpuri', 'English'];
+      const langs = ['English', 'Hindi', 'Bhojpuri'];
       const next = langs[(langs.indexOf(state.student.language) + 1) % langs.length];
       state.student.language = next;
       localStorage.setItem('jesh_student', JSON.stringify(state.student));
       refreshStudentUI();
-      showToast('भाषा बदली गई: ' + next);
+      showToast('Language switched to: ' + next);
     }
 
+    /* ========================================================================
+     * JESHLINGO: AUTO-EXPLAIN ON MISTAKE + AUTO-ADVANCE TO NEXT QUESTION
+     * ======================================================================== */
     function renderLingoQuestion() {
+      state.lingoAnswered = false;
       const item = LINGO_BANK[state.lingoIndex % LINGO_BANK.length];
       document.getElementById('lingoQuestionBox').textContent = item.q;
-      document.getElementById('lingoFeedback').textContent = '';
+      const fb = document.getElementById('lingoFeedback');
+      fb.classList.add('hidden');
+      fb.textContent = '';
+      document.getElementById('btnNextLingo').classList.add('hidden');
+
       const optsBox = document.getElementById('lingoOptions');
       optsBox.innerHTML = '';
       item.opts.forEach((opt, idx) => {
@@ -633,18 +783,29 @@
         b.className = 'btn-outline';
         b.style.cssText = 'width:100%; margin-bottom:8px; text-align:left;';
         b.textContent = opt;
-        b.onclick = () => checkLingoAnswer(idx === item.ans, item.word);
+        b.onclick = () => checkLingoAnswer(idx === item.ans, opt, item);
         optsBox.appendChild(b);
       });
     }
 
-    async function checkLingoAnswer(isCorrect, word) {
+    async function checkLingoAnswer(isCorrect, chosenText, item) {
+      if (state.lingoAnswered) return;
+      state.lingoAnswered = true;
+
+      // Disable buttons to prevent double tap
+      document.querySelectorAll('#lingoOptions button').forEach(b => b.disabled = true);
+
       const fb = document.getElementById('lingoFeedback');
+      const nextBtn = document.getElementById('btnNextLingo');
+      fb.classList.remove('hidden');
+
       if (isCorrect) {
-        fb.style.color = '#059669';
-        fb.textContent = 'बहुत बढ़िया! बिल्कुल सही वाक्य। +10 XP';
-        state.lingoIndex++;
-        const syncPayload = { action: 'submitLingoProgress', studentId: state.student.studentId, xp: 10, masteredWord: word };
+        fb.style.background = '#ECFDF5';
+        fb.style.color = '#065F46';
+        fb.textContent = 'Great job! That is completely right. +10 XP — Moving to next...';
+        speakText('Great job! ' + item.opts[item.ans], 1.05, 0.95);
+
+        const syncPayload = { action: 'submitLingoProgress', studentId: state.student.studentId, xp: 10, masteredWord: item.word };
         const res = await apiCall(syncPayload);
         if (res.ok) {
           state.student.xp = res.xp;
@@ -656,24 +817,54 @@
           state.offlineQueue.push(syncPayload);
           localStorage.setItem('jesh_offline_queue', JSON.stringify(state.offlineQueue));
         }
-        setTimeout(renderLingoQuestion, 1100);
+
+        nextBtn.classList.remove('hidden');
+        setTimeout(() => { if (state.lingoAnswered) advanceLingoQuestion(); }, 1800);
       } else {
-        fb.style.color = '#DC2626';
-        fb.textContent = `कोई बात नहीं! "${word}" को हम अगले अभ्यास में फिर से आसान तरीके से दोहराएंगे।`;
-        apiCall({ action: 'submitLingoProgress', studentId: state.student.studentId, xp: 2, weakWord: word });
+        // MISTAKE MADE: Immediately explain clearly + log weak word + show Next button & auto-advance
+        fb.style.background = '#FEF2F2';
+        fb.style.color = '#991B1B';
+        fb.textContent = `Good try! Here is why: ${item.whyWrong}`;
+        speakText(item.whyWrong, 1.0, 0.92);
+
+        // Also ask AI for a custom bilingual tip if needed
+        apiCall({
+          action: 'chatWithCharacter',
+          message: `Student chose "${chosenText}" instead of "${item.opts[item.ans]}". Explain gently in 1 short sentence.`,
+          character: 'Aarav',
+          level: state.student.level,
+          language: state.student.language,
+          mode: 'mistake_tip'
+        }).then(aiTip => {
+          if (aiTip && aiTip.ok && aiTip.reply && state.lingoAnswered) {
+            fb.textContent = `Good try! ${aiTip.reply}`;
+          }
+        });
+
+        apiCall({ action: 'submitLingoProgress', studentId: state.student.studentId, xp: 2, weakWord: item.word });
+        nextBtn.classList.remove('hidden');
+        setTimeout(() => { if (state.lingoAnswered) advanceLingoQuestion(); }, 4500);
       }
     }
 
+    function advanceLingoQuestion() {
+      state.lingoIndex++;
+      renderLingoQuestion();
+    }
+
+    /* ========================================================================
+     * JESHREAD
+     * ======================================================================== */
     async function loadJeshReadPassage() {
       const box = document.getElementById('readPassageBox');
-      box.textContent = 'आपके स्तर के अनुसार पाठ तैयार हो रहा है...';
+      box.textContent = 'Preparing your adaptive passage...';
       const res = await apiCall({
         action: 'getJeshReadContent',
         level: state.student.level,
         language: state.student.language,
         weakWords: state.student.weakWords || []
       });
-      const text = (res && res.passage) ? res.passage : 'I wake up at 5 AM. I drink warm milk and study with my friends.';
+      const text = (res && res.passage) ? res.passage : 'I wake up early at 5 AM. I drink warm milk and ride my bicycle to class. Learning English every day makes me confident.';
       box.innerHTML = text.split(/\s+/).map(w => `<span class="read-word" onclick="explainTappedWord(this, '${w.replace(/'/g, '')}')">${w}</span>`).join(' ');
     }
 
@@ -683,16 +874,19 @@
       speakText(word, 1.0, 0.9);
       const card = document.getElementById('wordMeaningCard');
       card.classList.remove('hidden');
-      card.textContent = `"${word}" का अर्थ खोजा जा रहा है...`;
+      card.textContent = `Looking up "${word}"...`;
       const res = await apiCall({
         action: 'getWordMeaning',
         word,
         language: state.student.language,
         level: state.student.level
       });
-      card.textContent = res.explanation || `${word}: रोज़मर्रा का उपयोगी शब्द।`;
+      card.textContent = res.explanation || `${word}: A useful everyday English word.`;
     }
 
+    /* ========================================================================
+     * LIVE VIDEO & VOICE CALL EXPERIENCE (5 CHARACTERS + CAMERA + VOICE LOOP)
+     * ======================================================================== */
     function renderCharacterGrid() {
       const grid = document.getElementById('characterGrid');
       const customImg = localStorage.getItem('jesh_custom_avatar');
@@ -701,7 +895,7 @@
       CHARACTERS.forEach(c => {
         const div = document.createElement('div');
         div.className = 'char-card' + (state.selectedChar.id === c.id ? ' selected' : '');
-        div.innerHTML = `<div class="avatar-circle">${c.emoji}</div><strong style="font-size:13px;">${c.name}</strong><div style="font-size:11px;color:#64748B;">${c.role}</div>`;
+        div.innerHTML = `<div style="font-size:24px;">${c.emoji}</div><strong style="font-size:12px;">${c.name}</strong><div style="font-size:10px;color:#64748B;">${c.role}</div>`;
         div.onclick = () => selectCharacter(c, false);
         grid.appendChild(div);
       });
@@ -709,8 +903,8 @@
       if (customImg) {
         const div = document.createElement('div');
         div.className = 'char-card' + (state.selectedChar.id === 'custom' ? ' selected' : '');
-        div.innerHTML = `<div class="avatar-circle"><img src="${customImg}" alt="My Avatar"/></div><strong style="font-size:13px;">मेरा अवतार</strong><div style="font-size:11px;color:#64748B;">कस्टम मॉडल</div>`;
-        div.onclick = () => selectCharacter({ id: 'custom', name: state.student.name + ' (My Model)', role: 'कस्टम अवतार', emoji: '⭐', pitch: Number(localStorage.getItem('jesh_custom_pitch') || 1.05), rate: 0.95 }, true);
+        div.innerHTML = `<div style="font-size:24px;">⭐</div><strong style="font-size:12px;">My Avatar</strong><div style="font-size:10px;color:#64748B;">Custom</div>`;
+        div.onclick = () => selectCharacter({ id: 'custom', name: state.student.name, role: 'Custom Model', emoji: '⭐', pitch: Number(localStorage.getItem('jesh_custom_pitch') || 1.05), rate: 0.95 }, true);
         grid.appendChild(div);
       }
     }
@@ -722,43 +916,79 @@
       const customImg = localStorage.getItem('jesh_custom_avatar');
       if (isCustom && customImg) stage.innerHTML = `<img src="${customImg}" alt="Custom"/>`;
       else stage.textContent = charObj.emoji;
-      document.getElementById('activeCharName').textContent = `${charObj.name} (${charObj.role})`;
+      document.getElementById('activeCharName').textContent = `${charObj.name} • ${charObj.role}`;
+      const greet = `Hi ${state.student ? state.student.name : 'friend'}! I am ${charObj.name}. Let's talk in English!`;
+      document.getElementById('callLiveSubtitle').textContent = `"${greet}"`;
+      speakText(greet, charObj.pitch, charObj.rate, true);
     }
 
-    function handleCustomAvatarUpload(e) {
-      const file = e.target.files && e.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = () => {
-        localStorage.setItem('jesh_custom_avatar', reader.result);
-        updateCustomModelStatus();
-        renderCharacterGrid();
-        showToast('आपका कस्टम अवतार डिवाइस में सेव हो गया!');
+    function startVideoCallExperience() {
+      const greet = `Hi ${state.student.name}! I am ${state.selectedChar.name}. Tell me, how was your day?`;
+      document.getElementById('callLiveSubtitle').textContent = `"${greet}"`;
+      speakText(greet, state.selectedChar.pitch, state.selectedChar.rate, true);
+    }
+
+    async function toggleSelfCamera() {
+      const btn = document.getElementById('btnToggleCam');
+      const videoEl = document.getElementById('selfVideoEl');
+      const fallbackEl = document.getElementById('pipFallbackEmoji');
+
+      if (state.camStream) {
+        state.camStream.getTracks().forEach(t => t.stop());
+        state.camStream = null;
+        videoEl.classList.add('hidden');
+        fallbackEl.classList.remove('hidden');
+        btn.textContent = '📷 Camera: OFF';
+        btn.classList.remove('on');
+        return;
+      }
+
+      try {
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) throw new Error('No camera');
+        state.camStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' }, audio: false });
+        videoEl.srcObject = state.camStream;
+        videoEl.classList.remove('hidden');
+        fallbackEl.classList.add('hidden');
+        btn.textContent = '📷 Camera: ON';
+        btn.classList.add('on');
+      } catch (e) {
+        showToast('Camera unavailable — continuing smoothly in Avatar Voice mode.');
+      }
+    }
+
+    function toggleHandsFreeVoice() {
+      state.handsFreeVoice = !state.handsFreeVoice;
+      const btn = document.getElementById('btnToggleMic');
+      btn.textContent = state.handsFreeVoice ? '🎙️ Live Voice: ON' : '🔇 Live Voice: OFF';
+      btn.classList.toggle('on', state.handsFreeVoice);
+      if (state.handsFreeVoice) startSingleVoiceListen();
+      else if (state.recognition) { try { state.recognition.stop(); } catch (e) {} }
+    }
+
+    function startSingleVoiceListen() {
+      const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SpeechRec) return showToast('Voice mic not supported on this browser — please type below.');
+      try { if (state.recognition) state.recognition.stop(); } catch (e) {}
+
+      const rec = new SpeechRec();
+      state.recognition = rec;
+      rec.lang = 'en-IN';
+      rec.interimResults = false;
+      document.getElementById('voiceBars').classList.add('active');
+
+      rec.onresult = (e) => {
+        document.getElementById('voiceBars').classList.remove('active');
+        const transcript = e.results[0][0].transcript;
+        document.getElementById('chatInput').value = transcript;
+        sendCharacterMessage();
       };
-      reader.readAsDataURL(file);
-    }
-
-    function recordVoicePitchSample() {
-      const nextPitch = localStorage.getItem('jesh_custom_pitch') === '1.2' ? '0.9' : '1.2';
-      localStorage.setItem('jesh_custom_pitch', nextPitch);
-      updateCustomModelStatus();
-      speakText('Hello! My custom voice model is ready.', Number(nextPitch), 0.95);
-      showToast('कस्टम आवाज़ सैंपल सेट हो गया!');
-    }
-
-    function clearCustomModel() {
-      localStorage.removeItem('jesh_custom_avatar');
-      localStorage.removeItem('jesh_custom_pitch');
-      selectCharacter(CHARACTERS[0], false);
-      updateCustomModelStatus();
-      showToast('कस्टम मॉडल हटा दिया गया।');
-    }
-
-    function updateCustomModelStatus() {
-      const hasImg = !!localStorage.getItem('jesh_custom_avatar');
-      const hasVoice = !!localStorage.getItem('jesh_custom_pitch');
-      document.getElementById('customModelStatus').textContent =
-        `स्थिति: इमेज ${hasImg ? '✅ सेट' : '❌ नहीं'} • आवाज़ सैंपल ${hasVoice ? '✅ सेट' : '❌ नहीं'}`;
+      rec.onerror = () => {
+        document.getElementById('voiceBars').classList.remove('active');
+      };
+      rec.onend = () => {
+        document.getElementById('voiceBars').classList.remove('active');
+      };
+      try { rec.start(); } catch (e) {}
     }
 
     async function sendCharacterMessage() {
@@ -770,9 +1000,7 @@
       const log = document.getElementById('charChatLog');
       log.innerHTML += `<div class="msg user">${text}</div>`;
       log.scrollTop = log.scrollHeight;
-
-      const avatarEl = document.getElementById('activeCallAvatar');
-      avatarEl.classList.add('speaking');
+      document.getElementById('callLiveSubtitle').textContent = 'Thinking...';
 
       const res = await apiCall({
         action: 'chatWithCharacter',
@@ -783,53 +1011,115 @@
         mode: 'video_voice'
       });
 
-      const reply = res.reply || 'Great job! Keep speaking step by step.';
+      const reply = res.reply || 'Great try! Say it like this: "I am learning English today." What did you eat today?';
       log.innerHTML += `<div class="msg ai">${reply}</div>`;
       log.scrollTop = log.scrollHeight;
-      speakText(reply, state.selectedChar.pitch, state.selectedChar.rate);
-      setTimeout(() => avatarEl.classList.remove('speaking'), 2000);
+      document.getElementById('callLiveSubtitle').textContent = `"${reply}"`;
+      speakText(reply, state.selectedChar.pitch, state.selectedChar.rate, true);
     }
 
-    function startVoiceInput() {
-      const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
-      if (!SpeechRec) return showToast('इस ब्राउज़र में माइक उपलब्ध नहीं है — कृपया टाइप करें।');
-      const rec = new SpeechRec();
-      rec.lang = 'en-IN';
-      rec.onresult = (e) => {
-        document.getElementById('chatInput').value = e.results[0][0].transcript;
-        sendCharacterMessage();
-      };
-      rec.onerror = () => showToast('माइक अनुमति नहीं मिली — टेक्स्ट मोड चालू है।');
-      rec.start();
-    }
-
-    function speakText(text, pitch = 1.0, rate = 0.95) {
+    function speakText(text, pitch = 1.0, rate = 0.95, autoRelisten = false) {
       if (!('speechSynthesis' in window)) return;
       window.speechSynthesis.cancel();
+      const avatarEl = document.getElementById('activeCallAvatar');
+      const barsEl = document.getElementById('voiceBars');
+      if (avatarEl) avatarEl.classList.add('speaking');
+      if (barsEl) barsEl.classList.add('active');
+
       const u = new SpeechSynthesisUtterance(text);
       u.pitch = pitch;
       u.rate = rate;
+      u.onend = () => {
+        if (avatarEl) avatarEl.classList.remove('speaking');
+        if (barsEl) barsEl.classList.remove('active');
+        if (autoRelisten && state.handsFreeVoice && !document.getElementById('view-call').classList.contains('hidden')) {
+          setTimeout(startSingleVoiceListen, 400);
+        }
+      };
       window.speechSynthesis.speak(u);
     }
 
+    function stopCallMedia() {
+      if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+      if (state.recognition) { try { state.recognition.stop(); } catch (e) {} }
+      if (state.camStream) {
+        state.camStream.getTracks().forEach(t => t.stop());
+        state.camStream = null;
+      }
+    }
+
     async function endCharacterCall() {
+      stopCallMedia();
       await apiCall({
         action: 'saveSessionSummary',
         studentId: state.student.studentId,
-        summary: `Practiced spoken English with ${state.selectedChar.name} at level ${state.student.level}.`
+        summary: `Practiced live video/voice English with ${state.selectedChar.name} at level ${state.student.level}.`
       });
       navigate('home');
-      showToast('सत्र सुरक्षित सेव हो गया!');
+      showToast('Call summary saved safely!');
+    }
+
+    function handleCustomAvatarUpload(e) {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        localStorage.setItem('jesh_custom_avatar', reader.result);
+        updateCustomModelStatus();
+        renderCharacterGrid();
+        showToast('Custom avatar saved on this device!');
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function recordVoicePitchSample() {
+      const nextPitch = localStorage.getItem('jesh_custom_pitch') === '1.2' ? '0.9' : '1.2';
+      localStorage.setItem('jesh_custom_pitch', nextPitch);
+      updateCustomModelStatus();
+      speakText('Hello! My custom voice model is ready.', Number(nextPitch), 0.95, false);
+      showToast('Custom voice pitch updated!');
+    }
+
+    function clearCustomModel() {
+      localStorage.removeItem('jesh_custom_avatar');
+      localStorage.removeItem('jesh_custom_pitch');
+      selectCharacter(CHARACTERS[0], false);
+      updateCustomModelStatus();
+      showToast('Custom model cleared.');
+    }
+
+    function updateCustomModelStatus() {
+      const hasImg = !!localStorage.getItem('jesh_custom_avatar');
+      const hasVoice = !!localStorage.getItem('jesh_custom_pitch');
+      document.getElementById('customModelStatus').textContent =
+        `Status: Photo ${hasImg ? '✅ Set' : '❌ None'} • Voice ${hasVoice ? '✅ Set' : '❌ None'}`;
+    }
+
+    /* ========================================================================
+     * JESH ACADEMY (MULTI-STEP LOGIC)
+     * ======================================================================== */
+    function renderAcademyStep() {
+      const step = ACADEMY_STEPS[state.academyIndex % ACADEMY_STEPS.length];
+      const box = document.getElementById('academyStepBox');
+      document.getElementById('academyFeedback').textContent = '';
+      box.innerHTML = `<p style="font-weight:600; color:var(--text-main);">${step.q}</p>` +
+        step.opts.map((o, i) => `<button class="btn-outline" style="width:100%; margin-bottom:8px; text-align:left;" onclick="checkAcademyLogic(${i === step.ans})">${o}</button>`).join('');
     }
 
     function checkAcademyLogic(correct) {
+      const step = ACADEMY_STEPS[state.academyIndex % ACADEMY_STEPS.length];
       const fb = document.getElementById('academyFeedback');
       fb.style.color = correct ? '#059669' : '#DC2626';
-      fb.textContent = correct
-        ? 'सही लॉजिक! कंप्यूटर प्रोग्राम भी इसी तरह पहले तैयारी (Setup) और फिर कार्य (Action) करता है।'
-        : 'फिर सोचें: बिना बैग तैयार किए जाने पर ज़रूरी सामान छूट जाएगा।';
+      fb.textContent = (correct ? 'Correct! ' : 'Good try! ') + step.explain;
+      if (correct) {
+        apiCall({ action: 'submitLingoProgress', studentId: state.student.studentId, xp: 10 });
+        setTimeout(() => { state.academyIndex++; renderAcademyStep(); }, 2000);
+      }
     }
 
+    /* ========================================================================
+     * COURSE CERTIFICATE & LEAVE/HELP
+     * ======================================================================== */
     async function loadCourseCertificate() {
       const res = await apiCall({ action: 'getCourseCertificate', studentId: state.student.studentId });
       const cert = res.certificate || {
@@ -840,7 +1130,7 @@
         verifyCode: `JESH-${state.student.studentId}`
       };
       document.getElementById('certStudentName').textContent = cert.studentName;
-      document.getElementById('certDetails').textContent = `स्तर: ${cert.level} • प्रगति: ${cert.progress}% • दिनांक: ${cert.issuedDate}`;
+      document.getElementById('certDetails').textContent = `Level: ${cert.level} • Progress: ${cert.progress}% • Date: ${cert.issuedDate}`;
       document.getElementById('certVerifyCode').textContent = `Verify ID: ${cert.verifyCode}`;
       document.getElementById('certQrBox').innerHTML =
         `<img src="https://api.qrserver.com/v1/create-qr-code/?size=110x110&data=${encodeURIComponent(cert.verifyCode)}" alt="Verification QR" />`;
@@ -850,11 +1140,13 @@
       const note = document.getElementById('leaveNote').value.trim();
       const res = await apiCall({ action: 'submitLeaveOrHelp', studentId: state.student.studentId, note });
       document.getElementById('leaveNote').value = '';
-      showToast(res.message || 'संदेश सुरक्षित भेज दिया गया!');
+      showToast(res.message || 'Note sent! Your streak is safe.');
       navigate('home');
     }
 
-    // ADMIN & ZERO-CODE MULTI-API MANAGER
+    /* ========================================================================
+     * ADMIN COMMAND CENTER & ZERO-CODE MULTI-API MANAGER
+     * ======================================================================== */
     async function handleAdminLogin() {
       const pass = document.getElementById('adminPassInput').value.trim();
       const res = await apiCall({ action: 'loginAdmin', adminPass: pass });
@@ -864,7 +1156,7 @@
         document.getElementById('admin-dashboard-panel').classList.remove('hidden');
         loadAdminDashboard();
       } else {
-        showToast(res.error || 'गलत एडमिन पासवर्ड');
+        showToast(res.error || 'Invalid Admin Password');
       }
     }
 
@@ -874,7 +1166,6 @@
       document.getElementById('adminTotalStudents').textContent = res.totalStudents;
       document.getElementById('adminAlertCount').textContent = res.openAlerts.length;
 
-      // Render Multi-AI Failover Engines
       const aiBox = document.getElementById('aiEnginesList');
       aiBox.innerHTML = '';
       (res.aiEngines || []).forEach(eng => {
@@ -886,14 +1177,13 @@
         aiBox.appendChild(row);
       });
 
-      // Render Open Alerts
       const list = document.getElementById('adminAlertsList');
-      list.innerHTML = res.openAlerts.length ? '' : '<p>कोई नया अलर्ट नहीं है।</p>';
+      list.innerHTML = res.openAlerts.length ? '' : '<p>No open alerts.</p>';
       res.openAlerts.forEach(a => {
         const div = document.createElement('div');
         div.className = 'step-item';
         div.innerHTML = `<div class="step-info"><strong>${a.type} (${a.studentId})</strong><span>${a.details}</span></div>` +
-          (a.type === 'PIN_RESET' ? `<button class="btn-primary btn-sm" style="width:auto;" onclick="approvePin('${a.studentId}')">PIN दें</button>` : '');
+          (a.type === 'PIN_RESET' ? `<button class="btn-primary btn-sm" style="width:auto;" onclick="approvePin('${a.studentId}')">Approve PIN</button>` : '');
         list.appendChild(div);
       });
     }
@@ -905,7 +1195,7 @@
       const priority = Number(document.getElementById('newApiPriority').value || 1);
       const endpoint = document.getElementById('newApiEndpoint').value.trim();
 
-      if (!engineName || !apiKey) return showToast('API नाम और Key दोनों भरें');
+      if (!engineName || !apiKey) return showToast('Enter both API Name and Key');
       const res = await apiCall({
         action: 'addOrUpdateAiEngine',
         adminPass: state.adminPass,
@@ -928,13 +1218,13 @@
     }
 
     async function testAllAiEnginesUi() {
-      showToast('सभी AI इंजनों की जांच हो रही है...');
+      showToast('Testing all active AI engines...');
       const res = await apiCall({ action: 'testAllAiEngines', adminPass: state.adminPass });
       if (res.ok) {
-        showToast(`सक्रिय इंजन: ${res.activeCount} | जवाब: "${res.sampleResponse}"`);
+        showToast(`Active Engines: ${res.activeCount} | Reply: "${res.sampleResponse}"`);
         loadAdminDashboard();
       } else {
-        showToast(res.error || 'जांच विफल');
+        showToast(res.error || 'Test failed');
       }
     }
 
@@ -947,7 +1237,7 @@
     async function runZeroCodeUpgrade() {
       const moduleTitle = document.getElementById('coModTitle').value.trim();
       const instruction = document.getElementById('coModInstruction').value.trim();
-      if (!instruction) return showToast('Co-Architect के लिए निर्देश लिखें');
+      if (!instruction) return showToast('Enter instruction for Co-Architect');
       const res = await apiCall({
         action: 'coArchitectUpgrade',
         adminPass: state.adminPass,
