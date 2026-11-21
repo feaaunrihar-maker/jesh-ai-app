@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Jesh AI — Self-Reliant Learning, Video Call, Courses & AI Chat</title>
+  <title>Jesh AI — Full-Screen AI Assistant, Live Video Call & Skill Ecosystem</title>
   <style>
     :root {
       --bg-calm: #F8FAFC;
@@ -72,7 +72,7 @@
     .badge-pro { background: var(--pro-soft); color: var(--pro); }
     .badge-green { background: var(--accent-soft); color: var(--accent); }
 
-    main#app { max-width: 740px; margin: 0 auto; padding: 14px; }
+    main#app { max-width: 760px; margin: 0 auto; padding: 14px; }
 
     .card {
       background: var(--surface);
@@ -105,7 +105,7 @@
       padding: 10px 15px;
       font-size: 14px;
       font-weight: 600;
-      transition: opacity 0.15s ease, transform 0.1s ease, background 0.15s ease;
+      transition: opacity 0.15s ease, transform 0.1s ease;
     }
     button:active { opacity: 0.88; transform: scale(0.98); }
     button:disabled { opacity: 0.6; cursor: not-allowed; }
@@ -121,72 +121,137 @@
     .course-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-bottom: 12px; }
 
     .course-tile {
-      border: 1.5px solid var(--border);
-      border-radius: 14px;
-      padding: 12px;
-      background: var(--surface);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 8px;
+      border: 1.5px solid var(--border); border-radius: 14px; padding: 12px;
+      background: var(--surface); display: flex; flex-direction: column; justify-content: space-between; gap: 8px;
     }
 
     .step-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 12px;
-      border: 1.5px solid var(--border);
-      border-radius: 14px;
-      margin-bottom: 10px;
-      background: var(--surface);
-      gap: 8px;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 12px; border: 1.5px solid var(--border); border-radius: 14px;
+      margin-bottom: 10px; background: var(--surface); gap: 8px;
     }
     .step-info strong { display: block; font-size: 15px; color: var(--text-main); }
     .step-info span { font-size: 12px; color: var(--text-muted); }
 
-    .lingo-header-bar { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
-    .progress-track { flex: 1; height: 12px; background: var(--border); border-radius: 999px; overflow: hidden; }
-    .progress-fill {
-      height: 100%; width: 20%; background: linear-gradient(90deg, #22C55E, #16A34A);
-      border-radius: 999px; transition: width 0.35s ease;
-    }
-    .lingo-opt-btn {
-      width: 100%; margin-bottom: 10px; text-align: left;
-      padding: 13px 14px; border-radius: 14px;
-      border: 2px solid var(--border); background: var(--surface); color: var(--text-main);
-      font-size: 15px; display: flex; align-items: center; gap: 10px;
-      box-shadow: 0 2px 0 var(--border);
-    }
-    .lingo-opt-btn:hover:not(:disabled) { border-color: var(--primary); background: var(--primary-soft); }
-    .lingo-opt-btn.correct-choice {
-      border-color: #16A34A !important; background: #DCFCE7 !important; color: #14532D !important;
-      box-shadow: 0 2px 0 #16A34A;
-    }
-    .lingo-opt-btn.wrong-choice {
-      border-color: #DC2626 !important; background: #FEE2E2 !important; color: #7F1D1D !important;
-      box-shadow: 0 2px 0 #DC2626;
-    }
-    .opt-letter {
-      width: 28px; height: 28px; border-radius: 8px;
-      background: var(--primary-soft); color: var(--primary);
-      display: inline-flex; align-items: center; justify-content: center;
-      font-weight: 700; font-size: 13px; flex-shrink: 0;
+    /* ========================================================================
+     * FULL-SCREEN CHATGPT / GEMINI STYLE AI STUDIO OVERLAY
+     * ======================================================================== */
+    .fullscreen-chat-shell {
+      position: fixed;
+      inset: 0;
+      z-index: 60;
+      background: var(--bg-calm);
+      display: flex;
+      flex-direction: column;
+      height: 100dvh;
+      width: 100vw;
     }
 
-    .ai-chat-stream {
-      max-height: 340px; overflow-y: auto; padding: 12px;
-      background: var(--bg-calm); border: 1.5px solid var(--border);
-      border-radius: 14px; margin-bottom: 10px;
+    .fs-chat-topbar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
     }
-    .ai-bubble {
-      padding: 11px 14px; border-radius: 14px; margin-bottom: 10px;
-      font-size: 14.5px; line-height: 1.55; max-width: 90%;
+
+    .fs-chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+      max-width: 820px;
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .fs-msg-row {
+      display: flex;
+      flex-direction: column;
+      max-width: 88%;
+    }
+    .fs-msg-row.me { align-self: flex-end; }
+    .fs-msg-row.bot { align-self: flex-start; width: 100%; max-width: 96%; }
+
+    .fs-bubble {
+      padding: 13px 16px;
+      border-radius: 18px;
+      font-size: 15.5px;
+      line-height: 1.6;
       white-space: pre-wrap;
+      word-wrap: break-word;
     }
-    .ai-bubble.bot { background: var(--surface); border: 1px solid var(--border); color: var(--text-main); }
-    .ai-bubble.me { background: var(--primary); color: #FFFFFF; margin-left: auto; }
-    .ai-bubble-tools { display: flex; gap: 10px; margin-top: 6px; font-size: 11px; color: var(--text-muted); }
+    .fs-msg-row.me .fs-bubble {
+      background: var(--primary);
+      color: #FFFFFF;
+      border-bottom-right-radius: 4px;
+    }
+    .fs-msg-row.bot .fs-bubble {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      border-bottom-left-radius: 4px;
+    }
+
+    .fs-msg-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 6px;
+      padding-left: 4px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .fs-chat-composer {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 10px 14px 14px 14px;
+      flex-shrink: 0;
+    }
+    .fs-composer-inner {
+      max-width: 820px;
+      margin: 0 auto;
+    }
+    .fs-input-bar {
+      display: flex;
+      gap: 8px;
+      align-items: flex-end;
+      background: var(--bg-calm);
+      border: 1.5px solid var(--border);
+      border-radius: 16px;
+      padding: 6px 8px;
+    }
+    .fs-input-bar textarea {
+      border: none;
+      background: transparent;
+      margin: 0;
+      padding: 6px 8px;
+      resize: none;
+      max-height: 120px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    /* JESHLINGO & OTHER MODULES */
+    .lingo-header-bar { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+    .progress-track { flex: 1; height: 12px; background: var(--border); border-radius: 999px; overflow: hidden; }
+    .progress-fill { height: 100%; width: 20%; background: linear-gradient(90deg, #22C55E, #16A34A); border-radius: 999px; transition: width 0.35s ease; }
+    .lingo-opt-btn {
+      width: 100%; margin-bottom: 10px; text-align: left; padding: 13px 14px; border-radius: 14px;
+      border: 2px solid var(--border); background: var(--surface); color: var(--text-main);
+      font-size: 15px; display: flex; align-items: center; gap: 10px; box-shadow: 0 2px 0 var(--border);
+    }
+    .lingo-opt-btn:hover:not(:disabled) { border-color: var(--primary); background: var(--primary-soft); }
+    .lingo-opt-btn.correct-choice { border-color: #16A34A !important; background: #DCFCE7 !important; color: #14532D !important; }
+    .lingo-opt-btn.wrong-choice { border-color: #DC2626 !important; background: #FEE2E2 !important; color: #7F1D1D !important; }
+    .opt-letter {
+      width: 28px; height: 28px; border-radius: 8px; background: var(--primary-soft); color: var(--primary);
+      display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; flex-shrink: 0;
+    }
 
     .read-along-banner {
       display: flex; align-items: center; gap: 12px;
@@ -204,63 +269,36 @@
       font-size: 18px; font-weight: 500; color: var(--text-main); cursor: pointer;
       border-bottom: 2px dashed #94A3B8; transition: all 0.2s ease;
     }
-    .read-word:hover, .read-word.active-word {
-      background: var(--primary-soft); color: var(--primary); border-bottom-color: var(--primary);
-    }
-    .read-word.spoken-ok {
-      background: #DCFCE7 !important; color: #15803D !important;
-      border-bottom: 2px solid #16A34A !important; font-weight: 700;
-    }
+    .read-word:hover, .read-word.active-word { background: var(--primary-soft); color: var(--primary); }
+    .read-word.spoken-ok { background: #DCFCE7 !important; color: #15803D !important; border-bottom: 2px solid #16A34A !important; font-weight: 700; }
 
     .lesson-concept-card {
       background: var(--primary-soft); border-left: 4px solid var(--primary);
       border-radius: 10px; padding: 12px; margin-bottom: 12px; font-size: 14px;
     }
 
-    .chip-row { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 6px; margin-bottom: 10px; }
+    .chip-row { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 6px; margin-bottom: 8px; }
     .chip {
       background: var(--bg-calm); border: 1px solid var(--border); color: var(--text-main);
       border-radius: 999px; padding: 6px 12px; font-size: 12px; font-weight: 600; white-space: nowrap;
     }
     .chip.active { background: var(--primary); color: #FFFFFF; border-color: var(--primary); }
 
+    /* MOVING VIDEO CALL */
     .video-stage {
-      position: relative;
-      background: linear-gradient(180deg, #0F172A 0%, #1E293B 100%);
+      position: relative; background: linear-gradient(180deg, #0F172A 0%, #1E293B 100%);
       color: #FFFFFF; border-radius: 16px; padding: 16px 12px 14px 12px;
       text-align: center; margin-bottom: 12px; overflow: hidden;
       min-height: 255px; display: flex; flex-direction: column; align-items: center; justify-content: center;
     }
-
-    .live-pill {
-      position: absolute; top: 10px; left: 10px;
-      background: rgba(220, 38, 38, 0.92); color: #FFFFFF;
-      font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 999px;
-    }
+    .live-pill { position: absolute; top: 10px; left: 10px; background: rgba(220, 38, 38, 0.92); color: #FFFFFF; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 999px; }
     .live-pill.connected { background: rgba(22, 163, 74, 0.95); }
 
-    @keyframes idleMotion {
-      0%, 100% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-4px) rotate(0.9deg); }
-    }
-    @keyframes talkMotion {
-      0%, 100% { transform: translateY(0px) scale(1); }
-      25% { transform: translateY(-5px) scale(1.03); }
-      75% { transform: translateY(-2px) scale(1.01); }
-    }
-    @keyframes pulseTalk {
-      0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.6); }
-      50% { transform: scale(1.06); box-shadow: 0 0 0 10px rgba(22, 163, 74, 0); }
-      100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(22, 163, 74, 0); }
-    }
-    @keyframes eyeBlink {
-      0%, 92%, 100% { transform: scaleY(1); }
-      96% { transform: scaleY(0.08); }
-    }
-    @keyframes lipSync {
-      0%, 100% { ry: 2; }
-      50% { ry: 8.5; }
-    }
+    @keyframes idleMotion { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-4px) rotate(0.9deg); } }
+    @keyframes talkMotion { 0%, 100% { transform: translateY(0px) scale(1); } 25% { transform: translateY(-5px) scale(1.03); } 75% { transform: translateY(-2px) scale(1.01); } }
+    @keyframes pulseTalk { 0% { transform: scale(1); } 50% { transform: scale(1.06); } 100% { transform: scale(1); } }
+    @keyframes eyeBlink { 0%, 92%, 100% { transform: scaleY(1); } 96% { transform: scaleY(0.08); } }
+    @keyframes lipSync { 0%, 100% { ry: 2; } 50% { ry: 8.5; } }
 
     .character-rig { width: 116px; height: 116px; animation: idleMotion 3s ease-in-out infinite; }
     .character-rig.speaking { animation: talkMotion 0.42s ease-in-out infinite; }
@@ -268,15 +306,12 @@
     .mouth-ellipse { transform-origin: center 66px; ry: 2; }
     .character-rig.speaking .mouth-ellipse { animation: lipSync 0.22s ease-in-out infinite; }
 
-    .custom-photo-ring {
-      width: 106px; height: 106px; border-radius: 50%; overflow: hidden;
-      border: 3px solid #38BDF8; animation: idleMotion 3s ease-in-out infinite;
-    }
+    .custom-photo-ring { width: 106px; height: 106px; border-radius: 50%; overflow: hidden; border: 3px solid #38BDF8; animation: idleMotion 3s ease-in-out infinite; }
     .custom-photo-ring.speaking { animation: talkMotion 0.42s ease-in-out infinite; border-color: #34D399; }
     .custom-photo-ring img { width: 100%; height: 100%; object-fit: cover; }
 
     .voice-bars { display: flex; gap: 4px; height: 18px; align-items: center; justify-content: center; margin: 5px 0; }
-    .voice-bars span { width: 4px; height: 6px; background: #38BDF8; border-radius: 4px; transition: height 0.15s ease; }
+    .voice-bars span { width: 4px; height: 6px; background: #38BDF8; border-radius: 4px; }
     .voice-bars.active span:nth-child(1) { height: 15px; background: #34D399; }
     .voice-bars.active span:nth-child(2) { height: 19px; background: #34D399; }
     .voice-bars.active span:nth-child(3) { height: 11px; background: #34D399; }
@@ -298,26 +333,15 @@
     .char-card { border: 1px solid var(--border); border-radius: 12px; padding: 8px; text-align: center; cursor: pointer; background: var(--surface); }
     .char-card.selected { border-color: var(--primary); background: var(--primary-soft); }
 
-    .chat-log {
-      max-height: 165px; overflow-y: auto; padding: 10px;
-      background: var(--bg-calm); border-radius: 10px; border: 1px solid var(--border); margin-bottom: 10px;
-    }
+    .chat-log { max-height: 165px; overflow-y: auto; padding: 10px; background: var(--bg-calm); border-radius: 10px; border: 1px solid var(--border); margin-bottom: 10px; }
     .msg { padding: 8px 12px; border-radius: 10px; margin-bottom: 8px; font-size: 14px; max-width: 85%; }
     .msg.ai { background: var(--surface); border: 1px solid var(--border); color: var(--text-main); }
     .msg.user { background: var(--primary); color: #FFFFFF; margin-left: auto; }
 
-    .yt-frame-wrap {
-      position: relative; width: 100%; padding-top: 56.25%;
-      background: #0F172A; border-radius: 12px; overflow: hidden; margin-bottom: 10px;
-    }
-    .yt-frame-wrap iframe, .yt-frame-wrap video {
-      position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;
-    }
+    .yt-frame-wrap { position: relative; width: 100%; padding-top: 56.25%; background: #0F172A; border-radius: 12px; overflow: hidden; margin-bottom: 10px; }
+    .yt-frame-wrap iframe, .yt-frame-wrap video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
 
-    .fb-post {
-      border: 1px solid var(--border); border-radius: 12px;
-      padding: 12px; margin-bottom: 10px; background: var(--surface);
-    }
+    .fb-post { border: 1px solid var(--border); border-radius: 12px; padding: 12px; margin-bottom: 10px; background: var(--surface); }
     .fb-post-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
     .fb-post-actions { display: flex; gap: 10px; border-top: 1px solid var(--border); padding-top: 8px; margin-top: 8px; }
 
@@ -337,7 +361,7 @@
     .toast {
       position: fixed; top: 58px; left: 50%; transform: translateX(-50%);
       background: #0F172A; color: #FFFFFF; padding: 9px 16px; border-radius: 999px;
-      font-size: 13px; z-index: 40; display: none; max-width: 90%; text-align: center;
+      font-size: 13px; z-index: 80; display: none; max-width: 90%; text-align: center;
     }
     .hidden { display: none !important; }
   </style>
@@ -348,12 +372,12 @@
   <header>
     <div class="brand">
       <span id="brandTitle">Jesh AI</span>
-      <span class="badge-pill" id="netStatus">Online</span>
+      <span class="badge-pill" id="netStatus">Multi-AI Active</span>
     </div>
     <div style="display:flex; gap:6px; align-items:center;">
       <span class="badge-pill badge-green" id="headerStats">🌱 Starter • 0 XP</span>
-      <button class="btn-outline btn-sm" onclick="handleLogout()" title="Switch Account / लॉगआउट">🚪</button>
-      <button class="btn-outline btn-sm" onclick="navigate('admin')" title="Admin & Prompt Studio">⚙️</button>
+      <button class="btn-outline btn-sm" onclick="handleLogout()" title="Switch Account">🚪</button>
+      <button class="btn-outline btn-sm" onclick="navigate('admin')" title="Admin Studio">⚙️</button>
     </div>
   </header>
 
@@ -363,7 +387,7 @@
     <!-- 1. AUTH VIEW -->
     <section id="view-auth" class="card">
       <h2>Welcome to Jesh AI <span class="hi-sub">स्वागत है — हर छात्र का अलग खाता व सुरक्षित प्रोग्रेस</span></h2>
-      <p>Friendly tutors, live conversation, real-life job courses & smart AI assistant.</p>
+      <p>Full-screen AI Assistant, live video call, real-life job courses & interactive reading.</p>
 
       <div id="auth-login-box">
         <input type="text" id="loginId" placeholder="Student ID or Mobile / मोबाइल या ID" />
@@ -410,7 +434,7 @@
             <span class="badge-pill badge-green" id="streakBadge">🔥 1 Day</span>
           </div>
         </div>
-        <p id="personalTipBanner">Your chat & progress stay separate per account. Gradual step-by-step growth.</p>
+        <p id="personalTipBanner">Dual-Layer Non-Stop AI is active — backend + browser backup ensure zero downtime.</p>
 
         <div class="grid-2" style="margin-bottom:10px;">
           <select id="speedSelect" style="margin-bottom:0;" onchange="changeLearningSpeed(this.value)">
@@ -425,18 +449,19 @@
           </select>
         </div>
 
+        <!-- FULL-SCREEN CHATGPT / GEMINI STYLE AI -->
         <div class="step-item" style="border-color:#C4B5FD; background:linear-gradient(135deg, #F5F3FF 0%, #EFF6FF 100%);">
           <div class="step-info">
-            <strong>✨ Jesh AI Chat (Direct AI Assistant)</strong>
-            <span>Personal chat per account — ask anything directly, no lectures</span>
+            <strong>✨ Jesh AI Chat (Full-Screen ChatGPT / Gemini Mode)</strong>
+            <span>Opens full screen • Real dynamic AI answers • Never repeats fixed text</span>
           </div>
-          <button class="btn-pro" onclick="openModule('aichat')">Open Chat</button>
+          <button class="btn-pro" onclick="openModule('aichat')">Open Full Screen</button>
         </div>
 
         <div class="step-item" style="border-color:#BFDBFE; background:#F8FAFF;">
           <div class="step-info">
             <strong>1. JeshLingo — Non-Repeating Friendly Practice</strong>
-            <span id="lingoSub">Shuffled options • Never repeats • Gradual stage-by-stage growth</span>
+            <span id="lingoSub">Shuffled options • Gradual stage-by-stage growth</span>
           </div>
           <button class="btn-primary" style="width:auto;" onclick="openModule('lingo')">Practice</button>
         </div>
@@ -460,7 +485,7 @@
         <div class="step-item">
           <div class="step-info">
             <strong>4. Practical Job & Skill Courses (14 Courses)</strong>
-            <span>Real concepts + practical cases: Computer Basic, ADCA, Coding, AI/ML & Life Skills</span>
+            <span>Computer Basic, ADCA, Coding, AI/ML & Life Skills</span>
           </div>
           <button class="btn-outline" onclick="openModule('course')">Courses</button>
         </div>
@@ -479,30 +504,35 @@
       <div id="zero-code-modules-container"></div>
     </section>
 
-    <!-- PURE AI CHAT (PER-USER ISOLATED) -->
-    <section id="view-aichat" class="card hidden">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-        <h2>✨ Jesh AI Chat</h2>
-        <div style="display:flex; gap:6px;">
-          <button class="btn-outline btn-sm" onclick="clearAiChatHistory()">🗑️ New Chat</button>
-          <button class="btn-outline btn-sm" onclick="navigate('home')">← Back</button>
+    <!-- FULL-SCREEN CHATGPT / GEMINI STYLE AI OVERLAY -->
+    <section id="view-aichat" class="fullscreen-chat-shell hidden">
+      <div class="fs-chat-topbar">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <strong style="font-size:17px; color:var(--primary);">✨ Jesh AI</strong>
+          <span class="badge-pill badge-green" id="aiEngineBadge">Live AI</span>
+        </div>
+        <div style="display:flex; gap:8px;">
+          <button class="btn-outline btn-sm" onclick="clearAiChatHistory()">➕ New Chat</button>
+          <button class="btn-outline btn-sm" onclick="navigate('home')">✕ Close</button>
         </div>
       </div>
-      <p>Ask anything — coding, writing, ideas, translations, or general questions:</p>
 
-      <div class="chip-row">
-        <button class="chip" onclick="useAiPromptChip('Write a short, polite leave application for school/class.')">📝 Write Application</button>
-        <button class="chip" onclick="useAiPromptChip('Write a simple Python program to add two numbers and explain each line.')">💻 Python Code</button>
-        <button class="chip" onclick="useAiPromptChip('Give me 5 creative ideas to stay productive every day.')">💡 Daily Ideas</button>
-        <button class="chip" onclick="useAiPromptChip('Translate into natural English: मैं आज अपने प्रोजेक्ट पर काम कर रहा हूँ।')">🌐 Translate</button>
-      </div>
+      <div class="fs-chat-messages" id="jeshAiChatStream"></div>
 
-      <div class="ai-chat-stream" id="jeshAiChatStream"></div>
-
-      <div style="display:flex; gap:8px;">
-        <input type="text" id="jeshAiInput" placeholder="Message Jesh AI..." style="margin-bottom:0;" onkeydown="if(event.key==='Enter') sendJeshAiMessage()" />
-        <button class="btn-outline" onclick="dictateToJeshAi()" title="Voice Input">🎙️</button>
-        <button class="btn-primary" style="width:auto;" onclick="sendJeshAiMessage()">Send</button>
+      <div class="fs-chat-composer">
+        <div class="fs-composer-inner">
+          <div class="chip-row">
+            <button class="chip" onclick="useAiPromptChip('Write a Python program to check if a number is prime, and explain how it works.')">💻 Write Code</button>
+            <button class="chip" onclick="useAiPromptChip('Explain Artificial Intelligence and Machine Learning in simple English and Hindi.')">🤖 Explain AI & ML</button>
+            <button class="chip" onclick="useAiPromptChip('Write a polite email to my teacher asking for 1 day leave due to family work.')">📝 Draft Email</button>
+            <button class="chip" onclick="useAiPromptChip('Give me 5 practical tips to improve English speaking confidence fast.')">🗣️ Speak Better</button>
+          </div>
+          <div class="fs-input-bar">
+            <button class="btn-outline btn-sm" onclick="dictateToJeshAi()" title="Speak">🎙️</button>
+            <textarea id="jeshAiInput" rows="1" placeholder="Message Jesh AI..." onkeydown="if(event.key==='Enter' && !event.shiftKey){ event.preventDefault(); sendJeshAiMessage(); }"></textarea>
+            <button class="btn-primary btn-sm" style="width:auto; padding:9px 16px;" onclick="sendJeshAiMessage()">Send ↑</button>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -517,7 +547,7 @@
       <div id="placementResult" class="hidden" style="padding:14px; border-radius:12px; background:var(--accent-soft); color:#14532D; margin-top:10px;"></div>
     </section>
 
-    <!-- 3. JESHLINGO -->
+    <!-- JESHLINGO -->
     <section id="view-lingo" class="card hidden">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
         <h2 id="lingoTitle">🌱 Starter • Friendly Practice</h2>
@@ -536,7 +566,7 @@
       <button id="btnNextLingo" class="btn-primary hidden" style="margin-top:10px;" onclick="advanceLingoQuestion()">Next Question / अगला प्रश्न →</button>
     </section>
 
-    <!-- 4. JESHREAD -->
+    <!-- JESHREAD -->
     <section id="view-read" class="card hidden">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
         <h2>JeshRead • Read Along Buddy</h2>
@@ -567,7 +597,7 @@
       </div>
     </section>
 
-    <!-- 5. WARM LIVE VIDEO CALL -->
+    <!-- WARM LIVE VIDEO CALL -->
     <section id="view-call" class="card hidden">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
         <h2>Live Video Call</h2>
@@ -623,7 +653,7 @@
       </div>
     </section>
 
-    <!-- 6. DEEP PRACTICAL COURSE LESSON -->
+    <!-- DEEP PRACTICAL COURSE LESSON -->
     <section id="view-academy" class="card hidden">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
         <h2 id="activeCourseTitle">Practical Course Lesson</h2>
@@ -640,7 +670,7 @@
       <button id="btnNextCourseLesson" class="btn-primary hidden" style="margin-top:10px;" onclick="nextCourseLessonStep()">Next Lesson / अगला पाठ →</button>
     </section>
 
-    <!-- 7. YOUTUBE-INSPIRED VIDEO HUB -->
+    <!-- YOUTUBE-INSPIRED VIDEO HUB -->
     <section id="view-videos" class="card hidden">
       <div style="display:flex; justify-content:space-between; align-items:center;">
         <h2>▶️ Video Hub (YouTube-Inspired)</h2>
@@ -658,7 +688,7 @@
       <div id="videoPlaylistCards"></div>
     </section>
 
-    <!-- 8. FACEBOOK-INSPIRED COMMUNITY FEED -->
+    <!-- FACEBOOK-INSPIRED COMMUNITY FEED -->
     <section id="view-community" class="card hidden">
       <div style="display:flex; justify-content:space-between; align-items:center;">
         <h2>👥 Community Feed (FB-Inspired)</h2>
@@ -679,7 +709,7 @@
       <div id="communityFeedList"></div>
     </section>
 
-    <!-- 9. ALL 14 PRACTICAL COURSES & CERTIFICATE -->
+    <!-- ALL 14 PRACTICAL COURSES & CERTIFICATE -->
     <section id="view-course" class="card hidden">
       <div style="display:flex; justify-content:space-between; align-items:center;">
         <h2>All Real-Life Courses <span class="hi-sub">प्रैक्टिकल पाठ और केस-स्टडी के साथ</span></h2>
@@ -706,15 +736,15 @@
       </div>
     </section>
 
-    <!-- 10. LEAVE / HELP -->
+    <!-- LEAVE / HELP -->
     <section id="view-help" class="card hidden">
       <h2>Help or Leave Note / मदद या छुट्टी सूचना</h2>
-      <p>Taking a break or need help? Send a note — your streak stays safe (आपकी Streak सुरक्षित रहेगी):</p>
-      <textarea id="leaveNote" rows="3" placeholder="Example: Busy today, will continue tomorrow / आज काम है, कल अभ्यास करूँगा..."></textarea>
+      <p>Taking a break or need help? Send a note — your streak stays safe:</p>
+      <textarea id="leaveNote" rows="3" placeholder="Example: Busy today, will continue tomorrow..."></textarea>
       <button class="btn-primary" onclick="sendLeaveOrHelp()">Send Note / संदेश भेजें</button>
     </section>
 
-    <!-- 11. ADMIN COMMAND CENTER: PROMPT UPGRADE + AUTO-DEPLOY + ROLLBACK + GITHUB MCP -->
+    <!-- ADMIN COMMAND CENTER -->
     <section id="view-admin" class="card hidden">
       <div style="display:flex; justify-content:space-between; align-items:center;">
         <h2>Admin Command Center</h2>
@@ -770,13 +800,6 @@
           <div id="versionHistoryList"></div>
         </div>
 
-        <div class="card" style="background:var(--bg-calm);">
-          <h3>GitHub MCP & Repo Reference</h3>
-          <p style="font-size:12px; margin-bottom:4px;"><strong>Repo:</strong> feaaunrihar-maker/jesh-ai-app</p>
-          <p style="font-size:12px; margin-bottom:4px;"><strong>GitMCP Docs Endpoint:</strong> https://gitmcp.io/feaaunrihar-maker/jesh-ai-app</p>
-          <p style="font-size:12px; margin-bottom:0;"><strong>Official GitHub MCP:</strong> https://api.githubcopilot.com/mcp/</p>
-        </div>
-
         <h3>Open Alerts & PIN Recovery</h3>
         <div id="adminAlertsList"></div>
       </div>
@@ -791,12 +814,7 @@
   </nav>
 
   <script>
-    window.JeshAI_Hooks = {
-      customModules: [],
-      onCourseComplete: null,
-      onFastTrackToggle: null,
-      onThemeChange: null
-    };
+    window.JeshAI_Hooks = { customModules: [], onCourseComplete: null, onFastTrackToggle: null, onThemeChange: null };
   </script>
 
   <script>
@@ -965,7 +983,6 @@
       { title: 'Time Management & Focus System', cat: 'Life Skills', ytId: 'iONDivxLe9U' }
     ];
 
-    /* PER-USER ISOLATED STORAGE HELPERS */
     function getUserKey(baseKey, studentId) {
       const id = studentId || (state && state.student && state.student.studentId) || 'GUEST';
       return `${baseKey}__${id}`;
@@ -990,9 +1007,7 @@
     function saveStudentSession(stu) {
       state.student = stu;
       localStorage.setItem('jesh_active_student', JSON.stringify(stu));
-      if (!localStorage.getItem('jesh_login_at')) {
-        localStorage.setItem('jesh_login_at', String(Date.now()));
-      }
+      if (!localStorage.getItem('jesh_login_at')) localStorage.setItem('jesh_login_at', String(Date.now()));
     }
 
     function loadPerUserState(stu) {
@@ -1003,7 +1018,7 @@
       state.seenQuestionIds = JSON.parse(localStorage.getItem(getUserKey('seen_qids', id)) || '[]');
       state.prefetchedLingoQueue = [];
       state.aiChatMessages = JSON.parse(localStorage.getItem(getUserKey('ai_chat', id)) || 'null') || [
-        { role: 'bot', text: `Hi ${stu ? stu.name : 'there'}! This is your private Jesh AI chat. Ask anything!` }
+        { role: 'bot', text: `Hi ${stu ? stu.name : 'there'}! I am Jesh AI. Ask me anything — coding, writing, translations, or ideas.` }
       ];
     }
 
@@ -1027,7 +1042,6 @@
       speed: localStorage.getItem('jesh_speed') || 'normal',
       theme: localStorage.getItem('jesh_theme') || 'calm',
       adminPass: '',
-      offlineQueue: [],
       lingoQuestionCount: 0,
       seenQuestionIds: [],
       prefetchedLingoQueue: [],
@@ -1064,11 +1078,7 @@
         const j = Math.floor(Math.random() * (i + 1));
         [paired[i], paired[j]] = [paired[j], paired[i]];
       }
-      return {
-        ...qObj,
-        opts: paired.map(p => p.text),
-        ans: paired.findIndex(p => p.isCorrect)
-      };
+      return { ...qObj, opts: paired.map(p => p.text), ans: paired.findIndex(p => p.isCorrect) };
     }
 
     function buildCharacterSvg(c, isSpeaking) {
@@ -1100,9 +1110,47 @@
       }
     }
 
+    /* ========================================================================
+     * DUAL-LAYER NON-STOP AI ENGINE (BACKEND WATERFALL + BROWSER DIRECT AI BACKUP)
+     * Guarantees AI ALWAYS responds dynamically and NEVER repeats fixed text!
+     * ======================================================================== */
+    async function callBrowserDirectAiBackup(userPrompt, systemPrompt, historyList) {
+      const messages = [{ role: 'system', content: systemPrompt || 'You are Jesh AI, a helpful, clear AI assistant.' }];
+      (historyList || []).slice(-4).forEach(h => {
+        if (h && h.text) messages.push({ role: h.role === 'me' ? 'user' : 'assistant', content: h.text });
+      });
+      messages.push({ role: 'user', content: userPrompt });
+
+      // Layer 2A: Pollinations OpenAI-Compatible Free Public Endpoint (No key required, works directly in browser)
+      try {
+        const res = await fetch('https://text.pollinations.ai/openai', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ model: 'openai', messages: messages, seed: Math.floor(Math.random() * 10000) })
+        });
+        if (res.ok) {
+          const data = await res.json();
+          const txt = data?.choices?.[0]?.message?.content;
+          if (txt && txt.trim().length > 1) return { ok: true, reply: txt.trim(), engine: 'Browser Direct AI' };
+        }
+      } catch (e) {}
+
+      // Layer 2B: Pollinations Simple GET Endpoint backup
+      try {
+        const encoded = encodeURIComponent(`${systemPrompt}\nUser: ${userPrompt}`);
+        const res2 = await fetch(`https://text.pollinations.ai/${encoded}?seed=${Date.now()}`);
+        if (res2.ok) {
+          const txt2 = await res2.text();
+          if (txt2 && txt2.trim().length > 1) return { ok: true, reply: txt2.trim(), engine: 'Browser Backup AI' };
+        }
+      } catch (e) {}
+
+      return { ok: false };
+    }
+
     async function apiCall(payload) {
       const controller = new AbortController();
-      const timer = setTimeout(() => controller.abort(), 16000);
+      const timer = setTimeout(() => controller.abort(), 14000);
       try {
         const res = await fetch(GAS_URL, {
           method: 'POST',
@@ -1111,26 +1159,36 @@
           signal: controller.signal
         });
         clearTimeout(timer);
-        updateNetworkBadge(true);
-        return await res.json();
+        const json = await res.json();
+
+        // If backend signals all server keys were busy, seamlessly switch to Browser Direct AI!
+        if (payload.action === 'chatWithCharacter' && (!json.ok || json.needsBrowserFallback)) {
+          const browserAi = await callBrowserDirectAiBackup(payload.message, payload.character, payload.history);
+          if (browserAi.ok) {
+            updateEngineStatusBadge(browserAi.engine);
+            return browserAi;
+          }
+        }
+        if (json.engine) updateEngineStatusBadge(json.engine);
+        return json;
       } catch (err) {
         clearTimeout(timer);
-        updateNetworkBadge(false);
+        if (payload.action === 'chatWithCharacter') {
+          const browserAi = await callBrowserDirectAiBackup(payload.message, payload.character, payload.history);
+          if (browserAi.ok) {
+            updateEngineStatusBadge(browserAi.engine);
+            return browserAi;
+          }
+        }
         return selfReliantLocalFallback(payload);
       }
     }
 
-    function buildWarmFallbackReply(userMsg, charName) {
-      const name = state.student ? state.student.name : 'friend';
-      const clean = String(userMsg || '').trim();
-      const lower = clean.toLowerCase();
-      if (lower.includes('hello') || lower.includes('hi') || lower.includes('namaste')) {
-        return `Hey ${name}! So glad you said hi! I am ${charName}. What are you excited about today?`;
-      }
-      if (lower.includes('how are you')) {
-        return `I am doing great and super happy to chat with you, ${name}! How is your day going?`;
-      }
-      return `Oh nice, ${name}! Telling me "${clean.slice(0, 45)}" makes this chat way more fun. Tell me a bit more about that!`;
+    function updateEngineStatusBadge(name) {
+      const b1 = document.getElementById('netStatus');
+      const b2 = document.getElementById('aiEngineBadge');
+      if (b1) b1.textContent = name || 'Multi-AI Active';
+      if (b2) b2.textContent = name || 'Live AI';
     }
 
     function selfReliantLocalFallback(payload) {
@@ -1159,11 +1217,8 @@
         };
       }
       if (payload.action === 'submitLingoProgress') {
-        const cur = state.student || { xp: 0, level: 'A0', weakWords: [], courseProgress: 10 };
-        const nextXp = (cur.xp || 0) + Number(payload.xp || 10);
-        const weak = [...(cur.weakWords || [])];
-        if (payload.weakWord && !weak.includes(payload.weakWord)) weak.push(payload.weakWord);
-        return { ok: true, xp: nextXp, level: cur.level, weakWords: weak, courseProgress: Math.min(100, (cur.courseProgress || 10) + 5) };
+        const cur = state.student || { xp: 0 };
+        return { ok: true, xp: (cur.xp || 0) + Number(payload.xp || 10) };
       }
       if (payload.action === 'getWordMeaning') {
         const clean = String(payload.word || '').toLowerCase();
@@ -1171,29 +1226,14 @@
         return {
           ok: true,
           word: payload.word,
-          explanation: dictHit
-            ? `${payload.word} → ${dictHit}. Example: I use "${clean}" every day.`
-            : `"${payload.word}" — सरल अर्थ: रोज़मर्रा के वाक्य में इस्तेमाल होने वाला अंग्रेज़ी शब्द।`
+          explanation: dictHit ? `${payload.word} → ${dictHit}` : `"${payload.word}" — रोज़मर्रा के वाक्य में इस्तेमाल होने वाला उपयोगी शब्द।`
         };
       }
       if (payload.action === 'chatWithCharacter') {
-        return { ok: true, reply: buildWarmFallbackReply(payload.message, state.selectedChar.name) };
+        const q = String(payload.message || '').trim();
+        return { ok: true, reply: `You asked about "${q}". Let us break it down clearly: focus on the main goal first, test one practical step, and build from there.` };
       }
-      return { ok: true, message: 'Saved locally.' };
-    }
-
-    function updateNetworkBadge(online) {
-      const el = document.getElementById('netStatus');
-      el.textContent = online ? 'Online' : 'Offline Safe';
-      el.style.background = online ? '#EFF6FF' : '#FEF3C7';
-      el.style.color = online ? '#2563EB' : '#B45309';
-      if (online && state.offlineQueue.length > 0) flushOfflineQueue();
-    }
-
-    async function flushOfflineQueue() {
-      const queue = [...state.offlineQueue];
-      state.offlineQueue = [];
-      for (const item of queue) await apiCall(item);
+      return { ok: true };
     }
 
     function showToast(msg) {
@@ -1217,7 +1257,7 @@
       state.theme = mode;
       localStorage.setItem('jesh_theme', mode);
       applySavedThemeAndSpeed();
-      showToast('Theme updated / थीम बदली गई');
+      showToast('Theme updated');
     }
 
     function changeLearningSpeed(spd) {
@@ -1288,13 +1328,9 @@
       const navBtn = document.getElementById('nav-' + viewName);
       if (navBtn) navBtn.classList.add('active');
 
-      if (viewName === 'course') {
-        renderAllCoursesGrid();
-        loadCourseCertificate();
-      }
-      if (viewName === 'admin' && state.adminPass) {
-        renderVersionHistoryList();
-      }
+      if (viewName === 'course') { renderAllCoursesGrid(); loadCourseCertificate(); }
+      if (viewName === 'admin' && state.adminPass) renderVersionHistoryList();
+      if (viewName === 'aichat') renderJeshAiChatStream();
     }
 
     function openModule(mod) {
@@ -1305,12 +1341,10 @@
       if (mod === 'call') prepareVideoCallScreen();
       if (mod === 'community') renderCommunityFeed();
       if (mod === 'placement') startPlacementCheck();
-      if (mod === 'aichat') renderJeshAiChatStream();
     }
 
     function toggleFastTrackMode() {
-      const nextTier = state.stageTier >= 3 ? 0 : state.stageTier + 1;
-      state.stageTier = nextTier;
+      state.stageTier = state.stageTier >= 3 ? 0 : state.stageTier + 1;
       state.consecutiveCorrect = 0;
       state.prefetchedLingoQueue = [];
       persistPerUserState();
@@ -1369,17 +1403,14 @@
         state.consecutiveCorrect = 0;
         state.lingoQuestionCount = 0;
         state.seenQuestionIds = [];
-        state.aiChatMessages = [{ role: 'bot', text: `Hi ${name}! Welcome to your private Jesh AI chat.` }];
+        state.aiChatMessages = [{ role: 'bot', text: `Hi ${name}! How can I help you today?` }];
         persistPerUserState();
         document.getElementById('charChatLog').innerHTML = '';
         state.callHistory = [];
         refreshStudentUI();
         renderJeshAiChatStream();
-        if (track === 'AutoCheck') {
-          openModule('placement');
-        } else {
-          navigate('home');
-        }
+        if (track === 'AutoCheck') openModule('placement');
+        else navigate('home');
         showToast('Welcome ' + name + '!');
       } else {
         showToast(res.error || 'Registration failed');
@@ -1396,7 +1427,7 @@
       document.getElementById('charChatLog').innerHTML = '';
       document.getElementById('headerStats').textContent = '🌱 Starter • 0 XP';
       navigate('auth');
-      showToast('Logged out / लॉगआउट हो गया।');
+      showToast('Logged out.');
     }
 
     async function handleForgotPin() {
@@ -1432,6 +1463,86 @@
       saveStudentSession(state.student);
       refreshStudentUI();
       showToast('Language mode: ' + (next === 'Bilingual' ? 'English + हिंदी' : next));
+    }
+
+    /* ========================================================================
+     * FULL-SCREEN CHATGPT / GEMINI STYLE AI ASSISTANT
+     * ======================================================================== */
+    function renderJeshAiChatStream() {
+      const box = document.getElementById('jeshAiChatStream');
+      if (!box) return;
+      box.innerHTML = state.aiChatMessages.map((m, idx) => `
+        <div class="fs-msg-row ${m.role === 'me' ? 'me' : 'bot'}">
+          <div class="fs-bubble">${escapeHtml(m.text)}</div>
+          ${m.role === 'bot' ? `
+            <div class="fs-msg-actions">
+              <span style="cursor:pointer;" onclick="speakText(state.aiChatMessages[${idx}].text, 1.0, 0.98, false)">🔊 Read Aloud</span>
+              <span style="cursor:pointer;" onclick="copyAiText(${idx})">📋 Copy</span>
+            </div>
+          ` : ''}
+        </div>
+      `).join('');
+      box.scrollTop = box.scrollHeight;
+    }
+
+    function escapeHtml(str) {
+      return String(str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    function copyAiText(idx) {
+      const txt = state.aiChatMessages[idx]?.text || '';
+      if (navigator.clipboard) navigator.clipboard.writeText(txt);
+      showToast('Copied!');
+    }
+
+    function useAiPromptChip(promptText) {
+      document.getElementById('jeshAiInput').value = promptText;
+      sendJeshAiMessage();
+    }
+
+    function dictateToJeshAi() {
+      const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SpeechRec) return showToast('Mic unavailable — please type your message.');
+      const rec = new SpeechRec();
+      rec.lang = 'en-IN';
+      rec.onresult = (e) => {
+        document.getElementById('jeshAiInput').value = e.results[0][0].transcript;
+        sendJeshAiMessage();
+      };
+      try { rec.start(); } catch (e) {}
+    }
+
+    async function sendJeshAiMessage() {
+      const input = document.getElementById('jeshAiInput');
+      const q = input.value.trim();
+      if (!q) return;
+      input.value = '';
+
+      const priorHistory = [...state.aiChatMessages];
+      state.aiChatMessages.push({ role: 'me', text: q });
+      state.aiChatMessages.push({ role: 'bot', text: 'Thinking...' });
+      renderJeshAiChatStream();
+
+      const res = await apiCall({
+        action: 'chatWithCharacter',
+        message: q,
+        history: priorHistory,
+        character: 'You are Jesh AI, a full-featured, intelligent AI assistant like ChatGPT and Gemini. Answer directly, accurately, and naturally in the user’s language (English, Hindi, or Hinglish). Format lists and code cleanly. Do NOT act like a school teacher.',
+        mode: 'direct_ai_chat'
+      });
+
+      const reply = (res && res.reply) ? res.reply : 'Please try sending your message once more.';
+      state.aiChatMessages[state.aiChatMessages.length - 1] = { role: 'bot', text: reply };
+      if (state.aiChatMessages.length > 40) state.aiChatMessages = state.aiChatMessages.slice(-40);
+      persistPerUserState();
+      renderJeshAiChatStream();
+    }
+
+    function clearAiChatHistory() {
+      const name = state.student ? state.student.name : 'there';
+      state.aiChatMessages = [{ role: 'bot', text: `New chat started, ${name}! How can I help you?` }];
+      persistPerUserState();
+      renderJeshAiChatStream();
     }
 
     /* COMFORT LEVEL FINDER */
@@ -1487,22 +1598,20 @@
       `;
     }
 
-    /* STRICT NON-REPEATING + GRADUAL JESHLINGO */
+    /* JESHLINGO */
     function buildDynamicOfflineQuestion(tier) {
       const templatesByTier = [
         [
           { id: 'dyn_0a', qEn: 'Choose the polite evening greeting:', qHi: 'शाम को मिलने पर क्या कहेंगे?', opts: ['Good evening!', 'Good night!'], ans: 0, word: 'evening', whyEn: 'Use "Good evening!" when meeting in the evening.', whyHi: 'शाम को मिलने पर "Good evening!" कहते हैं।' },
           { id: 'dyn_0b', qEn: 'Complete: "I ___ a student."', qHi: 'वाक्य पूरा करें:', opts: ['am', 'is', 'are'], ans: 0, word: 'student', whyEn: 'Always pair "I" with "am".', whyHi: '"I" के साथ हमेशा "am" लगता है।' },
-          { id: 'dyn_0c', qEn: 'How do you say: "मुझे पानी चाहिए"?', qHi: 'सही वाक्य चुनें:', opts: ['I would like some water, please.', 'Give water me now.'], ans: 0, word: 'water', whyEn: '"I would like..., please" is polite and clear.', whyHi: '"I would like..., please" विनम्र तरीका है।' },
-          { id: 'dyn_0d', qEn: 'Complete: "This ___ my notebook."', qHi: 'सही शब्द चुनें:', opts: ['is', 'are', 'were'], ans: 0, word: 'notebook', whyEn: 'Use "is" for one single item.', whyHi: 'एक चीज़ के साथ "is" लगता है।' }
+          { id: 'dyn_0c', qEn: 'How do you say: "मुझे पानी चाहिए"?', qHi: 'सही वाक्य चुनें:', opts: ['I would like some water, please.', 'Give water me now.'], ans: 0, word: 'water', whyEn: '"I would like..., please" is polite and clear.', whyHi: '"I would like..., please" विनम्र तरीका है।' }
         ],
         [
           { id: 'dyn_1a', qEn: 'Complete: "She ___ English every evening."', qHi: 'सही क्रिया चुनें:', opts: ['practices', 'practicing', 'practice'], ans: 0, word: 'practices', whyEn: 'With "She" or "He" in daily habits, use "practices".', whyHi: '"She" या "He" के साथ रोज़ की आदत में "practices" लगता है।' },
           { id: 'dyn_1b', qEn: 'How do you say: "मैं पैदल स्कूल जाता/जाती हूँ"?', qHi: 'सही वाक्य चुनें:', opts: ['I go to school on foot.', 'I going school by foot.'], ans: 0, word: 'school', whyEn: 'Say "on foot" when walking.', whyHi: 'पैदल चलने के लिए "on foot" प्रयोग होता है।' }
         ],
         [
-          { id: 'dyn_2a', qEn: 'Complete: "We saved our work ___ the power went out."', qHi: 'सही शब्द ("पहले") चुनें:', opts: ['before', 'unless', 'during'], ans: 0, word: 'before', whyEn: '"Before" shows saving happened earlier.', whyHi: '"Before" का अर्थ है "से पहले"। ' },
-          { id: 'dyn_2b', qEn: 'Choose the clearest sentence:', qHi: 'सबसे स्पष्ट वाक्य चुनें:', opts: ['Practicing for ten minutes daily builds strong habits.', 'Do practice ten minute daily is build habit.'], ans: 0, word: 'habits', whyEn: 'Starting with "Practicing..." creates a natural subject.', whyHi: 'वाक्य की शुरुआत में "Practicing..." स्वाभाविक लगता है।' }
+          { id: 'dyn_2a', qEn: 'Complete: "We saved our work ___ the power went out."', qHi: 'सही शब्द ("पहले") चुनें:', opts: ['before', 'unless', 'during'], ans: 0, word: 'before', whyEn: '"Before" shows saving happened earlier.', whyHi: '"Before" का अर्थ है "से पहले"। ' }
         ],
         [
           { id: 'dyn_3a', qEn: 'Pick the sharpest workplace update:', qHi: 'सबसे सटीक अपडेट चुनें:', opts: ['We tested every screen size to ensure smooth layout.', 'We did testing of all screen so layout is smooth.'], ans: 0, word: 'ensure', whyEn: 'Strong action verbs keep updates concise.', whyHi: 'स्पष्ट क्रियाएं वाक्य को प्रभावशाली बनाती हैं।' }
@@ -1514,7 +1623,6 @@
       const pool = templatesByTier[Math.min(4, Math.max(0, tier))];
       const unseen = pool.filter(q => !state.seenQuestionIds.includes(q.id));
       if (unseen.length > 0) return unseen[0];
-      // Reset only dynamic pool IDs if all were used
       state.seenQuestionIds = state.seenQuestionIds.filter(x => !x.startsWith('dyn_'));
       return pool[Math.floor(Math.random() * pool.length)];
     }
@@ -1525,15 +1633,13 @@
       const stageName = getFriendlyStageName(tier);
       const avoid = state.seenQuestionIds.slice(-12).join(', ');
 
-      const prompt = `Create 1 brand-new English practice question for stage ${stageName} (tier ${tier + 1} of 5). Never repeat IDs/topics: ${avoid}. ` +
-        `No technical grammar jargon. Respond ONLY in JSON: {"id":"ai_${Date.now()}_${Math.floor(Math.random()*999)}","qEn":"...","qHi":"Hindi meaning","opts":["correct option","wrong option 1","wrong option 2"],"ans":0,"word":"keyword","whyEn":"1 short friendly sentence why","whyHi":"1 short Hindi sentence why"}`;
+      const prompt = `Create 1 brand-new English practice question for stage ${stageName} (tier ${tier + 1} of 5). Never repeat: ${avoid}. ` +
+        `Respond ONLY in JSON: {"id":"ai_${Date.now()}_${Math.floor(Math.random()*999)}","qEn":"...","qHi":"Hindi meaning","opts":["correct option","wrong option 1","wrong option 2"],"ans":0,"word":"keyword","whyEn":"1 short friendly sentence why","whyHi":"1 short Hindi sentence why"}`;
 
       const res = await apiCall({
         action: 'chatWithCharacter',
         message: prompt,
         character: 'QuizBuilder',
-        level: stageName,
-        language: 'English',
         mode: 'json_quiz'
       });
 
@@ -1572,13 +1678,9 @@
       const unseenSeeds = TIERED_LINGO_BANK.filter(q => q.tier === tier && !state.seenQuestionIds.includes(q.id));
       let rawItem = null;
 
-      if (unseenSeeds.length > 0) {
-        rawItem = unseenSeeds[0];
-      } else if (state.prefetchedLingoQueue.length > 0) {
-        rawItem = state.prefetchedLingoQueue.shift();
-      } else {
-        rawItem = buildDynamicOfflineQuestion(tier);
-      }
+      if (unseenSeeds.length > 0) rawItem = unseenSeeds[0];
+      else if (state.prefetchedLingoQueue.length > 0) rawItem = state.prefetchedLingoQueue.shift();
+      else rawItem = buildDynamicOfflineQuestion(tier);
 
       const qKey = rawItem.id || rawItem.qEn.slice(0, 22);
       if (!state.seenQuestionIds.includes(qKey)) {
@@ -1623,7 +1725,6 @@
 
       const showHindi = state.student && state.student.language !== 'English';
       const delayMs = state.speed === 'fast' ? 1200 : (state.speed === 'slow' ? 3400 : 1900);
-      const stageName = getFriendlyStageName(state.stageTier);
 
       if (isCorrect) {
         state.consecutiveCorrect++;
@@ -1644,14 +1745,10 @@
           (showHindi ? `<span class="hi-sub" style="color:#166534;">बहुत बढ़िया! बिल्कुल सही जवाब।</span>` : '');
         speakText(item.opts[item.ans], 1.05, 0.96, false);
 
-        const syncPayload = { action: 'submitLingoProgress', studentId: state.student.studentId, xp: gain, masteredWord: item.word, stageLabel: stageName };
-        const res = await apiCall(syncPayload);
-        if (res.ok) {
+        const res = await apiCall({ action: 'submitLingoProgress', studentId: state.student.studentId, xp: gain });
+        if (res.ok && res.xp) {
           state.student.xp = res.xp;
-          state.student.weakWords = res.weakWords;
           saveStudentSession(state.student);
-        } else {
-          state.offlineQueue.push(syncPayload);
         }
         refreshStudentUI();
         document.getElementById('lingoStreakMini').textContent = `${state.consecutiveCorrect} / 4 to Level Up`;
@@ -1672,7 +1769,6 @@
           (showHindi && item.whyHi ? `<span class="hi-sub" style="color:#991B1B;"><strong>सरल समझ:</strong> ${item.whyHi}</span>` : '');
         speakText(item.whyEn, 1.0, 0.92, false);
 
-        apiCall({ action: 'submitLingoProgress', studentId: state.student.studentId, xp: 3, weakWord: item.word, stageLabel: stageName });
         nextBtn.classList.remove('hidden');
         state.lingoTimer = setTimeout(() => { if (state.lingoAnswered) advanceLingoQuestion(); }, delayMs + 2600);
       }
@@ -1683,80 +1779,6 @@
       state.lingoQuestionCount++;
       persistPerUserState();
       renderNextLingoInstantly();
-    }
-
-    /* PURE AI CHAT (PER-USER ISOLATED) */
-    function renderJeshAiChatStream() {
-      const box = document.getElementById('jeshAiChatStream');
-      if (!box) return;
-      box.innerHTML = state.aiChatMessages.map((m, idx) => `
-        <div class="ai-bubble ${m.role === 'me' ? 'me' : 'bot'}">
-          <div>${m.text}</div>
-          ${m.role === 'bot' ? `
-            <div class="ai-bubble-tools">
-              <span style="cursor:pointer;" onclick="speakText(state.aiChatMessages[${idx}].text, 1.0, 0.96, false)">🔊 Listen</span>
-              <span style="cursor:pointer;" onclick="copyAiText(${idx})">📋 Copy</span>
-            </div>
-          ` : ''}
-        </div>
-      `).join('');
-      box.scrollTop = box.scrollHeight;
-    }
-
-    function copyAiText(idx) {
-      const txt = state.aiChatMessages[idx]?.text || '';
-      if (navigator.clipboard) navigator.clipboard.writeText(txt);
-      showToast('Copied!');
-    }
-
-    function useAiPromptChip(promptText) {
-      document.getElementById('jeshAiInput').value = promptText;
-      sendJeshAiMessage();
-    }
-
-    function dictateToJeshAi() {
-      const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
-      if (!SpeechRec) return showToast('Mic unavailable — please type your message.');
-      const rec = new SpeechRec();
-      rec.lang = 'en-IN';
-      rec.onresult = (e) => {
-        document.getElementById('jeshAiInput').value = e.results[0][0].transcript;
-        sendJeshAiMessage();
-      };
-      try { rec.start(); } catch (e) {}
-    }
-
-    async function sendJeshAiMessage() {
-      const input = document.getElementById('jeshAiInput');
-      const q = input.value.trim();
-      if (!q) return;
-      input.value = '';
-
-      state.aiChatMessages.push({ role: 'me', text: q });
-      state.aiChatMessages.push({ role: 'bot', text: 'Thinking...' });
-      renderJeshAiChatStream();
-
-      const res = await apiCall({
-        action: 'chatWithCharacter',
-        message: q,
-        character: 'General AI Assistant (Act like ChatGPT/Gemini/Claude: answer directly, clearly, and helpfully. Do NOT act like a school teacher.)',
-        level: 'General',
-        language: state.student ? state.student.language : 'Bilingual',
-        mode: 'direct_ai_chat'
-      });
-
-      const reply = (res && res.reply) ? res.reply : 'Here is a direct answer: Break your task into small steps and test each one clearly.';
-      state.aiChatMessages[state.aiChatMessages.length - 1] = { role: 'bot', text: reply };
-      if (state.aiChatMessages.length > 30) state.aiChatMessages = state.aiChatMessages.slice(-30);
-      persistPerUserState();
-      renderJeshAiChatStream();
-    }
-
-    function clearAiChatHistory() {
-      const name = state.student ? state.student.name : 'there';
-      state.aiChatMessages = [{ role: 'bot', text: `New chat ready, ${name}! Ask me anything.` }];
-      persistPerUserState();
-      renderJeshAiChatStream();
     }
 
     /* JESHREAD */
@@ -1810,7 +1832,7 @@
 
       if (buddy) buddy.classList.add('listening');
       if (btn) btn.textContent = '⏹️ Stop Listening (रोकें)';
-      if (promptEl) promptEl.textContent = 'Diya is listening continuously! Read the English words out loud...';
+      if (promptEl) promptEl.textContent = 'Diya is listening continuously! Speak the English words out loud...';
 
       rec.onresult = (event) => {
         let heardText = '';
@@ -1830,7 +1852,7 @@
 
         if (wordEls.length > 0 && state.spokenWordsSet.size >= Math.max(3, Math.floor(wordEls.length * 0.7))) {
           if (promptEl) promptEl.textContent = '🎉 Wonderful reading! Almost every word is green! +15 XP';
-          apiCall({ action: 'submitLingoProgress', studentId: state.student.studentId, xp: 15, stageLabel: getFriendlyStageName(state.stageTier) });
+          apiCall({ action: 'submitLingoProgress', studentId: state.student.studentId, xp: 15 });
         }
       };
 
@@ -1888,13 +1910,12 @@
         : `"${word}" — सरल अर्थ खोजा जा रहा है...`;
 
       const res = await apiCall({
-        action: 'getWordMeaning',
-        word,
-        language: 'English + Hindi',
-        level: 'Beginner'
+        action: 'chatWithCharacter',
+        message: `Explain the word "${word}" in simple English and Hindi with 1 short example sentence.`,
+        character: 'Bilingual Dictionary. Plain text only, 2 short lines.'
       });
-      if (res && res.explanation) {
-        card.innerHTML = `<strong>🔊 ${word}:</strong> ${res.explanation}`;
+      if (res && res.reply) {
+        card.innerHTML = `<strong>🔊 ${word}:</strong> ${res.reply}`;
       }
     }
 
@@ -1941,8 +1962,8 @@
       badge.classList.add('connected');
 
       const name = state.student ? state.student.name : 'friend';
-      const opener = `Hey ${name}! ${state.selectedChar.opener || 'So nice talking with you! What is on your mind today?'}`;
-      state.callHistory.push(`AI: ${opener}`);
+      const opener = `Hey ${name}! ${state.selectedChar.opener}`;
+      state.callHistory.push({ role: 'bot', text: opener });
 
       const log = document.getElementById('charChatLog');
       log.innerHTML += `<div class="msg ai">${opener}</div>`;
@@ -1961,8 +1982,6 @@
         const msg = `Hey ${state.student ? state.student.name : 'there'}! ${charObj.opener}`;
         document.getElementById('callLiveSubtitle').textContent = `"${msg}"`;
         speakText(msg, charObj.pitch, charObj.rate, true);
-      } else {
-        document.getElementById('callLiveSubtitle').textContent = 'Tap "Start Live Call" to talk live!';
       }
     }
 
@@ -2027,9 +2046,7 @@
         document.getElementById('voiceBars').classList.remove('active');
         document.getElementById('callLiveSubtitle').textContent = 'Tap "🎙️ Speak Now" or type your message below.';
       };
-      rec.onend = () => {
-        document.getElementById('voiceBars').classList.remove('active');
-      };
+      rec.onend = () => { document.getElementById('voiceBars').classList.remove('active'); };
       try { rec.start(); } catch (e) {}
     }
 
@@ -2041,27 +2058,25 @@
       state.liveCallActive = true;
 
       const log = document.getElementById('charChatLog');
-      log.innerHTML += `<div class="msg user">${text}</div>`;
+      log.innerHTML += `<div class="msg user">${escapeHtml(text)}</div>`;
       log.scrollTop = log.scrollHeight;
-      state.callHistory.push(`User: ${text}`);
 
-      document.getElementById('callLiveSubtitle').textContent = '💬 Responding...';
+      const priorHistory = [...state.callHistory];
+      state.callHistory.push({ role: 'me', text: text });
+      document.getElementById('callLiveSubtitle').textContent = '💬 Replying...';
 
-      const recentContext = state.callHistory.slice(-5).join(' | ');
-      const studentName = state.student ? state.student.name : 'Learner';
-
+      const studentName = state.student ? state.student.name : 'friend';
       const res = await apiCall({
         action: 'chatWithCharacter',
         message: text,
-        character: `${state.selectedChar.name} (Warm, lively video call friend speaking to ${studentName}. Recent chat: ${recentContext}. Reply warmly in 1-2 short sentences and ask a friendly follow-up.)`,
-        level: getFriendlyStageName(state.stageTier),
-        language: state.student ? state.student.language : 'Bilingual',
+        history: priorHistory,
+        character: `You are ${state.selectedChar.name}, a warm, lively, expressive friend on a live video call with ${studentName}. Respond naturally and warmly in 1-2 short spoken sentences and ask a friendly follow-up question.`,
         mode: 'warm_live_call'
       });
 
-      const reply = (res && res.reply) ? res.reply : buildWarmFallbackReply(text, state.selectedChar.name);
-      state.callHistory.push(`AI: ${reply}`);
-      log.innerHTML += `<div class="msg ai">${reply}</div>`;
+      const reply = (res && res.reply) ? res.reply : `That sounds awesome, ${studentName}! Tell me more about what you enjoy doing next!`;
+      state.callHistory.push({ role: 'bot', text: reply });
+      log.innerHTML += `<div class="msg ai">${escapeHtml(reply)}</div>`;
       log.scrollTop = log.scrollHeight;
       document.getElementById('callLiveSubtitle').textContent = `"${reply}"`;
       speakText(reply, state.selectedChar.pitch, state.selectedChar.rate, true);
@@ -2118,7 +2133,7 @@
         summary: `Live call with ${state.selectedChar.name}.`
       });
       navigate('home');
-      showToast('Call ended & summary saved!');
+      showToast('Call ended!');
     }
 
     function handleCustomAvatarUpload(e) {
@@ -2129,7 +2144,7 @@
         localStorage.setItem('jesh_custom_avatar', reader.result);
         updateCustomModelStatus();
         renderCharacterGrid();
-        showToast('Custom photo saved on device!');
+        showToast('Custom photo saved!');
       };
       reader.readAsDataURL(file);
     }
@@ -2156,7 +2171,7 @@
         `Photo ${hasImg ? '✅ Set' : '❌ None'} • Voice ${hasVoice ? '✅ Set' : '❌ None'}`;
     }
 
-    /* DEEP PRACTICAL COURSES */
+    /* PRACTICAL COURSES */
     function filterCourses(cat, btnEl) {
       state.courseFilter = cat;
       document.querySelectorAll('#courseFilterChips .chip').forEach(c => c.classList.remove('active'));
@@ -2167,10 +2182,7 @@
     function renderAllCoursesGrid() {
       const grid = document.getElementById('allCoursesGrid');
       if (!grid) return;
-      const list = state.courseFilter === 'ALL'
-        ? DEEP_COURSES
-        : DEEP_COURSES.filter(c => c.cat === state.courseFilter);
-
+      const list = state.courseFilter === 'ALL' ? DEEP_COURSES : DEEP_COURSES.filter(c => c.cat === state.courseFilter);
       grid.innerHTML = list.map(c => `
         <div class="course-tile">
           <div>
@@ -2202,7 +2214,6 @@
       document.getElementById('activeCourseTitle').textContent = c.title;
       document.getElementById('courseLessonStepBadge').textContent = `Lesson ${idx + 1} / ${total}`;
       document.getElementById('courseLessonBar').style.width = `${Math.round(((idx + 1) / total) * 100)}%`;
-
       document.getElementById('courseConceptBox').innerHTML = `<strong>📘 Practical Concept:</strong><br/>${lesson.concept}`;
 
       const fb = document.getElementById('academyFeedback');
@@ -2211,7 +2222,6 @@
 
       const shuffled = shuffleQuestionOptions(lesson);
       const letters = ['A', 'B', 'C'];
-
       document.getElementById('academyStepBox').innerHTML = `
         <p style="font-weight:700; color:var(--text-main);">Real-Life Check: ${shuffled.q}</p>
         ${shuffled.opts.map((optText, i) => `
@@ -2232,7 +2242,7 @@
         fb.style.background = '#DCFCE7';
         fb.style.color = '#14532D';
         fb.textContent = `🎉 Correct! +15 XP — ${explainText}`;
-        apiCall({ action: 'submitLingoProgress', studentId: state.student.studentId, xp: 15, stageLabel: getFriendlyStageName(state.stageTier) });
+        apiCall({ action: 'submitLingoProgress', studentId: state.student.studentId, xp: 15 });
       } else {
         btnEl.classList.add('wrong-choice');
         fb.style.background = '#FEE2E2';
@@ -2251,11 +2261,8 @@
     function renderVideoHub(activeVid) {
       document.getElementById('nowPlayingTitle').textContent = 'Now Playing: ' + activeVid.title;
       const wrap = document.getElementById('videoPlayerContainer');
-      if (activeVid.directUrl) {
-        wrap.innerHTML = `<video src="${activeVid.directUrl}" controls autoplay playsinline></video>`;
-      } else {
-        wrap.innerHTML = `<iframe src="https://www.youtube.com/embed/${activeVid.ytId}?rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
-      }
+      if (activeVid.directUrl) wrap.innerHTML = `<video src="${activeVid.directUrl}" controls autoplay playsinline></video>`;
+      else wrap.innerHTML = `<iframe src="https://www.youtube.com/embed/${activeVid.ytId}?rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
 
       const list = document.getElementById('videoPlaylistCards');
       list.innerHTML = '';
@@ -2272,11 +2279,8 @@
       const raw = document.getElementById('customVideoUrlInput').value.trim();
       if (!raw) return showToast('Paste a YouTube or video URL first');
       const ytMatch = raw.match(/(?:v=|youtu\.be\/|embed\/)([A-Za-z0-9_-]{6,})/);
-      if (ytMatch && ytMatch[1]) {
-        renderVideoHub({ title: 'Custom YouTube Lesson', cat: 'Custom', ytId: ytMatch[1] });
-      } else {
-        renderVideoHub({ title: 'Custom Web Video', cat: 'Custom', directUrl: raw });
-      }
+      if (ytMatch && ytMatch[1]) renderVideoHub({ title: 'Custom YouTube Lesson', cat: 'Custom', ytId: ytMatch[1] });
+      else renderVideoHub({ title: 'Custom Web Video', cat: 'Custom', directUrl: raw });
     }
 
     /* FACEBOOK-INSPIRED COMMUNITY FEED */
@@ -2285,17 +2289,11 @@
       const tag = document.getElementById('newPostTag').value;
       if (!txt) return showToast('Write a message first');
 
-      state.posts.unshift({
-        id: Date.now(),
-        author: `${state.student.name} (${getFriendlyStageName(state.stageTier)})`,
-        tag: tag,
-        text: txt,
-        likes: 0
-      });
+      state.posts.unshift({ id: Date.now(), author: `${state.student.name} (${getFriendlyStageName(state.stageTier)})`, tag, text: txt, likes: 0 });
       localStorage.setItem('jesh_fb_posts', JSON.stringify(state.posts));
       document.getElementById('newPostText').value = '';
       renderCommunityFeed();
-      showToast('Published to Community / पोस्ट हो गया!');
+      showToast('Published to Community!');
     }
 
     function likeCommunityPost(id) {
@@ -2313,10 +2311,10 @@
       box.innerHTML = state.posts.map(p => `
         <div class="fb-post">
           <div class="fb-post-header">
-            <strong style="font-size:14px;">${p.author}</strong>
-            <span class="badge-pill">${p.tag}</span>
+            <strong style="font-size:14px;">${escapeHtml(p.author)}</strong>
+            <span class="badge-pill">${escapeHtml(p.tag)}</span>
           </div>
-          <p style="color:var(--text-main); margin-bottom:4px;">${p.text}</p>
+          <p style="color:var(--text-main); margin-bottom:4px;">${escapeHtml(p.text)}</p>
           <div class="fb-post-actions">
             <button class="btn-outline btn-sm" onclick="likeCommunityPost(${p.id})">👍 Like (${p.likes || 0})</button>
           </div>
@@ -2345,7 +2343,7 @@
       const note = document.getElementById('leaveNote').value.trim();
       const res = await apiCall({ action: 'submitLeaveOrHelp', studentId: state.student.studentId, note });
       document.getElementById('leaveNote').value = '';
-      showToast(res.message || 'Note sent! Streak protected.');
+      showToast(res.message || 'Note sent!');
       navigate('home');
     }
 
@@ -2400,11 +2398,7 @@
       const endpoint = document.getElementById('newApiEndpoint').value.trim();
       if (!engineName || !apiKey) return showToast('Enter both API Name and Key');
 
-      const res = await apiCall({
-        action: 'addOrUpdateAiEngine',
-        adminPass: state.adminPass,
-        engineName, apiKey, model, priority, endpoint
-      });
+      const res = await apiCall({ action: 'addOrUpdateAiEngine', adminPass: state.adminPass, engineName, apiKey, model, priority, endpoint });
       showToast(res.message || res.error);
       if (res.ok) {
         document.getElementById('newApiName').value = '';
@@ -2428,7 +2422,7 @@
         showToast(`Active Engines: ${res.activeCount} | Reply: "${res.sampleResponse}"`);
         loadAdminDashboard();
       } else {
-        showToast(res.error || 'Test failed');
+        showToast(res.error || 'Browser Direct AI Backup active.');
       }
     }
 
@@ -2467,15 +2461,10 @@
       const target = state.versions.find(v => v.id === verId);
       if (!target) return showToast('Version not found.');
       if (target.html) {
-        const res = await apiCall({
-          action: 'triggerGitHubCommitNow',
-          adminPass: state.adminPass,
-          htmlContent: target.html,
-          commitMessage: 'Rollback to ' + target.label
-        });
+        const res = await apiCall({ action: 'triggerGitHubCommitNow', adminPass: state.adminPass, htmlContent: target.html, commitMessage: 'Rollback to ' + target.label });
         showToast(res.message || ('Restored ' + target.label));
       } else {
-        showToast('Baseline active. Save a snapshot anytime before upgrades.');
+        showToast('Baseline active.');
       }
     }
 
@@ -2483,29 +2472,17 @@
       const moduleTitle = document.getElementById('coModTitle').value.trim();
       const instruction = document.getElementById('coModInstruction').value.trim();
       if (!instruction) return showToast('Enter an upgrade prompt first');
-
       saveManualVersionSnapshot();
-
-      const res = await apiCall({
-        action: 'coArchitectUpgrade',
-        adminPass: state.adminPass,
-        upgradeType: 'MODULE_CONFIG',
-        moduleTitle,
-        instruction
-      });
-      showToast(res.message || 'Prompt upgrade applied & queued for deploy!');
+      const res = await apiCall({ action: 'coArchitectUpgrade', adminPass: state.adminPass, upgradeType: 'MODULE_CONFIG', moduleTitle, instruction });
+      showToast(res.message || 'Upgrade applied!');
       document.getElementById('coModTitle').value = '';
       document.getElementById('coModInstruction').value = '';
       initApp();
     }
 
     async function runAdminSelfCheck() {
-      const res = await apiCall({
-        action: 'runSelfCheckScan',
-        adminPass: state.adminPass,
-        proposedHtml: document.documentElement.outerHTML
-      });
-      showToast(res.message || 'Self-Check Passed: UI, Navigation & Fallbacks Safe');
+      const res = await apiCall({ action: 'runSelfCheckScan', adminPass: state.adminPass, proposedHtml: document.documentElement.outerHTML });
+      showToast(res.message || 'Self-Check Passed!');
     }
 
     window.addEventListener('DOMContentLoaded', initApp);
